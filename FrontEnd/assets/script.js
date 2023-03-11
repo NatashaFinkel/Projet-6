@@ -1,38 +1,38 @@
 //  Création de variables vides (pour l'instant !).
 let categories;
-let  works;
-
+let works;
 
 //  Pour ne pas avoir à réécrire la même chose
 //  si on doit télécharger d'autres données de la
 //  même api.
-const apiUrl = 'http://localhost:5678/api';
+const apiUrl = `http://localhost:5678/api`;
 
-
-//  Pour récupérer les données des 
+//  Pour récupérer les données des
 //  travaux précédents.
 async function fetchWorkData() {
-
   //  Await met en pause l'exécution du code tant que
   //  la promesse n'a pas renvoyé son résultat.
   const response = await fetch(`${apiUrl}/works`);
   console.log("Le Fetch (travaux précédents) a réussi !");
 
-  const workData = await response.json();
-  console.log(workData);
+  const data = await response.json();
+  console.log(data);
+
+  const workData = data;
   return workData;
 }
 
- fetchWorkData().then(workData => {
+fetchWorkData().then((workData) => {
   console.log("Les travaux précédents ont été transférés !");
 
-  //  Les données sont placées dans la variable works qui 
+  //  Les données sont placées dans la variable works qui
   //  devient un tableau.
-      works = workData;
+  const works = workData;
+
+  worksGenerator(works);
 });
 
-
-//  Pour récupérer les données des 
+//  Pour récupérer les données des
 //  catégories déjà existantes.
 async function fetchCategories() {
   const response = await fetch(`${apiUrl}/categories`);
@@ -43,38 +43,35 @@ async function fetchCategories() {
   return categoriesData;
 }
 
-fetchCategories().then(categoriesData => {
+fetchCategories().then((categoriesData) => {
   console.log("Les catégories ont été transférées !");
-  
+
   categories = categoriesData;
 });
 
+function worksGenerator(works) {
+  //  Pour effacer dynamiquement tout
+  //  le contenu de la class gallery.
+  document.querySelector(".gallery").innerHTML = "";
 
-function worksGenerator(works){
+  //  La boucle for va créer le nouveau contenu de gallery.
+  for (let i = 0; i < works.length; i++) {
+    const newGallery = works[i];
 
-//  Pour effacer dynamiquement tout 
-//  le contenu de la class gallery.
-document.querySelector(".gallery").innerHTML = "";  
+    const galleryNewLocation = document.querySelector(".gallery");
 
-//  La boucle for va créer le nouveau contenu de gallery.
-for (let i = 0; i < works.length; i++) {
+    const createFigure = document.createElement("figure");
 
-  const newGallery = works[i];
+    const createImage = document.createElement("img");
+    createImage.src = newGallery.imageUrl;
+    createImage.alt = newGallery.title;
 
-  const galleryNewLocation = document.querySelector(".gallery");
+    const createFigCaption = document.createElement("figcaption");
+    createFigCaption.innerHTML = newGallery.title;
 
-  const createFigure = document.createElement("figure");
-
-  const createImage = document.createElement("img");
-  createImage.src = newGallery.imageUrl;
-  createImage.alt = newGallery.title;
-
-  const createFigCaption = document.createElement("figcaption");
-  createFigCaption.innerHTML = newGallery.title;
-
-galleryNewLocation.appendChild(createFigure);
-createFigure.appendChild(createImage);
-createFigure.appendChild(createFigCaption);
-}
-console.log(works);
+    galleryNewLocation.appendChild(createFigure);
+    createFigure.appendChild(createImage);
+    createFigure.appendChild(createFigCaption);
+  }
+  console.log();
 }
