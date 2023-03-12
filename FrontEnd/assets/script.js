@@ -59,7 +59,6 @@ function worksGenerator(works) {
   }
 }
 
-
 //  Pour récupérer les données des
 //  catégories déjà existantes.
 async function fetchCategories() {
@@ -75,77 +74,38 @@ async function fetchCategories() {
 
 fetchCategories().then((categoriesData) => {
   console.log("Les catégories ont été transférées !");
+
   return categoriesData;
 });
 
 function filterCreator() {
   let filter = document.getElementById("filter-btn");
-  // let nodeList = document.querySelectorAll("input");
+
+  //  Contrairement à l'Array, Set n'accepte pas
+  //  de valeurs "en doublon", donc c'est plus
+  //  pratique à contrôler.
+  let filterSet = new Set();
 
   for (let i = 0; i < 4; i++) {
-    const filterBtn = document.createElement("input");
-    filterBtn.setAttribute("type", "submit");
-    filterBtn.setAttribute("value", "");
+    filterSet = document.createElement("input");
+    filterSet.setAttribute("type", "submit");
 
+    //  Pour placer les éléments où il faut.
+    filter.prepend(filterSet);
 
-    //  Pour placer les éléments crées en haut 
-    //  du container (gallery)
-   filter.prepend(filterBtn);
+    //  nodeList séléctione tous les éléments "inputs"
+    let nodeList = document.querySelectorAll("input");
 
+    //  Ceci change la valeur de l'élément de la nodeList
+    //  dont le numéro d'index est entre les crochets.
+    nodeList[0].setAttribute("value", "Tous");
+    nodeList[1].setAttribute("value", "Objets");
+    nodeList[2].setAttribute("value", "Appartements");
+    nodeList[3].setAttribute("value", "Hôtels & restaurants");
   }
 }
 
-//  on prend le nombre d'éléments inputs crées
-//   dans cette fonction comme index i.
-//  i = nodeList[0];
-// console.log(nodeList.length);
-//  console.log(nodeList[0]);
-
-//  let nodeList = document.querySelectorAll("input");
-//  console.log(nodeList);
-
-// for (let i = 0; i < nodeList.length; i++) {
-// nodeList[i].setAttribute("value", " ");
-
-///////  ici ça marche !
-// Pour lister les inputs et les afficher dans la console.
-//   let nodeList = document.querySelectorAll("input");
-//   console.log(nodeList);
-
-/* function Filtername() {
-  let nodeList = document.querySelectorAll("input");
-  console.log(nodeList);
-
- // for (let i = 0; i < nodeList.length; i++) {
-  nodeList[i].setAttribute("value", " ");
-  } */
-//  console.log(nodeList);
-//    console.log(nodeList[0].value);
-
-//  for (let i = 0; i < nodeList.length; i++) {
-//   nodeList[0].setAttribute("value", categoriesData[0].name);
-
-////// ça marche !
-//    nodeList[1].setAttribute("value", "vanille");
-
-//    nodeList[0].setAttribute("value", categoriesData[i].name);
-// }
-
-// let nodeList = document.querySelectorAll("input");
-//  console.log(nodeList);
-
-//  for (let i = 0; i < 4; i++) {
-
-//}
-//}
-//console.log(nodeList);
-//   const nodeList = document.querySelectorAll("input");
-//   nodeList[0].setAttribute("value", "Tous");
-//  nodeList[1].setAttribute("value", categories[1].name);
-
-// Pour lister les inputs et les afficher dans la console.
-// const nodeList = document.querySelectorAll("input");
-// console.log(nodeList);
-
-//  nodeList[0].setAttribute("value", "Tous");
-// nodeList[1].setAttribute("value", categories[1].name);
+/////   C'est pour filtrer (à utiliser plus tard !)
+// filterBtn.addEventListener("click", filterCategories() => {
+//  code qui filtrera par catégorie
+//   });
