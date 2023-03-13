@@ -30,7 +30,6 @@ fetchWorkData().then((workData) => {
   const works = workData;
 
   worksGenerator(works);
-  filterCreator();
 });
 
 function worksGenerator(works) {
@@ -66,46 +65,76 @@ async function fetchCategories() {
   console.log("Le Fetch (catégories) a réussi !");
 
   const data = await response.json();
-  console.log(data);
+  // console.log(data);
 
-  categoriesData = data;
+  const categoriesData = data;
   return categoriesData;
 }
 
 fetchCategories().then((categoriesData) => {
   console.log("Les catégories ont été transférées !");
 
-  return categoriesData;
+  const categories = categoriesData;
+
+  categoriesGenerator(categories);
 });
 
-function filterCreator() {
-  let filter = document.getElementById("filter-btn");
+function categoriesGenerator(categories) {
+  console.log(categories);
 
-  //  Contrairement à l'Array, Set n'accepte pas
-  //  de valeurs "en doublon", donc c'est plus
-  //  pratique à contrôler.
-  let filterSet = new Set();
+  for (let i = 0; i < categories.length; i++) {
+    const WW = categories[i];
 
-  for (let i = 0; i < 4; i++) {
-    filterSet = document.createElement("input");
-    filterSet.setAttribute("type", "submit");
+    const filterLocation = document.querySelector(".filter-box");
 
-    //  Pour placer les éléments où il faut.
-    filter.prepend(filterSet);
+    const filterButtons = document.createElement("buttons");
+    filterButtons.setAttribute("class", "filter-btn");
+    filterButtons.innerHTML = WW.name;
 
-    //  nodeList séléctione tous les éléments "inputs"
-    let nodeList = document.querySelectorAll("input");
-
-    //  Ceci change la valeur de l'élément de la nodeList
-    //  dont le numéro d'index est entre les crochets.
-    nodeList[0].setAttribute("value", "Tous");
-    nodeList[1].setAttribute("value", "Objets");
-    nodeList[2].setAttribute("value", "Appartements");
-    nodeList[3].setAttribute("value", "Hôtels & restaurants");
+    filterLocation.appendChild(filterButtons);
   }
+
+  const filterLocation = document.querySelector(".filter-box");
+  const firstFilterButton = document.createElement("button");
+  firstFilterButton.setAttribute("class", "first-filter-btn");
+  firstFilterButton.innerText = "Tous";
+  filterLocation.prepend(firstFilterButton);
 }
 
-/////   C'est pour filtrer (à utiliser plus tard !)
-// filterBtn.addEventListener("click", filterCategories() => {
-//  code qui filtrera par catégorie
-//   });
+/////  Brouillons (on verra demain si on utilise ou pas !)
+
+//  Pour mettre dynamiquement les filtres et
+//   éviter les doublons.
+// const mySet = new Set();
+// console.log(mySet);
+
+//  Pour ajouter le résultat de fetchCategories dans mySet
+//  mySet.add(fetchCategories());
+// console.log(mySet);
+
+// for (let i = 0; i < mySet.length; i++) {
+//  const filterButtons = document.createElement("buttons");
+//  filterSet.setAttribute("type", "submit");
+
+// mySet.add(filterButtons);
+//   filterLocation.add(mySet);
+//  filterLocation.appendChild(mySet);
+
+//  console.log(mySet);
+//    console.log(filterButtons);
+//   console.log(categories);
+
+//    return categories;
+//  }
+
+// function XX() {
+
+//   //  Pour ajouter le résultat de fetchCategories dans mySet
+//   mySet.add(fetchCategories());
+
+//   return mySet;
+
+//   function ZZ() {}
+
+//   function TT() {}
+// }

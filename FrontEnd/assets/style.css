@@ -140,6 +140,7 @@ body {
 	margin: auto;
 	font-family: 'Work Sans';
 	font-size: 14px;
+	background-color: #fffef8;
 }
 
 header {
@@ -285,26 +286,28 @@ input[type="submit"] {
 }
 
 /* J'ai ajouté ça :  */
-#filter-btn {
+.filter-box {
 	display: flex;
 	justify-content: center;
 }
 
-/* J'ai ajouté ça :  */
-#filter-btn input {
+.filter-btn,
+.first-filter-btn {
 	border: 1px solid #1D6154;
-	height: 37px;
-	background-color: #E5E5E5;
+	background-color: #fffef8;
 	color: #1D6154;
 	width: fit-content;
-	padding: 0px 20px;
+	padding: 7px 20px;
 	margin: 10px 10px 40px 10px;
+	border-radius: 60px;
+	font-size: 16px;
+	font-weight: 700;
 }
 
-/* J'ai ajouté ça :  */
-#filter-btn :nth-child(1) {
+
+.first-filter-btn {
 	background-color: #1D6154;
-	color: #E5E5E5;
+	color: rgba(255, 255, 255, 1);
 }
 
 footer nav ul {
