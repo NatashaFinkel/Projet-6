@@ -43,15 +43,22 @@ function worksGenerator(works) {
 
     const galleryNewLocation = document.querySelector(".gallery");
 
+    //  Figure est un conteneur qui peut contenir divers éléments (images, vidéos,
+    //  tableaux, blocs de code, etc.)
     const createFigure = document.createElement("figure");
 
     const createImage = document.createElement("img");
+
+    //  Pour définir la source des images et les alt.
     createImage.src = newGallery.imageUrl;
     createImage.alt = newGallery.title;
 
+    //  FigCaption est la légende décrivant le reste du contenu de son élément parent <figure> .
     const createFigCaption = document.createElement("figcaption");
     createFigCaption.innerHTML = newGallery.title;
 
+    //  appendChild sert à placer les éléments 
+    //  en dernier dans galleryNewLocation (= la class gallery).
     galleryNewLocation.appendChild(createFigure);
     createFigure.appendChild(createImage);
     createFigure.appendChild(createFigCaption);
@@ -83,6 +90,8 @@ function categoriesGenerator(categories) {
   console.log(categories);
 
   for (let i = 0; i < categories.length; i++) {
+    //  La variable WW représente l'index i (chacun des éléments)
+    //   de l'array categories.
     const WW = categories[i];
 
     const filterLocation = document.querySelector(".filter-box");
@@ -94,10 +103,14 @@ function categoriesGenerator(categories) {
     filterLocation.appendChild(filterButtons);
   }
 
+  //  Pour créer le premier filtre (qui est différent).
   const filterLocation = document.querySelector(".filter-box");
   const firstFilterButton = document.createElement("button");
   firstFilterButton.setAttribute("class", "first-filter-btn");
   firstFilterButton.innerText = "Tous";
+
+  //  Pour placer le firstFilterButton
+  //  en premier dans filterLocation (= la class filter-box).
   filterLocation.prepend(firstFilterButton);
 }
 
