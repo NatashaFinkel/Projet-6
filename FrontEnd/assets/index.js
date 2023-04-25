@@ -184,6 +184,7 @@ if (localStorage.token) {
   console.log("Vous êtes sur l'interface 'client'. Bienvenue !");
 }
 
+//  Pour faire le logout.
 const logBtn = document.querySelector(".logBtn");
 logBtn.addEventListener("click", getOut);
 
