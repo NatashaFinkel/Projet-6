@@ -196,7 +196,9 @@ a {
 	color: black;
 }
 
-li:hover, a:hover, #instagram {
+li:hover,
+a:hover,
+#instagram {
 	color: #B1663C;
 }
 
@@ -230,6 +232,7 @@ li:hover, a:hover, #instagram {
 .movedBtn {
 	padding: 15px 40px;
 }
+
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
@@ -310,10 +313,11 @@ footer nav ul {
 	margin: 2em
 }
 
-footer, .adminBanner {
+footer,
+.adminBanner {
 	height: 60px;
 	width: 100vw;
-	background-color: white;	
+	background-color: white;
 }
 
 .loginPage,
@@ -350,11 +354,11 @@ footer, .adminBanner {
 }
 
 .filterBtn {
-    height: 38px;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 50px 0;
+	height: 38px;
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	margin: 50px 0;
 }
 
 .filterButton {
@@ -394,7 +398,8 @@ footer, .adminBanner {
 .adminBannerBtn {
 	border-radius: 60px;
 	padding: 10px 20px;
-	background-color: #FFFFFF;;
+	background-color: #FFFFFF;
+	;
 }
 
 .flexBtn {
@@ -409,3 +414,49 @@ footer, .adminBanner {
 	width: 20px;
 }
 
+#OriginalModal {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	font-family: 'Work Sans';
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+#OriginalModal>div {
+	width: 45%;
+	padding: 30px;
+	background-color: #fff;
+	border-radius: 10px;
+}
+
+#modalForm {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
+
+#modalForm a {
+	text-align: center;
+}
+
+
+#modalForm h3 {
+	margin: 10px;
+	font-size: 26px;
+	text-align: center;
+}
+
+#modalForm .submitBtn {
+	width: auto;
+	margin: 30px auto 20px;
+	padding: 0.8125em 3em;
+	border: none;
+}

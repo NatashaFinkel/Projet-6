@@ -51,9 +51,7 @@ async function createFilterBtns(works) {
 
   let fragment = document.createDocumentFragment();
   fragment.appendChild(filterZone);
-
-  // Pas sûre ça :
-  // portfolio.insertBefore(filterZone, gallery);
+  portfolio.insertBefore(filterZone, gallery);
 
   for (let element of categories) {
     let button = document.createElement("button");
@@ -61,11 +59,17 @@ async function createFilterBtns(works) {
     button.setAttribute("class", "filterButton");
     button.setAttribute("data-category", element);
     button.textContent = element;
-
+    //   button.addEventListener("click", test);
     filterZone.appendChild(button);
   }
   return fragment;
 }
+
+const filterButton = document.getElementsByClassName("filterButton");
+
+//function selectFilter() {
+//  this.classList.add("selectedFilter");
+//}
 
 async function worksGenerator(works) {
   let gallery = document.createElement("div");
@@ -108,23 +112,25 @@ async function addToDOM() {
 }
 
 async function activFilter() {
-  const galleryFilters = document.querySelector(".filterZone");
+  const filterZone = document.querySelector(".filterZone");
   const galleryContent = document.getElementsByClassName("galleryContent");
 
-  galleryFilters
-    .querySelector(".filterButton")
-    .classList.add(".selectedFilter");
+  //  Ajoute la class selectedFilter au premier élément qui
+  //  possède la class filterButton.
+  filterZone.querySelector(".filterButton").classList.add("selectedFilter");
 
-  galleryFilters.addEventListener("click", function (selectedItem) {
-    if (!selectedItem.target.classList.contains("filterButton")) {
-      return;
-    }
+  filterZone.addEventListener("click", function (selectedItem) {
 
-    galleryFilters
+    //  Quand on clique sur l'un des filtres, la class
+    //  selectedFilter se place sur celui-ci, et se
+    //  déplace quand on clique sur l'un des autres filtres.
+    filterZone
       .querySelector(".selectedFilter")
-      .classList.remove(".selectedFilter");
-    selectedItem.target.classList.add(".selectedFilter");
+      .classList.remove("selectedFilter");
+    selectedItem.target.classList.add("selectedFilter");
 
+    //  Active (ou désactive) l'affichage des figures en fonction 
+    //  de leur numéro de categorie.
     let category = selectedItem.target.getAttribute("data-category");
     for (let figure of galleryContent) {
       let filter = figure.getAttribute("data-category");
@@ -178,10 +184,19 @@ if (localStorage.token) {
 
   //  Pour créer le bouton qui modifie le contenu de la galerie.
   createModifBtn("modifGalleryBtn");
+  modifButton.addEventListener("click", openOriginalModal);
   galleryBtn.append(modifButton);
   console.log("Vous êtes sur l'interface 'administrateur'. Bienvenue !");
 } else {
   console.log("Vous êtes sur l'interface 'client'. Bienvenue !");
+}
+
+function openOriginalModal() {
+  console.log("ça marche !");
+}
+
+function test() {
+  console.log("Test réussi !");
 }
 
 //  Pour faire le logout.
@@ -189,19 +204,16 @@ const logBtn = document.querySelector(".logBtn");
 logBtn.addEventListener("click", getOut);
 
 function getOut() {
-  if (login.textContent === "logout") {
+  if (logBtn.textContent === "logout") {
     deleteToken();
     logBtn.setAttribute("href", "./index.html");
-  } else {
+  }
+
+  if (logBtn.textContent === "login") {
     logBtn.setAttribute("href", "./login.html");
   }
 }
 
 function deleteToken() {
   localStorage.clear();
-}
-
-function changeURL() {
-  let newURL = "./index.html";
-  document.getElementsByClassName("logBtn").href = newURL;
 }
