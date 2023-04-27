@@ -196,7 +196,7 @@ a {
 	color: black;
 }
 
-li:hover {
+li:hover, a:hover, #instagram {
 	color: #B1663C;
 }
 
