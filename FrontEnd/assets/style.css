@@ -151,7 +151,7 @@ header {
 }
 
 section {
-	margin: 50px 200px;
+	margin: 140px 200px;
 }
 
 h1 {
@@ -353,14 +353,6 @@ footer,
 	gap: 10px;
 }
 
-.filterBtn {
-	height: 38px;
-	display: flex;
-	justify-content: center;
-	gap: 10px;
-	margin: 50px 0;
-}
-
 .filterButton {
 	border: 1px solid #1D6154;
 	background-color: #fffef8;
@@ -370,7 +362,7 @@ footer,
 	border-radius: 60px;
 	font-size: 16px;
 	font-weight: 700;
-	height: 45px;
+	cursor: pointer;
 }
 
 .selectedFilter {
@@ -421,11 +413,9 @@ footer,
 	width: 100%;
 	height: 100%;
 	z-index: 1;
-
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
 	font-family: 'Work Sans';
 	background-color: rgba(0, 0, 0, 0.3);
 }
