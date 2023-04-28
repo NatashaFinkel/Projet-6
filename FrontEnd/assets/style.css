@@ -444,8 +444,22 @@ footer,
 }
 
 .miniGallery {
-	height: 400px;
+
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 9px;
+	row-gap: 13px;
 }
+
+.miniGallery figure {
+	position: relative;
+}
+
+
+.modalContent {
+	padding: 0px 40px;
+}
+
 
 #modalForm {
 	display: flex;
@@ -453,23 +467,50 @@ footer,
 	align-items: stretch;
 }
 
-#modalForm a {
+.modalContent a {
 	text-align: center;
 }
 
-#modalForm h3, .modal h3 {
-	margin: 10px;
+.modalContent h3,
+.modal h3 {
+	margin: 30px;
 	font-size: 26px;
 	text-align: center;
 }
 
-#modalForm .submitBtn {
+.modalContent .submitBtn {
 	width: auto;
 	margin: 30px auto 20px;
 	padding: 0.8125em 3em;
 	border: none;
 }
 
-.greyBG {
-	background-color: rgba(0, 0, 0, 0.3);
+.miniImg {
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: cover;
+}
+
+.iconDiv {
+	display: flex;
+	justify-content: flex-end;
+	top: 22px;
+	position: relative;
+	gap: 3px;
+	right: 7px;
+}
+
+.iconDiv i {
+	background-color: black;
+	color: white;
+	padding: 3px;
+	font-size: 11px;
+}
+
+.hoveredOnly {
+	display: none;
+}
+
+.showElement {
+	display: block;
 }

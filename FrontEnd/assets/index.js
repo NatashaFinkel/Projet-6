@@ -59,7 +59,6 @@ async function createFilterBtns(works) {
     button.setAttribute("class", "filterButton");
     button.setAttribute("data-category", element);
     button.textContent = element;
-    //   button.addEventListener("click", test);
     filterZone.appendChild(button);
   }
   return fragment;
@@ -73,7 +72,7 @@ async function worksGenerator(works) {
 
   for (let element of works) {
     let figure = document.createElement("figure");
-    figure.setAttribute("class", "galleryContent");
+    //  figure.setAttribute("class", "galleryContent");
     figure.setAttribute("data-category", element.category.name);
     figure.setAttribute("data-id", element.id);
 
@@ -107,7 +106,6 @@ async function addToDOM() {
 async function activFilter() {
   const filterZone = document.querySelector(".filterZone");
   const galleryContent = document.getElementsByClassName("galleryContent");
-
   //  Ajoute la class selectedFilter au premier élément qui
   //  possède la class filterButton.
   filterZone.querySelector(".filterButton").classList.add("selectedFilter");
@@ -210,42 +208,68 @@ function deleteToken() {
   localStorage.clear();
 }
 
-//// Modales.
+////  Modales.
 
 const originalModal = document.querySelector("#originalModal");
 const closeIcon = document.querySelector(".closeIcon");
 closeIcon.addEventListener("click", closeModal);
 
 function closeModal() {
-  // console.log("Fonction closeModal : OK !");
   originalModal.style.display = "none";
 }
 
 const miniGallery = document.querySelector(".miniGallery");
-// console.log(miniGallery);
+miniGallery.classList.add("galleryContent");
 
-function createMiniFigures() {
-
-  for (let i = 0; i < gallery.length; i++) {
+async function createMiniGallery(works) {
+  //  Pour pouvoir utiliser les travaux précédents téléchargés.
+  works = await getPreviousWork();
+  // console.log(works);
+  for (let i = 0; i < works.length; i++) {
     const miniFigure = document.createElement("figure");
-    miniFigure.classList.add("oneFigure");
-    miniFigure.setAttribute("data-category", element.category.name);
-    miniFigure.setAttribute("data-id", element.id);
+    miniFigure.classList.add("miniFigure");
 
-    const miniImg = document.createElement("img");
-    miniImg.setAttribute("crossorigin", "anonymous");
-    miniImg.setAttribute("src", element.imageUrl);
-    miniImg.getAttribute("alt", element.title);
+    //  Pour faire apparaître et disparaître l'icône
+    //  directionArrow au passage de la souris sur chacune des miniFigures.
+    miniFigure.addEventListener("mouseover", displayIcon);
+    miniFigure.addEventListener("mouseout", hideIcon);
 
-    miniFigure.appendChild(miniImg);
-  //  miniGallery.appendChild(miniFigure);
-  //   miniImg.classList.add("galleryImg");
-   // miniFigure.append(miniImg);
+    const miniImage = document.createElement("img");
+    miniImage.classList.add("miniImg");
+    miniImage.src = works[i].imageUrl;
+
+    const miniFigcaption = document.createElement("figcaption");
+    miniFigcaption.innerHTML = `<p>éditer</p>`;
+
+    const iconDiv = document.createElement("div");
+    iconDiv.classList.add("iconDiv");
+
+    //  icône "poubelle".
+    const trashIcon = document.createElement("figcaption");
+    trashIcon.innerHTML = `<i class="fa-solid fa-trash-can trashCan"></i>`;
+
+    //  icône "flèche multidirectionnelle".
+    const directionArrow = document.createElement("figcaption");
+    directionArrow.innerHTML = `<i class="fa-solid fa-arrows-up-down-left-right"></i>`;
+    directionArrow.style.display = "none";
+
+    function displayIcon() {
+      directionArrow.style.display = "block";
+    }
+
+    function hideIcon() {
+      directionArrow.style.display = "none";
+    }
+
+    iconDiv.append(directionArrow);
+    iconDiv.append(trashIcon);
+    miniFigure.append(iconDiv);
+
+    miniFigure.append(miniFigcaption);
+    miniFigure.append(miniImage);
+    miniFigure.append(miniFigcaption);
     miniGallery.append(miniFigure);
   }
-
 }
-createMiniFigures();
 
-
-
+createMiniGallery();
