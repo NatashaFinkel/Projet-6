@@ -67,14 +67,7 @@ async function createFilterBtns(works) {
 
 const filterButton = document.getElementsByClassName("filterButton");
 
-//function selectFilter() {
-//  this.classList.add("selectedFilter");
-//}
-
 async function worksGenerator(works) {
-  let gallery = document.createElement("div");
-  gallery.setAttribute("class", "gallery");
-
   let fragment = document.createDocumentFragment();
   fragment.appendChild(gallery);
 
@@ -219,27 +212,40 @@ function deleteToken() {
 
 //// Modales.
 
-//const closeIcon = document.querySelector(".closeIcon");
-//const OriginalModal = document.querySelector("#OriginalModal");
-//const originalModal = document.getElementById("OriginalModal");
-
-//const closeIcon = document.getElementsByClassName("closeIcon");
-//console.log(closeIcon);
-//console.log(originalModal);
-
-//closeIcon.addEventListener("click", closeModal);
-
-//function closeModal() {
-//console.log("La fonction closeModal marche !")
-//}
-
 const originalModal = document.querySelector("#originalModal");
-//console.log(originalModal);
-
 const closeIcon = document.querySelector(".closeIcon");
 closeIcon.addEventListener("click", closeModal);
 
 function closeModal() {
- // console.log("Fonction closeModal : OK !");
-originalModal.style.display = "none";
+  // console.log("Fonction closeModal : OK !");
+  originalModal.style.display = "none";
 }
+
+const miniGallery = document.querySelector(".miniGallery");
+// console.log(miniGallery);
+
+function createMiniFigures() {
+
+  for (let i = 0; i < gallery.length; i++) {
+    const miniFigure = document.createElement("figure");
+    miniFigure.classList.add("oneFigure");
+    miniFigure.setAttribute("data-category", element.category.name);
+    miniFigure.setAttribute("data-id", element.id);
+
+    const miniImg = document.createElement("img");
+    miniImg.setAttribute("crossorigin", "anonymous");
+    miniImg.setAttribute("src", element.imageUrl);
+    miniImg.getAttribute("alt", element.title);
+
+    miniFigure.appendChild(miniImg);
+  //  miniGallery.appendChild(miniFigure);
+  //   miniImg.classList.add("galleryImg");
+   // miniFigure.append(miniImg);
+    miniGallery.append(miniFigure);
+  }
+
+}
+createMiniFigures();
+
+
+

@@ -457,7 +457,7 @@ footer,
 	text-align: center;
 }
 
-#modalForm h3 {
+#modalForm h3, .modal h3 {
 	margin: 10px;
 	font-size: 26px;
 	text-align: center;
