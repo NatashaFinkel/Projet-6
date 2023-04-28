@@ -406,7 +406,7 @@ footer,
 	width: 20px;
 }
 
-#OriginalModal {
+#originalModal {
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -420,11 +420,31 @@ footer,
 	background-color: rgba(0, 0, 0, 0.3);
 }
 
-#OriginalModal>div {
+#originalModal>div {
 	width: 45%;
 	padding: 30px;
 	background-color: #fff;
 	border-radius: 10px;
+}
+
+.modal {
+	display: flex;
+	flex-direction: column;
+}
+
+.topModal {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.closeIcon {
+	border: none;
+	background-color: white;
+	cursor: pointer;
+}
+
+.miniGallery {
+	height: 400px;
 }
 
 #modalForm {
@@ -437,7 +457,6 @@ footer,
 	text-align: center;
 }
 
-
 #modalForm h3 {
 	margin: 10px;
 	font-size: 26px;
@@ -449,4 +468,8 @@ footer,
 	margin: 30px auto 20px;
 	padding: 0.8125em 3em;
 	border: none;
+}
+
+.greyBG {
+	background-color: rgba(0, 0, 0, 0.3);
 }

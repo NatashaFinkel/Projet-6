@@ -120,7 +120,6 @@ async function activFilter() {
   filterZone.querySelector(".filterButton").classList.add("selectedFilter");
 
   filterZone.addEventListener("click", function (selectedItem) {
-
     //  Quand on clique sur l'un des filtres, la class
     //  selectedFilter se place sur celui-ci, et se
     //  déplace quand on clique sur l'un des autres filtres.
@@ -129,7 +128,7 @@ async function activFilter() {
       .classList.remove("selectedFilter");
     selectedItem.target.classList.add("selectedFilter");
 
-    //  Active (ou désactive) l'affichage des figures en fonction 
+    //  Active (ou désactive) l'affichage des figures en fonction
     //  de leur numéro de categorie.
     let category = selectedItem.target.getAttribute("data-category");
     for (let figure of galleryContent) {
@@ -192,7 +191,7 @@ if (localStorage.token) {
 }
 
 function openOriginalModal() {
-  console.log("ça marche !");
+  originalModal.style.display = "flex";
 }
 
 function test() {
@@ -216,4 +215,31 @@ function getOut() {
 
 function deleteToken() {
   localStorage.clear();
+}
+
+//// Modales.
+
+//const closeIcon = document.querySelector(".closeIcon");
+//const OriginalModal = document.querySelector("#OriginalModal");
+//const originalModal = document.getElementById("OriginalModal");
+
+//const closeIcon = document.getElementsByClassName("closeIcon");
+//console.log(closeIcon);
+//console.log(originalModal);
+
+//closeIcon.addEventListener("click", closeModal);
+
+//function closeModal() {
+//console.log("La fonction closeModal marche !")
+//}
+
+const originalModal = document.querySelector("#originalModal");
+//console.log(originalModal);
+
+const closeIcon = document.querySelector(".closeIcon");
+closeIcon.addEventListener("click", closeModal);
+
+function closeModal() {
+ // console.log("Fonction closeModal : OK !");
+originalModal.style.display = "none";
 }
