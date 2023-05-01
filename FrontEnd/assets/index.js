@@ -91,6 +91,7 @@ async function worksGenerator(works) {
   return fragment;
 }
 
+//  esssj
 async function addToDOM() {
   const portfolio = document.getElementById("portfolio");
   const works = await getPreviousWork();
