@@ -92,7 +92,7 @@ async function worksGenerator(works) {
   return fragment;
 }
 
-//  esssj
+
 async function addToDOM() {
   const portfolio = document.getElementById("portfolio");
   const works = await getPreviousWork();
@@ -123,20 +123,29 @@ async function activFilter() {
 
     //  Active (ou désactive) l'affichage des figures en fonction
     //  de leur numéro de categorie.
-    let category = selectedItem.target.getAttribute("data-category");
-    for (let figure of galleryContent) {
-      let filter = figure.getAttribute("data-category");
-      switch (true) {
-        case category == "Tous":
-          figure.style.display = "block";
-          break;
-        case filter == category:
-          figure.style.display = "block";
-          break;
-        default:
-          figure.style.display = "none";
-      }
-    }
+ //   let category = selectedItem.target.getAttribute("data-category");
+ //   console.log(category);
+    // for (let figure of galleryContent) {
+    //   let filter = figure.getAttribute("data-category");
+    //   console.log(filter);
+    //   switch (true) {
+
+    //     case category == "Tous":
+    //     console.log(filter);
+    //   //    figure.style.display = "block";
+    //   figure.style.display = "grid";
+    //   console.log(filter);
+    //       break;
+    //     case filter == category:
+    //       console.log(filter);
+    //   //    figure.style.display = "block";
+    //   figure.style.display = "grid";
+    //       break;
+    //     default:
+    //  //     figure.style.display = "none";
+    //       figure.style.display = "grid";
+    //   }
+    // }
   });
 }
 
@@ -250,16 +259,16 @@ async function createMiniGallery(works) {
     const trashIcon = document.createElement("figcaption");
     trashIcon.innerHTML = `<i class="fa-solid fa-trash-can trashCan"></i>`;
 
-    function removeFigure() {
-      let element = trashIcon.closest(".miniFigure");
-      let elementB = works[i];
-      // let elementB = works[i];
-      console.log(element);
-      console.log(elementB);
-      //    element.parentNode.removeChild(element);
-    }
+    // function removeFigure() {
+    //   let element = trashIcon.closest(".miniFigure");
+    //   let elementB = works[i];
+    //   // let elementB = works[i];
+    //   console.log(element);
+    //   console.log(elementB);
+    //   //    element.parentNode.removeChild(element);
+    // }
 
-    trashIcon.addEventListener("click", removeFigure);
+    trashIcon.addEventListener("click", test);
 
     //  icône "flèche multidirectionnelle".
     const directionArrow = document.createElement("figcaption");
