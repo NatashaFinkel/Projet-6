@@ -8,6 +8,7 @@ const gallery = document.querySelector(".gallery");
 const logInAndOut = document.querySelector(".logInAndOut");
 const body = document.querySelector("body");
 const header = document.querySelector("header");
+const figure = document.querySelector("figure");
 let adminBanner;
 let modifButton;
 const galleryBtn = document.querySelector(".galleryBtn");
@@ -72,7 +73,7 @@ async function worksGenerator(works) {
 
   for (let element of works) {
     let figure = document.createElement("figure");
-    //  figure.setAttribute("class", "galleryContent");
+    figure.setAttribute("class", "bigFigure");
     figure.setAttribute("data-category", element.category.name);
     figure.setAttribute("data-id", element.id);
 
@@ -247,6 +248,17 @@ async function createMiniGallery(works) {
     //  icône "poubelle".
     const trashIcon = document.createElement("figcaption");
     trashIcon.innerHTML = `<i class="fa-solid fa-trash-can trashCan"></i>`;
+
+    function removeFigure() {
+      let element = trashIcon.closest(".miniFigure");
+      let elementB = works[i];
+      // let elementB = works[i];
+      console.log(element);
+      console.log(elementB);
+      //    element.parentNode.removeChild(element);
+    }
+
+    trashIcon.addEventListener("click", removeFigure);
 
     //  icône "flèche multidirectionnelle".
     const directionArrow = document.createElement("figcaption");
