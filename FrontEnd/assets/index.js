@@ -92,7 +92,6 @@ async function worksGenerator(works) {
   return fragment;
 }
 
-
 async function addToDOM() {
   const portfolio = document.getElementById("portfolio");
   const works = await getPreviousWork();
@@ -107,11 +106,14 @@ async function addToDOM() {
 
 async function activFilter() {
   const filterZone = document.querySelector(".filterZone");
-  const galleryContent = document.getElementsByClassName("galleryContent");
+  const bigFigure = document.getElementsByClassName("bigFigure");
+
   //  Ajoute la class selectedFilter au premier élément qui
-  //  possède la class filterButton.
+  //  possède la class filterButton (pour qu'il soit vert "par défaut").
   filterZone.querySelector(".filterButton").classList.add("selectedFilter");
 
+  //  J'ai choisi de mettre l'addEventListener sur filterZone pour ne pas
+  //  appeller la méthode plusieurs fois (à chaque filtre).
   filterZone.addEventListener("click", function (selectedItem) {
     //  Quand on clique sur l'un des filtres, la class
     //  selectedFilter se place sur celui-ci, et se
@@ -121,31 +123,35 @@ async function activFilter() {
       .classList.remove("selectedFilter");
     selectedItem.target.classList.add("selectedFilter");
 
-    //  Active (ou désactive) l'affichage des figures en fonction
-    //  de leur numéro de categorie.
- //   let category = selectedItem.target.getAttribute("data-category");
- //   console.log(category);
-    // for (let figure of galleryContent) {
-    //   let filter = figure.getAttribute("data-category");
-    //   console.log(filter);
-    //   switch (true) {
+    // categorie renvoie le nom de la catégorie du filtre sur lequel on clique.
+    let category = selectedItem.target.getAttribute("data-category");
 
-    //     case category == "Tous":
-    //     console.log(filter);
-    //   //    figure.style.display = "block";
-    //   figure.style.display = "grid";
-    //   console.log(filter);
-    //       break;
-    //     case filter == category:
-    //       console.log(filter);
-    //   //    figure.style.display = "block";
-    //   figure.style.display = "grid";
-    //       break;
-    //     default:
-    //  //     figure.style.display = "none";
-    //       figure.style.display = "grid";
-    //   }
-    // }
+    //  Pour chaque figure de chacun des éléments avec la classe bigFigure.
+    for (let figure of bigFigure) {
+      //  filter renvoie le nom de catégorie de chacune des figures.
+      let filter = figure.getAttribute("data-category");
+
+      //  switch est utile quand on veut exécuter une action
+      //  qui peut être différente selon certaines conditions.
+      //  ici : on vérifie si la valeur est "vraie".
+      switch (true) {
+        case category == "Tous":
+          gallery.style.display = "grid";
+          figure.style.display = "block";
+          break;
+
+        //  Si le nom de catégorie du filtre est le même que
+        //  celui de la figure.
+        case category == filter:
+          gallery.style.display = "grid";
+          figure.style.display = "block";
+          break;
+
+        default:
+          figure.style.display = "none";
+          gallery.style.display = "grid";
+      }
+    }
   });
 }
 
