@@ -295,16 +295,19 @@ a:hover,
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"] {
+input[type="submit"], input[type="button"] {
 	font-family: 'Syne';
 	font-weight: 700;
-	color: white;
-	background-color: #1D6154;
 	margin: 2em auto;
 	width: 180px;
 	text-align: center;
 	border-radius: 60px;
 	cursor: pointer;
+}
+
+input[type="submit"] {
+	background-color: #1D6154;
+	color: white;
 }
 
 footer nav ul {
@@ -418,21 +421,20 @@ footer,
 	font-family: 'Work Sans';
 }
 
-#originalModal, #addWorkModal {
+#originalModal,
+#addWorkModal {
 	justify-content: center;
+	border-radius: 10px;
 }
 
-#originalModal>div {
+#originalModal>div,
+#add-work-modal>div {
 	width: 40%;
 	padding: 30px;
 	background-color: #fff;
 	border-radius: 10px;
 }
 
-.modal {
-	display: flex;
-	flex-direction: column;
-}
 
 .topModal {
 	display: flex;
@@ -446,7 +448,6 @@ footer,
 }
 
 .miniGallery {
-
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
 	gap: 9px;
@@ -461,12 +462,40 @@ footer,
 	padding: 0px 20px;
 	display: grid;
 }
+.image-box {
+	display: flex;
+    text-align: center;
+	flex-direction: column;
+}
 
+.landscape-image {
+font-size: 50px;
+color: rgba(185, 197, 204, 1);
 
-#modalForm {
+}
+
+.add-pic-btn {
+	background-color: #CBD6DC;;
+color: rgba(48, 102, 133, 1);
+border: none;
+}
+.modal-form {
+	/* display: flex;
+	flex-direction: column;
+	align-items: center; */
+
+	margin-top: 50px;
+}
+
+.modal-form input {
+	height: 50px;
+	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+	border: none;
+}
+
+.modal-form form {
 	display: flex;
 	flex-direction: column;
-	align-items: stretch;
 }
 
 .modal-content a {
@@ -480,7 +509,7 @@ footer,
 	text-align: center;
 }
 
-.modal-content .submitBtn {  
+.modal-content .submitBtn {
 	border: none;
 	padding: 10px 0px;
 	font-size: 14px;
@@ -522,8 +551,8 @@ footer,
 	flex-direction: column;
 	justify-self: center;
 	width: 80%;
-    border-top: 1px solid #B3B3B3;
-    margin-top: 45px;
+	border-top: 1px solid #B3B3B3;
+	margin-top: 45px;
 }
 
 .modal-content .erase-btn {
@@ -533,4 +562,21 @@ footer,
 	border: none;
 	cursor: pointer;
 	background-color: white;
+}
+
+#addWorkModal {
+	width: 350px;
+	flex-direction: column;
+	background-color: white;
+	padding: 30px 30px 55px 30px;
+}
+
+.top-AddWorkModal {
+	display: flex;
+	justify-content: space-between;
+}
+
+.div1 {
+	padding: 20px 0px;
+	background-color: rgba(232, 241, 246, 1);
 }

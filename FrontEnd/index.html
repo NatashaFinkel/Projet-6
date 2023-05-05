@@ -75,10 +75,10 @@
 	</footer>
 
 	<!-- Modales -->
-	<aside class="aside-content" style="display: none">  
+	<aside class="aside-content" style="display: none">
 		<div id="originalModal" style="display: none">
-			<div class="modal">
-				<div class="topModal">
+			<div>
+				<div>
 					<button class="closeIcon">
 						<i class="fa-solid fa-xmark"></i>
 					</button>
@@ -92,10 +92,12 @@
 
 			</div>
 		</div>
+	</aside>
 
 
-		<div id="addWorkModal" style="display: none">
-			<div class="topModal">
+	<aside class="aside-content" style="display: flex">
+		<div id="addWorkModal" style="display: flex">
+			<div class="top-AddWorkModal">
 				<button class="closeIcon">
 					<i class="fa-solid fa-xmark"></i>
 				</button>
@@ -105,10 +107,34 @@
 				</button>
 			</div>
 
+			<div class="modal-content">
+				<h3>Ajout photo</h3>
+			</div>
+
+			<div class="div1">
+				<div class="image-box">
+					<i class="fa-regular fa-image landscape-image"></i>
+
+
+					<input type="button" class="add-pic-btn" value="+ Ajouter photo">
+					<p>jpg, png : 4mo max</p>
+				</div>
+
+			</div>
+
+			<div class="modal-form">
+				<form>
+					<label for="Title">Titre</label><br>
+					<input type="text" id="titleInput" name="titleInput"><br>
+					<label for="category">Catégorie</label><br>
+					<input type="text" id="lname" name="lname">
+				</form>
+			</div>
+
 		</div>
 
-
 	</aside>
+
 	<script src="./assets/index.js"></script>
 
 </body>
