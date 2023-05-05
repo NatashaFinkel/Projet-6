@@ -13,7 +13,6 @@ let adminBanner;
 let modifButton;
 const galleryBtn = document.querySelector(".galleryBtn");
 
-
 async function getCategories() {
   try {
     const response = await fetch(apiUrl + "categories");
@@ -192,17 +191,11 @@ if (localStorage.token) {
 
   //  Pour créer le bouton qui modifie le contenu de la galerie.
   createModifBtn("modifGalleryBtn");
-  modifButton.addEventListener("click", openAsideContent);
+  modifButton.addEventListener("click", openOriginalModal);
   galleryBtn.append(modifButton);
   console.log("Vous êtes sur l'interface 'administrateur'. Bienvenue !");
 } else {
   console.log("Vous êtes sur l'interface 'client'. Bienvenue !");
-}
-
-function openAsideContent() {
-  asideContent.backgroundColor = "green";
-  asideContent.style.display = "flex";
-  originalModal.style.display = "flex";
 }
 
 function test() {
@@ -232,11 +225,28 @@ function deleteToken() {
 
 const asideContent = document.querySelector(".aside-content");
 const originalModal = document.querySelector("#originalModal");
-const closeIcon = document.querySelector(".closeIcon");
-closeIcon.addEventListener("click", closeModal);
+const closeIcon = document.querySelectorAll(".closeIcon");
 
-function closeModal() {
+//closeIcon.addEventListener("click", closeAllModals);
+//closeIcon.addEventListener("click", closeOriginalModal);
+//closeIcon.addEventListener("click", closeAddWorkModal);
+const addWorkModal = document.querySelector("#addWorkModal");
+
+function openOriginalModal() {
+  asideContent.style.display = "flex";
+  originalModal.style.display = "flex";
+}
+
+function closeAllModals() {
   asideContent.style.display = "none";
+}
+
+function closeAddWorkModal() {
+  asideContent.style.display = "none";
+  addWorkModal.style.display = "none";
+}
+
+function closeOriginalModal() {
   originalModal.style.display = "none";
 }
 
@@ -313,7 +323,14 @@ async function createMiniGallery(works) {
   submitBtn.setAttribute("type", "submit");
   submitBtn.classList.add("submitBtn");
   submitBtn.setAttribute("value", "Ajouter une photo");
-  submitBtn.addEventListener("click", test);
+  submitBtn.addEventListener("click", closeOriginalModal);
+  submitBtn.addEventListener("click", openAddWorkModal);
+
+  function openAddWorkModal() {
+ //   originalModal.style.display = "none";
+  //  asideContent.style.display = "flex";
+    addWorkModal.style.display = "flex";
+  }
 
   const eraseBtn = document.createElement("input");
   eraseBtn.addEventListener("click", test);

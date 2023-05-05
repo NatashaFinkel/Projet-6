@@ -75,7 +75,8 @@
 	</footer>
 
 	<!-- Modales -->
-	<aside class="aside-content" style="display: none">
+	<div class="aside-content"style="display: none">
+	<aside>
 		<div id="originalModal" style="display: none">
 			<div>
 				<div>
@@ -95,16 +96,18 @@
 	</aside>
 
 
-	<aside class="aside-content" style="display: flex">
-		<div id="addWorkModal" style="display: flex">
+	<aside>
+		<div id="addWorkModal" style="display: none">
 			<div class="top-AddWorkModal">
+		
+				<button class="arrow-icon">
+					<i class="fa-solid fa-arrow-left"></i>
+				</button>
+
 				<button class="closeIcon">
 					<i class="fa-solid fa-xmark"></i>
 				</button>
 
-				<button>
-					<i class="fa-solid fa-arrow-left"></i>
-				</button>
 			</div>
 
 			<div class="modal-content">
@@ -131,10 +134,15 @@
 				</form>
 			</div>
 
+			<div class="btn-div">
+				<input type="submit" class="add-btn" value="Ajouter">
+
+			</div>
+
 		</div>
 
 	</aside>
-
+</div>
 	<script src="./assets/index.js"></script>
 
 </body>
