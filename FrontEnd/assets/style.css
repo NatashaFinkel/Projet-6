@@ -406,18 +406,20 @@ footer,
 	width: 20px;
 }
 
-#originalModal {
+.aside-content {
+	background-color: rgba(0, 0, 0, 0.3);
 	position: fixed;
 	left: 0;
 	top: 0;
 	width: 100%;
 	height: 100%;
-	z-index: 1;
-	display: flex;
 	justify-content: center;
 	align-items: center;
 	font-family: 'Work Sans';
-	background-color: rgba(0, 0, 0, 0.3);
+}
+
+#originalModal, #addWorkModal {
+	justify-content: center;
 }
 
 #originalModal>div {

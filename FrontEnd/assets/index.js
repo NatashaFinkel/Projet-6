@@ -13,6 +13,7 @@ let adminBanner;
 let modifButton;
 const galleryBtn = document.querySelector(".galleryBtn");
 
+
 async function getCategories() {
   try {
     const response = await fetch(apiUrl + "categories");
@@ -191,14 +192,16 @@ if (localStorage.token) {
 
   //  Pour créer le bouton qui modifie le contenu de la galerie.
   createModifBtn("modifGalleryBtn");
-  modifButton.addEventListener("click", openOriginalModal);
+  modifButton.addEventListener("click", openAsideContent);
   galleryBtn.append(modifButton);
   console.log("Vous êtes sur l'interface 'administrateur'. Bienvenue !");
 } else {
   console.log("Vous êtes sur l'interface 'client'. Bienvenue !");
 }
 
-function openOriginalModal() {
+function openAsideContent() {
+  asideContent.backgroundColor = "green";
+  asideContent.style.display = "flex";
   originalModal.style.display = "flex";
 }
 
@@ -227,11 +230,13 @@ function deleteToken() {
 
 ////  Modales.
 
+const asideContent = document.querySelector(".aside-content");
 const originalModal = document.querySelector("#originalModal");
 const closeIcon = document.querySelector(".closeIcon");
 closeIcon.addEventListener("click", closeModal);
 
 function closeModal() {
+  asideContent.style.display = "none";
   originalModal.style.display = "none";
 }
 
@@ -243,7 +248,7 @@ async function createMiniGallery(works) {
   //  Pour pouvoir utiliser les travaux précédents téléchargés.
 
   works = await getPreviousWork();
-//   console.log(works);
+  //   console.log(works);
   for (let i = 0; i < works.length; i++) {
     const miniFigure = document.createElement("figure");
     miniFigure.classList.add("miniFigure");
@@ -301,24 +306,24 @@ async function createMiniGallery(works) {
     miniGallery.append(miniFigure);
   }
 
-const btnDiv = document.createElement("div");
-btnDiv.classList.add("btn-div");
+  const btnDiv = document.createElement("div");
+  btnDiv.classList.add("btn-div");
 
-const submitBtn = document.createElement("input");
-submitBtn.setAttribute("type", "submit");
-submitBtn.classList.add("submitBtn");
-submitBtn.setAttribute("value", "Ajouter une photo");
-submitBtn.addEventListener("click", test);
+  const submitBtn = document.createElement("input");
+  submitBtn.setAttribute("type", "submit");
+  submitBtn.classList.add("submitBtn");
+  submitBtn.setAttribute("value", "Ajouter une photo");
+  submitBtn.addEventListener("click", test);
 
-const eraseBtn = document.createElement("input");
-eraseBtn.addEventListener("click", test);
-eraseBtn.setAttribute("type", "button");
-eraseBtn.classList.add("erase-btn");
-eraseBtn.setAttribute("value", "Supprimer la galerie");
+  const eraseBtn = document.createElement("input");
+  eraseBtn.addEventListener("click", test);
+  eraseBtn.setAttribute("type", "button");
+  eraseBtn.classList.add("erase-btn");
+  eraseBtn.setAttribute("value", "Supprimer la galerie");
 
-btnDiv.append(submitBtn);
-btnDiv.append(eraseBtn);
-modalContent.append(btnDiv);
+  btnDiv.append(submitBtn);
+  btnDiv.append(eraseBtn);
+  modalContent.append(btnDiv);
 }
 
 createMiniGallery();
