@@ -455,9 +455,9 @@ footer,
 	position: relative;
 }
 
-
-.modalContent {
+.modal-content {
 	padding: 0px 20px;
+	display: grid;
 }
 
 
@@ -467,22 +467,22 @@ footer,
 	align-items: stretch;
 }
 
-.modalContent a {
+.modal-content a {
 	text-align: center;
 }
 
-.modalContent h3,
+.modal-content h3,
 .modal h3 {
 	margin-bottom: 30px;
 	font-size: 26px;
 	text-align: center;
 }
 
-.modalContent .submitBtn {
-	width: auto;
-	margin: 30px auto 20px;
-	padding: 0.8125em 3em;
+.modal-content .submitBtn {  
 	border: none;
+	padding: 10px 0px;
+	font-size: 14px;
+	width: 80%;
 }
 
 .miniImg {
@@ -513,4 +513,22 @@ footer,
 
 .showElement {
 	display: block;
+}
+
+.btn-div {
+	display: flex;
+	flex-direction: column;
+	justify-self: center;
+	width: 80%;
+    border-top: 1px solid #B3B3B3;
+    margin-top: 45px;
+}
+
+.modal-content .erase-btn {
+	text-align: center;
+	color: rgba(214, 83, 83, 1);
+	font-size: 14px;
+	border: none;
+	cursor: pointer;
+	background-color: white;
 }

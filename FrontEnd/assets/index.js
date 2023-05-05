@@ -239,9 +239,11 @@ const miniGallery = document.querySelector(".miniGallery");
 miniGallery.classList.add("galleryContent");
 
 async function createMiniGallery(works) {
+  const modalContent = document.querySelector(".modal-content");
   //  Pour pouvoir utiliser les travaux précédents téléchargés.
+
   works = await getPreviousWork();
-  // console.log(works);
+//   console.log(works);
   for (let i = 0; i < works.length; i++) {
     const miniFigure = document.createElement("figure");
     miniFigure.classList.add("miniFigure");
@@ -298,6 +300,25 @@ async function createMiniGallery(works) {
     miniFigure.append(miniFigcaption);
     miniGallery.append(miniFigure);
   }
+
+const btnDiv = document.createElement("div");
+btnDiv.classList.add("btn-div");
+
+const submitBtn = document.createElement("input");
+submitBtn.setAttribute("type", "submit");
+submitBtn.classList.add("submitBtn");
+submitBtn.setAttribute("value", "Ajouter une photo");
+submitBtn.addEventListener("click", test);
+
+const eraseBtn = document.createElement("input");
+eraseBtn.addEventListener("click", test);
+eraseBtn.setAttribute("type", "button");
+eraseBtn.classList.add("erase-btn");
+eraseBtn.setAttribute("value", "Supprimer la galerie");
+
+btnDiv.append(submitBtn);
+btnDiv.append(eraseBtn);
+modalContent.append(btnDiv);
 }
 
 createMiniGallery();
