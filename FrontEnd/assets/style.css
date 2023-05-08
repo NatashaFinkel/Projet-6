@@ -423,13 +423,12 @@ footer,
 }
 
 #originalModal,
-#addWorkModal {
+#add-work-modal {
 	justify-content: center;
 	border-radius: 10px;
 }
 
-#originalModal>div,
-#add-work-modal>div {
+#originalModal>div {
 	width: 40%;
 	padding: 30px;
 	background-color: #fff;
@@ -488,23 +487,22 @@ footer,
 }
 
 .modal-form {
-	/* display: flex;
-	flex-direction: column;
-	align-items: center; */
-
-	margin-top: 50px;
+	display: flex;
+	margin-top: 35px;
 }
 
-.modal-form input, .modal-form select {
+.modal-form input,
+.modal-form select {
 	height: 50px;
 	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
 	border: none;
-	padding-left: 15px;
+
 }
 
 .modal-form form {
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 }
 
 .modal-content a {
@@ -518,7 +516,7 @@ footer,
 	text-align: center;
 }
 
-.modal-content .submitBtn, .btn-div .add-btn {
+.modal-content .submitBtn {
 	border: none;
 	padding: 10px 0px;
 	font-size: 14px;
@@ -561,7 +559,7 @@ footer,
 	flex-direction: column;
 	width: 80%;
 	border-top: 1px solid #B3B3B3;
-	margin-top: 45px;
+	margin-top: 35px;
 	align-self: center;
 	justify-self: center;
 }
@@ -575,14 +573,17 @@ footer,
 	background-color: white;
 }
 
-#addWorkModal {
-	width: 350px;
+
+#add-work-modal>div {}
+
+#add-work-modal {
+	width: 320px;
 	flex-direction: column;
 	background-color: white;
-	padding: 30px 30px 55px 30px;
+	padding: 20px 50px 0px 50px;
 }
 
-.top-AddWorkModal {
+.top-add-work-modal {
 	display: flex;
 	justify-content: space-between;
 }
@@ -593,5 +594,6 @@ footer,
 }
 
 .add-btn {
-	background-color: rgba(167, 167, 167, 1);
+	border: none;
+	padding: 10px 0px;
 }

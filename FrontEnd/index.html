@@ -75,83 +75,79 @@
 	</footer>
 
 	<!-- Modales -->
-	<div class="aside-content"style="display: none">
-	<aside>
-		<div id="originalModal" style="display: none">
-			<div>
+	<div class="aside-content" style="display: none">
+		<aside>
+			<div id="originalModal" style="display: none">
 				<div>
+					<div>
+						<button class="closeIcon">
+							<i class="fa-solid fa-xmark"></i>
+						</button>
+					</div>
+
+					<div class="modal-content">
+						<h3>Galerie photo</h3>
+						<div class="miniGallery"></div>
+
+					</div>
+
+				</div>
+			</div>
+		</aside>
+
+
+		<aside>
+			<div id="add-work-modal" style="display: none">
+				<div class="top-add-work-modal">
+
+					<button class="arrow-icon">
+						<i class="fa-solid fa-arrow-left"></i>
+					</button>
+
 					<button class="closeIcon">
 						<i class="fa-solid fa-xmark"></i>
 					</button>
+
 				</div>
 
 				<div class="modal-content">
-					<h3>Galerie photo</h3>
-					<div class="miniGallery"></div>
+					<h3>Ajout photo</h3>
+				</div>
+
+				<div class="div1">
+					<div class="image-box">
+						<i class="fa-regular fa-image landscape-image"></i>
+						<input type="button" class="add-pic-btn" value="+ Ajouter photo">
+						<p>jpg, png : 4mo max</p>
+					</div>
+
+				</div>
+
+				<div class="modal-form">
+					<form>
+						<label for="Title">Titre</label><br>
+						<input type="text" id="titleInput" name="titleInput"><br>
+
+						<label for="category">Catégorie</label><br>
+						<select name="category" required>
+							<option value="1">Objets</option>
+							<option value="2">Appartements</option>
+							<option value="3">Hôtels & restaurants</option>
+						</select>
+
+					</form>
+				</div>
+
+				<div class="btn-div">
+					<input type="submit" class="add-btn" value="Valider">
 
 				</div>
 
 			</div>
-		</div>
-	</aside>
 
-
-	<aside>
-		<div id="addWorkModal" style="display: none">
-			<div class="top-AddWorkModal">
-		
-				<button class="arrow-icon">
-					<i class="fa-solid fa-arrow-left"></i>
-				</button>
-
-				<button class="closeIcon">
-					<i class="fa-solid fa-xmark"></i>
-				</button>
-
-			</div>
-
-			<div class="modal-content">
-				<h3>Ajout photo</h3>
-			</div>
-
-			<div class="div1">
-				<div class="image-box">
-	
-	
-					<i class="fa-regular fa-image landscape-image"></i>
-					<input type="button" class="add-pic-btn" value="+ Ajouter photo">
-					<p>jpg, png : 4mo max</p>
-				</div>
-
-			</div>
-
-			<div class="modal-form">
-				<form>
-					<label for="Title">Titre</label><br>
-					<input type="text" id="titleInput" name="titleInput"><br>
-					
-					<label for="category">Catégorie</label><br>
-					<select name="category" required>
-						<option value="1">Objets</option>
-						<option value="2">Appartements</option>
-						<option value="3">Hôtels & restaurants</option>
-					</select>
-				
-				
-				</form>
-			</div>
-
-			<div class="btn-div">
-				<input type="submit" class="add-btn" value="Ajouter">
-
-			</div>
-
-		</div>
-
-	</aside>
-</div>
+		</aside>
+	</div>
 	<script src="./assets/index.js"></script>
-
 </body>
 
 </html>

@@ -230,7 +230,7 @@ const closeIcon = document.querySelectorAll(".closeIcon");
 //closeIcon.addEventListener("click", closeAllModals);
 //closeIcon.addEventListener("click", closeOriginalModal);
 //closeIcon.addEventListener("click", closeAddWorkModal);
-const addWorkModal = document.querySelector("#addWorkModal");
+const addWorkModal = document.querySelector("#add-work-modal");
 
 function openOriginalModal() {
   asideContent.style.display = "flex";
