@@ -428,6 +428,8 @@ footer,
 	border-radius: 10px;
 }
 
+
+
 #originalModal>div {
 	width: 40%;
 	padding: 30px;
@@ -436,12 +438,12 @@ footer,
 }
 
 
-.topModal {
+.top-modal {
 	display: flex;
 	justify-content: flex-end;
 }
 
-.closeIcon,
+.close-icon,
 .arrow-icon {
 	border: none;
 	background-color: white;
@@ -573,8 +575,6 @@ footer,
 	background-color: white;
 }
 
-
-#add-work-modal>div {}
 
 #add-work-modal {
 	width: 320px;

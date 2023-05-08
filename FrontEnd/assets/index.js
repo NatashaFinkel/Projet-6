@@ -225,20 +225,43 @@ function deleteToken() {
 
 const asideContent = document.querySelector(".aside-content");
 const originalModal = document.querySelector("#originalModal");
-const closeIcon = document.querySelectorAll(".closeIcon");
 
-//closeIcon.addEventListener("click", closeAllModals);
-//closeIcon.addEventListener("click", closeOriginalModal);
-//closeIcon.addEventListener("click", closeAddWorkModal);
+const closeFirstModal = document.querySelector(".close-original-modal");
+
+const closeSecondModal = document.querySelector(".close-add-work-modal");
+
+closeFirstModal.addEventListener("click", closeOriginalModal);
+closeSecondModal.addEventListener("click", closeAddWorkModal);
 const addWorkModal = document.querySelector("#add-work-modal");
+const arrow = document.querySelector(".arrow-icon");
+arrow.addEventListener("click", test);
 
 function openOriginalModal() {
   asideContent.style.display = "flex";
   originalModal.style.display = "flex";
 }
 
-function closeAllModals() {
+function openAddWorkModal() {
+  originalModal.style.display = "none";
+  addWorkModal.style.display = "flex";
+}
+
+
+//  Pour enlever originalModal si on clique
+//  ailleurs que sur celle-ci.
+window.onclick = function (event) {
+  if (event.target == originalModal) {
+    test();
+  }
+};
+
+function closeModal() {
   asideContent.style.display = "none";
+}
+
+function closeOriginalModal() {
+  asideContent.style.display = "none";
+  originalModal.style.display = "none";
 }
 
 function closeAddWorkModal() {
@@ -246,9 +269,13 @@ function closeAddWorkModal() {
   addWorkModal.style.display = "none";
 }
 
-function closeOriginalModal() {
+function closeAll() {
+  asideContent.style.display = "none";
   originalModal.style.display = "none";
+  addWorkModal.style.display = "none";
 }
+
+
 
 const miniGallery = document.querySelector(".miniGallery");
 miniGallery.classList.add("galleryContent");
@@ -323,14 +350,7 @@ async function createMiniGallery(works) {
   submitBtn.setAttribute("type", "submit");
   submitBtn.classList.add("submitBtn");
   submitBtn.setAttribute("value", "Ajouter une photo");
-  submitBtn.addEventListener("click", closeOriginalModal);
   submitBtn.addEventListener("click", openAddWorkModal);
-
-  function openAddWorkModal() {
- //   originalModal.style.display = "none";
-  //  asideContent.style.display = "flex";
-    addWorkModal.style.display = "flex";
-  }
 
   const eraseBtn = document.createElement("input");
   eraseBtn.addEventListener("click", test);
