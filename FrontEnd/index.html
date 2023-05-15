@@ -75,30 +75,44 @@
 	</footer>
 
 	<!-- Modales -->
-	<div class="aside-content" style="display: none">
-		<aside>
-			<div id="originalModal" class="modal" style="display: none">
-				<div>
-					<div class="top-modal">
-						<button class="close-icon">
+	<div class="modal-bg"></div>
+	<!--  <div class="aside-content"> -->
+	<!-- <div> -->
 
-							<i class="fa-solid fa-xmark close-original-modal"></i>
-						</button>
-					</div>
+	<aside id="first-modal">
+		<div id="original-modal" class="aside-content">
+			<div class="modal">
 
-					<div class="modal-content">
-						<h3>Galerie photo</h3>
-						<div class="miniGallery"></div>
+				<div class="top-modal">
 
+					<button class="close-icon">
+						<i class="fa-solid fa-xmark close-original-modal"></i>
+					</button>
+				</div>
+
+				<div class="modal-content">
+					<h3>Galerie photo</h3>
+					<div class="miniGallery"></div>
+
+					<div class="btn-div">
+						<input type="submit" class="submitBtn" id="open-sec-mod" value="Ajouter une photo">
+
+						<input type="button" class="erase-btn" value="Supprimer la galerie">
 					</div>
 
 				</div>
+
 			</div>
-		</aside>
+		</div>
 
+	</aside>
 
-		<aside>
-			<div id="add-work-modal" class="modal" style="display: none">
+	<aside id="second-modal">
+		<!-- <div id="add-work-modal" class="aside-content"> -->
+		<div id="add-work-modal" class="modal">
+
+			<div>
+
 				<div class="top-add-work-modal">
 
 					<button class="arrow-icon">
@@ -108,7 +122,6 @@
 					<button class="close-icon">
 						<i class="fa-solid fa-xmark close-add-work-modal"></i>
 					</button>
-
 				</div>
 
 				<div class="modal-content">
@@ -141,13 +154,14 @@
 
 				<div class="btn-div">
 					<input type="submit" class="add-btn" value="Valider">
-
 				</div>
 
 			</div>
+		</div>
+	</aside>
 
-		</aside>
 	</div>
+
 	<script src="./assets/index.js"></script>
 </body>
 

@@ -191,15 +191,23 @@ if (localStorage.token) {
 
   //  Pour créer le bouton qui modifie le contenu de la galerie.
   createModifBtn("modifGalleryBtn");
-  modifButton.addEventListener("click", openOriginalModal);
+
   galleryBtn.append(modifButton);
   console.log("Vous êtes sur l'interface 'administrateur'. Bienvenue !");
 } else {
   console.log("Vous êtes sur l'interface 'client'. Bienvenue !");
 }
 
-function test() {
-  console.log("Test réussi !");
+function test1() {
+  console.log("Test 1 réussi !");
+}
+
+function test2() {
+  console.log("Test 2 réussi !");
+}
+
+function test3() {
+  console.log("Test 3 réussi !");
 }
 
 //  Pour faire le logout.
@@ -224,59 +232,163 @@ function deleteToken() {
 ////  Modales.
 
 const asideContent = document.querySelector(".aside-content");
-const originalModal = document.querySelector("#originalModal");
+const originalModal = document.querySelector("#original-modal");
+const addWorkModal = document.querySelector("#add-work-modal");
+
+const firstModal = document.querySelector("#first-modal");
+const secondModal = document.querySelector("#second-modal");
 
 const closeFirstModal = document.querySelector(".close-original-modal");
-
 const closeSecondModal = document.querySelector(".close-add-work-modal");
 
-closeFirstModal.addEventListener("click", closeOriginalModal);
-closeSecondModal.addEventListener("click", closeAddWorkModal);
-const addWorkModal = document.querySelector("#add-work-modal");
-const arrow = document.querySelector(".arrow-icon");
-arrow.addEventListener("click", test);
+const modifGalleryBtn = document.querySelector("#modifGalleryBtn");
+modifGalleryBtn.addEventListener("click", createModalBG);
+modifGalleryBtn.addEventListener("click", openOriginalModal);
+
+const modalBG = document.querySelector(".modal-bg");
+
+//  Pour activer le background-color plus
+//  foncé et la mise en page pour les modales.
+function createModalBG() {
+  modalBG.classList.add("active");
+  modalBG.classList.add("aside-content");
+}
 
 function openOriginalModal() {
-  asideContent.style.display = "flex";
-  originalModal.style.display = "flex";
+  firstModal.classList.add("aside-content");
+  firstModal.classList.add("active");
+  originalModal.classList.add("active");
 }
 
-function openAddWorkModal() {
-  originalModal.style.display = "none";
-  addWorkModal.style.display = "flex";
-}
+//  Pour ouvrir la deuxième modale, et s'assurer que la
+//  première modale a bien été fermée.
+const openSecModal = document.querySelector("#open-sec-mod");
 
+openSecModal.addEventListener("click", (event) => {
+  function openAddWorkModal() {
+    firstModal.classList.remove("aside-content");
+    firstModal.classList.remove("active");
+    originalModal.classList.remove("active");
 
-//  Pour enlever originalModal si on clique
-//  ailleurs que sur celle-ci.
-window.onclick = function (event) {
-  if (event.target == originalModal) {
-    test();
+    secondModal.classList.add("aside-content");
+    secondModal.classList.add("active");
+    addWorkModal.classList.add("active");
   }
-};
 
-function closeModal() {
-  asideContent.style.display = "none";
-}
+  function isFirstModalClosed() {
+    if (
+      firstModal.classList.contains("aside-content") &&
+      firstModal.classList.contains("active") &&
+      originalModal.classList.contains("active") &&
+      secondModal.classList.contains("aside-content") &&
+      secondModal.classList.contains("active") &&
+      addWorkModal.classList.contains("active")
+    ) {
+      console.log("Les deux modales sont ouvertes !");
+    } else if (
+      !firstModal.classList.contains("aside-content") &&
+      !firstModal.classList.contains("active") &&
+      !originalModal.classList.contains("active") &&
+      secondModal.classList.contains("aside-content") &&
+      secondModal.classList.contains("active") &&
+      addWorkModal.classList.contains("active")
+    ) {
+      console.log("La 1ère modale est fermée, et la 2e modale est ouverte !");
+    }
+  }
+
+  openAddWorkModal();
+  isFirstModalClosed();
+
+  //  La fonction isFirstModalClosed est appellée
+  //  uniquement lorsque la seconde modale est chargée.
+  window.addEventListener("load", isFirstModalClosed);
+});
+
+closeFirstModal.addEventListener("click", closeOriginalModal);
 
 function closeOriginalModal() {
-  asideContent.style.display = "none";
-  originalModal.style.display = "none";
+  modalBG.classList.remove("active");
+  modalBG.classList.remove("aside-content");
+
+  firstModal.classList.remove("aside-content");
+  firstModal.classList.remove("active");
+  originalModal.classList.remove("active");
 }
+
+closeSecondModal.addEventListener("click", closeAddWorkModal);
 
 function closeAddWorkModal() {
-  asideContent.style.display = "none";
-  addWorkModal.style.display = "none";
+  modalBG.classList.remove("active");
+  modalBG.classList.remove("aside-content");
+
+  secondModal.classList.remove("aside-content");
+  secondModal.classList.remove("active");
+  addWorkModal.classList.remove("active");
 }
 
+window.addEventListener("click", clickAway);
+
+function clickAway(event) {
+  //  Renvoie true si on clique sur le btn qui ouvre la 1ère modale.
+  const openModalBtn = modifGalleryBtn.contains(event.target);
+  //  console.log(openModalBtn);
+
+  //  Renvoie true si on clique sur le btn qui ouvre la 2e modale.
+  const openSecModalBtn = openSecModal.contains(event.target);
+  //console.log(openSecModalBtn);
+
+  const modal = document.querySelector(".modal");
+  // console.log(modal);
+
+  const allModals = document.querySelectorAll(".modal");
+  //  console.log(allModals);
+
+  //  Renvoie true si on clique sur la 1ère  modale.
+  const clickFirstModal = modal.contains(event.target);
+  //  console.log(clickFirstModal);
+
+  //  Renvoie true si on clique sur la 2e  modale.
+  const clickSecondModal = addWorkModal.contains(event.target);
+  // console.log(clickSecondModal);
+
+  if (
+    !openModalBtn &&
+    originalModal.classList.contains("active") &&
+    !clickFirstModal
+  ) {
+    modalBG.classList.remove("active");
+    firstModal.classList.remove("active");
+    originalModal.classList.remove("active");
+  } else if (openModalBtn) {
+    modalBG.classList.add("active");
+    firstModal.classList.add("active");
+    originalModal.classList.add("active");
+  } else if (
+    !openSecModalBtn &&
+    addWorkModal.classList.contains("active") &&
+    !clickSecondModal
+  ) {
+    modalBG.classList.remove("active");
+    secondModal.classList.remove("active");
+    addWorkModal.classList.remove("active");
+  } else if (openSecModalBtn) {
+    modalBG.classList.add("active");
+    secondModal.classList.add("active");
+    addWorkModal.classList.add("active");
+  }
+}
+
+const arrow = document.querySelector(".arrow-icon");
+arrow.addEventListener("click", test1);
+
+/*
 function closeAll() {
   asideContent.style.display = "none";
   originalModal.style.display = "none";
   addWorkModal.style.display = "none";
 }
-
-
-
+*/
 const miniGallery = document.querySelector(".miniGallery");
 miniGallery.classList.add("galleryContent");
 
@@ -318,7 +430,7 @@ async function createMiniGallery(works) {
     //   //    element.parentNode.removeChild(element);
     // }
 
-    trashIcon.addEventListener("click", test);
+    trashIcon.addEventListener("click", test1);
 
     //  icône "flèche multidirectionnelle".
     const directionArrow = document.createElement("figcaption");
@@ -342,25 +454,6 @@ async function createMiniGallery(works) {
     miniFigure.append(miniFigcaption);
     miniGallery.append(miniFigure);
   }
-
-  const btnDiv = document.createElement("div");
-  btnDiv.classList.add("btn-div");
-
-  const submitBtn = document.createElement("input");
-  submitBtn.setAttribute("type", "submit");
-  submitBtn.classList.add("submitBtn");
-  submitBtn.setAttribute("value", "Ajouter une photo");
-  submitBtn.addEventListener("click", openAddWorkModal);
-
-  const eraseBtn = document.createElement("input");
-  eraseBtn.addEventListener("click", test);
-  eraseBtn.setAttribute("type", "button");
-  eraseBtn.classList.add("erase-btn");
-  eraseBtn.setAttribute("value", "Supprimer la galerie");
-
-  btnDiv.append(submitBtn);
-  btnDiv.append(eraseBtn);
-  modalContent.append(btnDiv);
 }
 
 createMiniGallery();
