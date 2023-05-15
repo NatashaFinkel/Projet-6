@@ -265,38 +265,7 @@ function openOriginalModal() {
 const openSecModal = document.querySelector("#open-sec-mod");
 
 openSecModal.addEventListener("click", (event) => {
-  function openAddWorkModal() {
-    firstModal.classList.remove("aside-content");
-    firstModal.classList.remove("active");
-    originalModal.classList.remove("active");
-
-    secondModal.classList.add("aside-content");
-    secondModal.classList.add("active");
-    addWorkModal.classList.add("active");
-  }
-
-  function isFirstModalClosed() {
-    if (
-      firstModal.classList.contains("aside-content") &&
-      firstModal.classList.contains("active") &&
-      originalModal.classList.contains("active") &&
-      secondModal.classList.contains("aside-content") &&
-      secondModal.classList.contains("active") &&
-      addWorkModal.classList.contains("active")
-    ) {
-      console.log("Les deux modales sont ouvertes !");
-    } else if (
-      !firstModal.classList.contains("aside-content") &&
-      !firstModal.classList.contains("active") &&
-      !originalModal.classList.contains("active") &&
-      secondModal.classList.contains("aside-content") &&
-      secondModal.classList.contains("active") &&
-      addWorkModal.classList.contains("active")
-    ) {
-      console.log("La 1ère modale est fermée, et la 2e modale est ouverte !");
-    }
-  }
-
+  isFirstModalClosed();
   openAddWorkModal();
   isFirstModalClosed();
 
@@ -304,6 +273,36 @@ openSecModal.addEventListener("click", (event) => {
   //  uniquement lorsque la seconde modale est chargée.
   window.addEventListener("load", isFirstModalClosed);
 });
+
+function openAddWorkModal() {
+  closeOriginalModal();
+  secondModal.classList.add("aside-content");
+  secondModal.classList.add("active");
+  addWorkModal.classList.add("active");
+}
+
+function isFirstModalClosed() {
+  if (
+    firstModal.classList.contains("aside-content") &&
+    firstModal.classList.contains("active") &&
+    originalModal.classList.contains("active") &&
+    
+    secondModal.classList.contains("aside-content") &&
+    secondModal.classList.contains("active") &&
+    addWorkModal.classList.contains("active")
+  ) {
+    console.log("Les deux modales sont ouvertes !");
+  } else if (
+    !firstModal.classList.contains("aside-content") &&
+    !firstModal.classList.contains("active") &&
+    !originalModal.classList.contains("active") &&
+    secondModal.classList.contains("aside-content") &&
+    secondModal.classList.contains("active") &&
+    addWorkModal.classList.contains("active")
+  ) {
+    console.log("La 1ère modale est fermée, et la 2e modale est ouverte !");
+  }
+}
 
 closeFirstModal.addEventListener("click", closeOriginalModal);
 
