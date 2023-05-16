@@ -523,7 +523,11 @@ footer,
 	height: 50px;
 	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
 	border: none;
+	padding: 0px 15px;
+}
 
+.invisible {
+	display: none;
 }
 
 .modal-form form {
