@@ -410,7 +410,8 @@ footer,
 	width: 20px;
 }
 
-.aside-content, .modal-bg {
+.aside-content,
+.modal-bg {
 	position: fixed;
 	left: 0;
 	top: 0;
