@@ -11,7 +11,7 @@ const header = document.querySelector("header");
 const figure = document.querySelector("figure");
 let adminBanner;
 let modifButton;
-const galleryBtn = document.querySelector(".galleryBtn");
+const galleryBtn = document.querySelector(".gallery-btn");
 
 async function getCategories() {
   try {
@@ -48,7 +48,7 @@ async function createFilterBtns(works) {
   //  Pour créer la zone avec les filtres,
   //  ajouter la classe et la placer.
   const filterZone = document.createElement("div");
-  filterZone.classList.add("filterZone");
+  filterZone.classList.add("filter-zone");
 
   let fragment = document.createDocumentFragment();
   fragment.appendChild(filterZone);
@@ -57,7 +57,7 @@ async function createFilterBtns(works) {
   for (let element of categories) {
     let button = document.createElement("button");
     button.setAttribute("type", "button");
-    button.setAttribute("class", "filterButton");
+    button.setAttribute("class", "filter-button");
     button.setAttribute("data-category", element);
     button.textContent = element;
     filterZone.appendChild(button);
@@ -65,7 +65,7 @@ async function createFilterBtns(works) {
   return fragment;
 }
 
-const filterButton = document.getElementsByClassName("filterButton");
+const filterButton = document.getElementsByClassName("filter-button");
 
 async function worksGenerator(works) {
   let fragment = document.createDocumentFragment();
@@ -105,23 +105,23 @@ async function addToDOM() {
 }
 
 async function activFilter() {
-  const filterZone = document.querySelector(".filterZone");
+  const filterZone = document.querySelector(".filter-zone");
   const bigFigure = document.getElementsByClassName("bigFigure");
 
-  //  Ajoute la class selectedFilter au premier élément qui
-  //  possède la class filterButton (pour qu'il soit vert "par défaut").
-  filterZone.querySelector(".filterButton").classList.add("selectedFilter");
+  //  Ajoute la class selected-filter au premier élément qui
+  //  possède la class filter-button (pour qu'il soit vert "par défaut").
+  filterZone.querySelector(".filter-button").classList.add("selected-filter");
 
   //  J'ai choisi de mettre l'addEventListener sur filterZone pour ne pas
   //  appeller la méthode plusieurs fois (à chaque filtre).
   filterZone.addEventListener("click", function (selectedItem) {
     //  Quand on clique sur l'un des filtres, la class
-    //  selectedFilter se place sur celui-ci, et se
+    //  selected-filter se place sur celui-ci, et se
     //  déplace quand on clique sur l'un des autres filtres.
     filterZone
-      .querySelector(".selectedFilter")
-      .classList.remove("selectedFilter");
-    selectedItem.target.classList.add("selectedFilter");
+      .querySelector(".selected-filter")
+      .classList.remove("selected-filter");
+    selectedItem.target.classList.add("selected-filter");
 
     // categorie renvoie le nom de la catégorie du filtre sur lequel on clique.
     let category = selectedItem.target.getAttribute("data-category");
@@ -159,17 +159,17 @@ addToDOM();
 
 const createAdminBanner = () => {
   adminBanner = document.createElement("div");
-  adminBanner.classList.add("adminBanner");
-  adminBanner.innerHTML = `<i class="fa-regular fa-pen-to-square penIcon"></i>
+  adminBanner.classList.add("admin-banner");
+  adminBanner.innerHTML = `<i class="fa-regular fa-pen-to-square pen-icon"></i>
        <p>Mode édition</p>
-       <button class="adminBannerBtn">publier les changements</button>`;
+       <button class="admin-banner-btn">publier les changements</button>`;
 };
 
 const createModifBtn = (id) => {
   modifButton = document.createElement("div");
-  modifButton.classList.add("flexBtn");
+  modifButton.classList.add("flex-btn");
   modifButton.setAttribute("id", id);
-  modifButton.innerHTML = `<i class="fa-regular fa-pen-to-square penIcon"></i><p>modifier</p>`;
+  modifButton.innerHTML = `<i class="fa-regular fa-pen-to-square pen-icon"></i><p>modifier</p>`;
 };
 
 if (localStorage.token) {
@@ -181,7 +181,7 @@ if (localStorage.token) {
   createModifBtn("modifIntroPictureBtn");
   const introPicture = introduction.querySelector("figure");
   introPicture.append(modifButton);
-  modifIntroPictureBtn.classList.add("movedBtn");
+  modifIntroPictureBtn.classList.add("moved-btn");
 
   //  Pour créer le bouton qui modifie le texte d'introduction.
   createModifBtn("modifTextIntroBtn");
