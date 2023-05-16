@@ -369,7 +369,7 @@ footer,
 	cursor: pointer;
 }
 
-.selected-filter, #selected {
+.selected-filter {
 	color: #fffef8;
 	background-color: #1D6154;
 }
