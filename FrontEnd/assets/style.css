@@ -369,10 +369,11 @@ footer,
 	cursor: pointer;
 }
 
-.selected-filter {
+.selected-filter, #selected {
 	color: #fffef8;
 	background-color: #1D6154;
 }
+
 
 .admin-banner {
 	background-color: black;

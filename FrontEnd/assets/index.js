@@ -107,10 +107,15 @@ async function addToDOM() {
 async function activFilter() {
   const filterZone = document.querySelector(".filter-zone");
   const bigFigure = document.getElementsByClassName("bigFigure");
+  const firstFilterBtn = document.querySelector(".filter-button");
 
   //  Ajoute la class selected-filter au premier élément qui
   //  possède la class filter-button (pour qu'il soit vert "par défaut").
-  filterZone.querySelector(".filter-button").classList.add("selected-filter");
+  // filterZone.querySelector(".filter-button").classList.add("selected-filter");
+
+  //  Pour que le premier filtre soit vert "par défaut".
+  firstFilterBtn.classList.add("selected-filter");
+  firstFilterBtn.setAttribute("id", "filter");
 
   //  J'ai choisi de mettre l'addEventListener sur filterZone pour ne pas
   //  appeller la méthode plusieurs fois (à chaque filtre).
@@ -121,7 +126,12 @@ async function activFilter() {
     filterZone
       .querySelector(".selected-filter")
       .classList.remove("selected-filter");
+
+    filterZone.querySelector("#filter").classList.remove("filter");
+
     selectedItem.target.classList.add("selected-filter");
+
+    selectedItem.target.setAttribute("id", "filter");
 
     // categorie renvoie le nom de la catégorie du filtre sur lequel on clique.
     let category = selectedItem.target.getAttribute("data-category");
@@ -277,7 +287,7 @@ openSecModal.addEventListener("click", (event) => {
 function openAddWorkModal() {
   closeOriginalModal();
   createModalBG();
-  
+
   secondModal.classList.add("aside-content");
   secondModal.classList.add("active");
   addWorkModal.classList.add("active");
