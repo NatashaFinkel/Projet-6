@@ -276,6 +276,10 @@ openSecModal.addEventListener("click", (event) => {
 
 function openAddWorkModal() {
   closeOriginalModal();
+
+  modalBG.classList.add("active");
+  modalBG.classList.add("aside-content");
+
   secondModal.classList.add("aside-content");
   secondModal.classList.add("active");
   addWorkModal.classList.add("active");
@@ -286,7 +290,6 @@ function isFirstModalClosed() {
     firstModal.classList.contains("aside-content") &&
     firstModal.classList.contains("active") &&
     originalModal.classList.contains("active") &&
-    
     secondModal.classList.contains("aside-content") &&
     secondModal.classList.contains("active") &&
     addWorkModal.classList.contains("active")
@@ -340,9 +343,6 @@ function clickAway(event) {
   const modal = document.querySelector(".modal");
   // console.log(modal);
 
-  const allModals = document.querySelectorAll(".modal");
-  //  console.log(allModals);
-
   //  Renvoie true si on clique sur la 1ère  modale.
   const clickFirstModal = modal.contains(event.target);
   //  console.log(clickFirstModal);
@@ -356,25 +356,17 @@ function clickAway(event) {
     originalModal.classList.contains("active") &&
     !clickFirstModal
   ) {
-    modalBG.classList.remove("active");
-    firstModal.classList.remove("active");
-    originalModal.classList.remove("active");
+    closeOriginalModal();
   } else if (openModalBtn) {
-    modalBG.classList.add("active");
-    firstModal.classList.add("active");
-    originalModal.classList.add("active");
+    openOriginalModal();
   } else if (
     !openSecModalBtn &&
     addWorkModal.classList.contains("active") &&
     !clickSecondModal
   ) {
-    modalBG.classList.remove("active");
-    secondModal.classList.remove("active");
-    addWorkModal.classList.remove("active");
+    closeAddWorkModal();
   } else if (openSecModalBtn) {
-    modalBG.classList.add("active");
-    secondModal.classList.add("active");
-    addWorkModal.classList.add("active");
+    openAddWorkModal();
   }
 }
 
