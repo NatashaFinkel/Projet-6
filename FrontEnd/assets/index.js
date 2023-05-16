@@ -276,10 +276,8 @@ openSecModal.addEventListener("click", (event) => {
 
 function openAddWorkModal() {
   closeOriginalModal();
-
-  modalBG.classList.add("active");
-  modalBG.classList.add("aside-content");
-
+  createModalBG();
+  
   secondModal.classList.add("aside-content");
   secondModal.classList.add("active");
   addWorkModal.classList.add("active");
