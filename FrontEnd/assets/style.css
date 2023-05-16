@@ -526,10 +526,6 @@ footer,
 	padding: 0px 15px;
 }
 
-.invisible {
-	display: none;
-}
-
 .modal-form form {
 	display: flex;
 	flex-direction: column;
