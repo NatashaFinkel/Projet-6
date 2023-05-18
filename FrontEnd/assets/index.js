@@ -109,10 +109,6 @@ async function activFilter() {
   const bigFigure = document.getElementsByClassName("bigFigure");
   const firstFilterBtn = document.querySelector(".filter-button");
 
-  //  Ajoute la class selected-filter au premier élément qui
-  //  possède la class filter-button (pour qu'il soit vert "par défaut").
-  // filterZone.querySelector(".filter-button").classList.add("selected-filter");
-
   //  Pour que le premier filtre soit vert "par défaut".
   firstFilterBtn.classList.add("selected-filter");
   firstFilterBtn.setAttribute("id", "filter");
@@ -252,10 +248,15 @@ const closeFirstModal = document.querySelector(".close-original-modal");
 const closeSecondModal = document.querySelector(".close-add-work-modal");
 
 const modifGalleryBtn = document.querySelector("#modifGalleryBtn");
-modifGalleryBtn.addEventListener("click", createModalBG);
 modifGalleryBtn.addEventListener("click", openOriginalModal);
 
 const modalBG = document.querySelector(".modal-bg");
+
+const addBtn = document.querySelector(".add-btn");
+addBtn.addEventListener("click", test3);
+
+const addPicBtn = document.querySelector(".add-pic-btn");
+addPicBtn.addEventListener("click", test2);
 
 //  Pour activer le background-color plus
 //  foncé et la mise en page pour les modales.
@@ -264,45 +265,44 @@ function createModalBG() {
   modalBG.classList.add("aside-content");
 }
 
+function closeModalBG() {
+  modalBG.classList.remove("active");
+  modalBG.classList.remove("aside-content");
+}
+
 function openOriginalModal() {
+  createModalBG();
+  whichModalIsOpened();
+
   firstModal.classList.add("aside-content");
   firstModal.classList.add("active");
   originalModal.classList.add("active");
 }
 
-//  Pour ouvrir la deuxième modale, et s'assurer que la
-//  première modale a bien été fermée.
+//  Pour ouvrir la deuxième modale.
 const openSecModal = document.querySelector("#open-sec-mod");
-
-openSecModal.addEventListener("click", (event) => {
-  isFirstModalClosed();
-  openAddWorkModal();
-  isFirstModalClosed();
-
-  //  La fonction isFirstModalClosed est appellée
-  //  uniquement lorsque la seconde modale est chargée.
-  window.addEventListener("load", isFirstModalClosed);
-});
+openSecModal.addEventListener("click", openAddWorkModal);
 
 function openAddWorkModal() {
   closeOriginalModal();
-  createModalBG();
+  whichModalIsOpened();
 
+  createModalBG();
   secondModal.classList.add("aside-content");
   secondModal.classList.add("active");
   addWorkModal.classList.add("active");
 }
 
-function isFirstModalClosed() {
+function whichModalIsOpened() {
   if (
+    !secondModal.classList.contains("aside-content") &&
+    !secondModal.classList.contains("active") &&
+    !addWorkModal.classList.contains("active") &&
     firstModal.classList.contains("aside-content") &&
     firstModal.classList.contains("active") &&
-    originalModal.classList.contains("active") &&
-    secondModal.classList.contains("aside-content") &&
-    secondModal.classList.contains("active") &&
-    addWorkModal.classList.contains("active")
+    originalModal.classList.contains("active")
   ) {
-    console.log("Les deux modales sont ouvertes !");
+    console.log("La 1ère modale est ouverte, et la 2e modale est fermée.");
   } else if (
     !firstModal.classList.contains("aside-content") &&
     !firstModal.classList.contains("active") &&
@@ -311,15 +311,38 @@ function isFirstModalClosed() {
     secondModal.classList.contains("active") &&
     addWorkModal.classList.contains("active")
   ) {
-    console.log("La 1ère modale est fermée, et la 2e modale est ouverte !");
+    console.log("La 2e modale est ouverte, et la 1ère modale est fermée.");
+  }
+}
+
+//  Pour savoir si les deux modales sont
+//  ouvertes ou fermées (en même temps).
+function AllModalsStatus() {
+  if (
+    firstModal.classList.contains("aside-content") &&
+    firstModal.classList.contains("active") &&
+    originalModal.classList.contains("active") &&
+    secondModal.classList.contains("aside-content") &&
+    secondModal.classList.contains("active") &&
+    addWorkModal.classList.contains("active")
+  ) {
+    console.log("Les deux modales sont ouvertes.");
+  } else if (
+    !firstModal.classList.contains("aside-content") &&
+    !firstModal.classList.contains("active") &&
+    !originalModal.classList.contains("active") &&
+    !secondModal.classList.contains("aside-content") &&
+    !secondModal.classList.contains("active") &&
+    !addWorkModal.classList.contains("active")
+  ) {
+    console.log("Les deux modales sont fermées.");
   }
 }
 
 closeFirstModal.addEventListener("click", closeOriginalModal);
 
 function closeOriginalModal() {
-  modalBG.classList.remove("active");
-  modalBG.classList.remove("aside-content");
+  closeModalBG();
 
   firstModal.classList.remove("aside-content");
   firstModal.classList.remove("active");
@@ -329,8 +352,7 @@ function closeOriginalModal() {
 closeSecondModal.addEventListener("click", closeAddWorkModal);
 
 function closeAddWorkModal() {
-  modalBG.classList.remove("active");
-  modalBG.classList.remove("aside-content");
+  closeModalBG();
 
   secondModal.classList.remove("aside-content");
   secondModal.classList.remove("active");
@@ -338,7 +360,12 @@ function closeAddWorkModal() {
 }
 
 window.addEventListener("click", clickAway);
+window.addEventListener("click", AllModalsStatus);
 
+//  Cette fonction ferme les
+//   modales dès que l'utilisateur
+//  clique ailleurs que sur elles et sur
+//  les boutons qui les ouvrent.
 function clickAway(event) {
   //  Renvoie true si on clique sur le btn qui ouvre la 1ère modale.
   const openModalBtn = modifGalleryBtn.contains(event.target);
@@ -348,6 +375,7 @@ function clickAway(event) {
   const openSecModalBtn = openSecModal.contains(event.target);
   //console.log(openSecModalBtn);
 
+  //// vérifier si c'est utile.
   const modal = document.querySelector(".modal");
   // console.log(modal);
 
@@ -365,36 +393,33 @@ function clickAway(event) {
     !clickFirstModal
   ) {
     closeOriginalModal();
-  } else if (openModalBtn) {
-    openOriginalModal();
   } else if (
     !openSecModalBtn &&
     addWorkModal.classList.contains("active") &&
     !clickSecondModal
   ) {
     closeAddWorkModal();
-  } else if (openSecModalBtn) {
-    openAddWorkModal();
   }
 }
 
 const arrow = document.querySelector(".arrow-icon");
 arrow.addEventListener("click", test1);
 
-/*
-function closeAll() {
-  asideContent.style.display = "none";
-  originalModal.style.display = "none";
-  addWorkModal.style.display = "none";
+function previousModal() {
+  //  closeAddWorkModal();
+  openOriginalModal();
+  //  isModalClosed();
+
+  console.log("test previousModal");
 }
-*/
+
 const miniGallery = document.querySelector(".miniGallery");
 miniGallery.classList.add("galleryContent");
 
 async function createMiniGallery(works) {
   const modalContent = document.querySelector(".modal-content");
   //  Pour pouvoir utiliser les travaux précédents téléchargés.
-
+  //console.log(modalContent);
   works = await getPreviousWork();
   //   console.log(works);
   for (let i = 0; i < works.length; i++) {
