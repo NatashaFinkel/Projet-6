@@ -111,7 +111,6 @@
 	</aside>
 
 	<aside id="second-modal">
-		<!-- <div id="add-work-modal" class="aside-content"> -->
 		<div id="add-work-modal" class="modal">
 
 			<div>
@@ -125,27 +124,34 @@
 					<button class="close-icon">
 						<i class="fa-solid fa-xmark close-add-work-modal"></i>
 					</button>
+
 				</div>
 
 				<div class="modal-content">
 					<h3>Ajout photo</h3>
 				</div>
 
-				<div class="div1">
-					<div class="image-box">
-						<i class="fa-regular fa-image landscape-image"></i>
-						<input type="button" class="add-pic-btn" value="+ Ajouter photo">
-						<p>jpg, png : 4mo max</p>
-					</div>
-
-				</div>
-
 				<div class="modal-form">
+
 					<form>
+						<div class="div1">
+							<div class="image-display"></div>
+
+							<div class="image-box">
+								<i class="fa-regular fa-image landscape-image"></i>
+								<label for="add-pic-btn" class="hidden-when-img-loaded-2">+ Ajouter photo</label>
+								<input type="file" id="add-pic-btn" name="image" accept="image/png, image/jpeg">
+								<p class="hidden-when-img-loaded-1">jpg, png : 4mo max</p>
+
+							</div>
+
+						</div>
+
 						<label for="titleInput">Titre</label><br>
 						<input type="text" id="titleInput" name="titleInput"><br>
 
 						<label for="category">Catégorie</label><br>
+
 						<select name="category" id="category" required>
 							<option value="" label=" "></option>
 							<option value="1">Objets</option>
@@ -154,6 +160,7 @@
 						</select>
 
 					</form>
+
 				</div>
 
 				<div class="btn-div">
@@ -161,6 +168,7 @@
 				</div>
 
 			</div>
+
 		</div>
 	</aside>
 

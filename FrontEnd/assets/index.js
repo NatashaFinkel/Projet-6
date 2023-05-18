@@ -475,12 +475,33 @@ async function createMiniGallery(works) {
   }
 }
 
-const addPicBtn = document.querySelector(".add-pic-btn");
-addPicBtn.addEventListener("click", test2);
+const imgDisplay = document.querySelector(".image-display");
 
+const showLoadedImg = (imageLoader, imageContainer) => {
+  let uploadedPic;
+  imageLoader.addEventListener("change", function () {
+    const reader = new FileReader();
+    const hidden1 = document.querySelector(".hidden-when-img-loaded-1");
+    const hidden2 = document.querySelector(".hidden-when-img-loaded-2");
+    reader.addEventListener("load", () => {
+      uploadedPic = reader.result;
+      imageContainer.style.backgroundImage = `url(${uploadedPic})`;
+    });
+    reader.readAsDataURL(imageLoader.files[0]);
+    imageContainer.style.display = "block";
+    hidden1.style.visibility = "hidden";
+    hidden2.style.visibility = "hidden";
+  });
+};
 
+const imageLoader = document.querySelector("#add-pic-btn");
+showLoadedImg(imageLoader, imgDisplay);
 
-//////////////////// Fait trop tôt. À voir plus tard ! 
+//const addPicBtn = document.querySelector(".add-pic-btn");
+//const imageLoader = document.querySelector(".add-pic-btn");
+//addPicBtn.addEventListener("click", test2);
+
+//////////////////// Fait trop tôt. À voir plus tard !
 /* const addBtn = document.querySelector(".add-btn");
 
 addBtn.addEventListener("click", async () => {
@@ -520,8 +541,6 @@ async function addNewWork() {
   }
 }
 */
-//////////////////// 
-
-
+////////////////////
 
 createMiniGallery();
