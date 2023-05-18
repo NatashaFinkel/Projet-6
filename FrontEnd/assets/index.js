@@ -2,6 +2,7 @@
 //  si on doit télécharger d'autres données de la
 //  même api.
 const apiUrl = "http://localhost:5678/api/";
+const postWorkUrl = apiUrl + "works";
 
 const portfolio = document.querySelector("#portfolio");
 const gallery = document.querySelector(".gallery");
@@ -252,12 +253,6 @@ modifGalleryBtn.addEventListener("click", openOriginalModal);
 
 const modalBG = document.querySelector(".modal-bg");
 
-const addBtn = document.querySelector(".add-btn");
-addBtn.addEventListener("click", test3);
-
-const addPicBtn = document.querySelector(".add-pic-btn");
-addPicBtn.addEventListener("click", test2);
-
 //  Pour activer le background-color plus
 //  foncé et la mise en page pour les modales.
 function createModalBG() {
@@ -479,5 +474,54 @@ async function createMiniGallery(works) {
     miniGallery.append(miniFigure);
   }
 }
+
+const addPicBtn = document.querySelector(".add-pic-btn");
+addPicBtn.addEventListener("click", test2);
+
+
+
+//////////////////// Fait trop tôt. À voir plus tard ! 
+/* const addBtn = document.querySelector(".add-btn");
+
+addBtn.addEventListener("click", async () => {
+  try {
+    await addNewWork();
+    console.log("Cet élément a été ajouté au portfolio avec succès");
+  } catch (error) {
+    console.error("Erreur lors de l'ajout de cet élément :", error);
+  }
+});
+
+async function addNewWork() {
+  const formData = new FormData();
+  formData.append("id", "0");
+  formData.append("title", "string");
+  formData.append("imageUrl", "string");
+  formData.append("categoryId", "string");
+  formData.append("userId", "0");
+
+  try {
+    const response = await fetch(postWorkUrl, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.token}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error("Erreur lors de la requête.");
+    }
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error("Erreur :", error);
+  }
+}
+*/
+//////////////////// 
+
+
 
 createMiniGallery();
