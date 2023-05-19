@@ -150,7 +150,7 @@ header {
 	margin: 50px 150px;
 }
 
-section {
+section, #introduction {
 	margin: 140px 200px;
 }
 

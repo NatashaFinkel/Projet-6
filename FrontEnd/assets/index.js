@@ -400,6 +400,12 @@ function clickAway(event) {
 const arrow = document.querySelector(".arrow-icon");
 arrow.addEventListener("click", test1);
 
+const addBtn = document.querySelector(".add-btn");
+addBtn.addEventListener("click", test2);
+
+const eraseAllBtn = document.querySelector(".erase-btn");
+eraseAllBtn.addEventListener("click", test1);
+
 function previousModal() {
   //  closeAddWorkModal();
   openOriginalModal();
@@ -432,6 +438,7 @@ async function createMiniGallery(works) {
 
     const miniFigcaption = document.createElement("figcaption");
     miniFigcaption.innerHTML = `<p>éditer</p>`;
+    miniFigcaption.addEventListener("click", test3);
 
     const iconDiv = document.createElement("div");
     iconDiv.classList.add("iconDiv");
