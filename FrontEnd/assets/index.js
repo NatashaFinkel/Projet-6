@@ -372,7 +372,7 @@ function clickAway(event) {
 
   //// vérifier si c'est utile.
   const modal = document.querySelector(".modal");
-  // console.log(modal);
+  //   console.log(modal);
 
   //  Renvoie true si on clique sur la 1ère  modale.
   const clickFirstModal = modal.contains(event.target);
