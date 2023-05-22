@@ -329,8 +329,6 @@ closeFirstModal.addEventListener("click", closeOriginalModal);
 closeFirstModal.addEventListener("click", closeModalBG);
 
 function closeOriginalModal() {
-  // closeModalBG();
-
   firstModal.classList.remove("aside-content");
   firstModal.classList.remove("active");
   originalModal.classList.remove("active");
@@ -354,34 +352,26 @@ window.addEventListener("click", clickAway);
 function clickAway(event) {
   //  Renvoie true si on clique sur le btn qui ouvre la 1ère modale.
   const openModalBtn = modifGalleryBtn.contains(event.target);
-  //  console.log(openModalBtn);
 
   //  Renvoie true si on clique sur le btn qui ouvre la 2e modale.
   const openSecModalBtn = openSecModal.contains(event.target);
-  //console.log(openSecModalBtn);
 
-  //// vérifier si c'est utile.
   const modal = document.querySelector(".modal");
-  //   console.log(modal);
 
   //  Renvoie true si on clique sur la 1ère  modale.
   const clickFirstModal = modal.contains(event.target);
-  //  console.log(clickFirstModal);
 
   //  Renvoie true si on clique sur la 2e  modale.
   const clickSecondModal = addWorkModal.contains(event.target);
-  // console.log(clickSecondModal);
 
   //  Renvoie true si on clique sur la flèche-retour.
   const clickArrow = arrow.contains(event.target);
-  //  console.log(clickArrow);
 
   if (
     !openModalBtn &&
     originalModal.classList.contains("active") &&
     !clickFirstModal
   ) {
-    //  console.log("cas de figure numéro 1");
     closeOriginalModal();
     closeModalBG();
     AllModalsStatus();
@@ -393,14 +383,11 @@ function clickAway(event) {
     closeAddWorkModal();
     closeModalBG();
     AllModalsStatus();
-    //   console.log("cas de figure numéro 2");
   } else if (clickArrow) {
-    // console.log("cas de figure numéro 3");
     closeAddWorkModal();
     openOriginalModal();
     AllModalsStatus();
   } else {
-    //  console.log("cas de figure numéro 4");
     console.log();
   }
 }
@@ -413,55 +400,26 @@ eraseAllBtn.addEventListener("click", test1);
 
 const miniGallery = document.querySelector(".miniGallery");
 miniGallery.classList.add("galleryContent");
-console.log(asideContent);
 
 const arrow = document.querySelector(".arrow-icon");
-
-/* function previousModal() {
-
-  asideContent.classList.add("active");
-} */
 
 async function createMiniGallery(works) {
   const modalContent = document.querySelector(".modal-content");
   //  Pour pouvoir utiliser les travaux précédents téléchargés.
   //console.log(modalContent);
   works = await getPreviousWork();
-  //   console.log(works);
+
   for (let i = 0; i < works.length; i++) {
     const miniFigure = document.createElement("figure");
     miniFigure.classList.add("miniFigure");
 
     //  Pour faire apparaître et disparaître l'icône
-    //  directionArrow au passage de la souris sur chacune des miniFigures.
+    //  "flèche multidirectionnelle" au passage de la
+    //   souris sur chacune des miniFigures
+    //  et mise en place de l'addEventListener de l'icône "poubelle".
     miniFigure.addEventListener("mouseover", displayIcon);
+    miniFigure.addEventListener("mouseover", currentImg);
     miniFigure.addEventListener("mouseout", hideIcon);
-
-    const miniImage = document.createElement("img");
-    miniImage.classList.add("miniImg");
-    miniImage.src = works[i].imageUrl;
-
-    const miniFigcaption = document.createElement("figcaption");
-    miniFigcaption.innerHTML = `<p>éditer</p>`;
-    miniFigcaption.addEventListener("click", test3);
-
-    const iconDiv = document.createElement("div");
-    iconDiv.classList.add("iconDiv");
-
-    //  icône "poubelle".
-    const trashIcon = document.createElement("figcaption");
-    trashIcon.innerHTML = `<i class="fa-solid fa-trash-can trashCan"></i>`;
-
-    // function removeFigure() {
-    //   let element = trashIcon.closest(".miniFigure");
-    //   let elementB = works[i];
-    //   // let elementB = works[i];
-    //   console.log(element);
-    //   console.log(elementB);
-    //   //    element.parentNode.removeChild(element);
-    // }
-
-    trashIcon.addEventListener("click", test1);
 
     //  icône "flèche multidirectionnelle".
     const directionArrow = document.createElement("figcaption");
@@ -475,6 +433,41 @@ async function createMiniGallery(works) {
     function hideIcon() {
       directionArrow.style.display = "none";
     }
+
+    //  icône "poubelle".
+    const trashIcon = document.createElement("figcaption");
+    trashIcon.innerHTML = `<i class="fa-solid fa-trash-can trash-can"></i>`;
+
+    function currentImg(event) {
+      const overedImg = miniFigure.contains(event.target);
+      const trashCan = miniFigure.querySelector(".trash-can");
+
+      if (overedImg) {
+        trashCan.addEventListener("click", test3);
+      } else {
+        console.log(overedImg);
+      }
+    }
+
+    const miniImage = document.createElement("img");
+    miniImage.classList.add("miniImg");
+    miniImage.src = works[i].imageUrl;
+
+    const miniFigcaption = document.createElement("figcaption");
+    miniFigcaption.innerHTML = `<p>éditer</p>`;
+    miniFigcaption.addEventListener("click", test3);
+
+    const iconDiv = document.createElement("div");
+    iconDiv.classList.add("iconDiv");
+
+    // function removeFigure() {
+    //   let element = trashIcon.closest(".miniFigure");
+    //   let elementB = works[i];
+    //   // let elementB = works[i];
+    //   console.log(element);
+    //   console.log(elementB);
+    //   //    element.parentNode.removeChild(element);
+    // }
 
     iconDiv.append(directionArrow);
     iconDiv.append(trashIcon);
