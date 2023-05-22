@@ -249,6 +249,7 @@ const closeFirstModal = document.querySelector(".close-original-modal");
 const closeSecondModal = document.querySelector(".close-add-work-modal");
 
 const modifGalleryBtn = document.querySelector("#modifGalleryBtn");
+modifGalleryBtn.addEventListener("click", createModalBG);
 modifGalleryBtn.addEventListener("click", openOriginalModal);
 
 const modalBG = document.querySelector(".modal-bg");
@@ -266,9 +267,6 @@ function closeModalBG() {
 }
 
 function openOriginalModal() {
-  createModalBG();
-  whichModalIsOpened();
-
   firstModal.classList.add("aside-content");
   firstModal.classList.add("active");
   originalModal.classList.add("active");
@@ -276,38 +274,13 @@ function openOriginalModal() {
 
 //  Pour ouvrir la deuxième modale.
 const openSecModal = document.querySelector("#open-sec-mod");
+openSecModal.addEventListener("click", closeOriginalModal);
 openSecModal.addEventListener("click", openAddWorkModal);
 
 function openAddWorkModal() {
-  closeOriginalModal();
-  whichModalIsOpened();
-
-  createModalBG();
   secondModal.classList.add("aside-content");
   secondModal.classList.add("active");
   addWorkModal.classList.add("active");
-}
-
-function whichModalIsOpened() {
-  if (
-    !secondModal.classList.contains("aside-content") &&
-    !secondModal.classList.contains("active") &&
-    !addWorkModal.classList.contains("active") &&
-    firstModal.classList.contains("aside-content") &&
-    firstModal.classList.contains("active") &&
-    originalModal.classList.contains("active")
-  ) {
-    console.log("La 1ère modale est ouverte, et la 2e modale est fermée.");
-  } else if (
-    !firstModal.classList.contains("aside-content") &&
-    !firstModal.classList.contains("active") &&
-    !originalModal.classList.contains("active") &&
-    secondModal.classList.contains("aside-content") &&
-    secondModal.classList.contains("active") &&
-    addWorkModal.classList.contains("active")
-  ) {
-    console.log("La 2e modale est ouverte, et la 1ère modale est fermée.");
-  }
 }
 
 //  Pour savoir si les deux modales sont
@@ -331,13 +304,32 @@ function AllModalsStatus() {
     !addWorkModal.classList.contains("active")
   ) {
     console.log("Les deux modales sont fermées.");
+  } else if (
+    !secondModal.classList.contains("aside-content") &&
+    !secondModal.classList.contains("active") &&
+    !addWorkModal.classList.contains("active") &&
+    firstModal.classList.contains("aside-content") &&
+    firstModal.classList.contains("active") &&
+    originalModal.classList.contains("active")
+  ) {
+    console.log("La 1ère modale est ouverte, et la 2e modale est fermée.");
+  } else if (
+    !firstModal.classList.contains("aside-content") &&
+    !firstModal.classList.contains("active") &&
+    !originalModal.classList.contains("active") &&
+    secondModal.classList.contains("aside-content") &&
+    secondModal.classList.contains("active") &&
+    addWorkModal.classList.contains("active")
+  ) {
+    console.log("La 2e modale est ouverte, et la 1ère modale est fermée.");
   }
 }
 
 closeFirstModal.addEventListener("click", closeOriginalModal);
+closeFirstModal.addEventListener("click", closeModalBG);
 
 function closeOriginalModal() {
-  closeModalBG();
+  // closeModalBG();
 
   firstModal.classList.remove("aside-content");
   firstModal.classList.remove("active");
@@ -345,17 +337,15 @@ function closeOriginalModal() {
 }
 
 closeSecondModal.addEventListener("click", closeAddWorkModal);
+closeSecondModal.addEventListener("click", closeModalBG);
 
 function closeAddWorkModal() {
-  closeModalBG();
-
   secondModal.classList.remove("aside-content");
   secondModal.classList.remove("active");
   addWorkModal.classList.remove("active");
 }
 
 window.addEventListener("click", clickAway);
-window.addEventListener("click", AllModalsStatus);
 
 //  Cette fonction ferme les
 //   modales dès que l'utilisateur
@@ -382,23 +372,38 @@ function clickAway(event) {
   const clickSecondModal = addWorkModal.contains(event.target);
   // console.log(clickSecondModal);
 
+  //  Renvoie true si on clique sur la flèche-retour.
+  const clickArrow = arrow.contains(event.target);
+  //  console.log(clickArrow);
+
   if (
     !openModalBtn &&
     originalModal.classList.contains("active") &&
     !clickFirstModal
   ) {
+    //  console.log("cas de figure numéro 1");
     closeOriginalModal();
+    closeModalBG();
+    AllModalsStatus();
   } else if (
     !openSecModalBtn &&
     addWorkModal.classList.contains("active") &&
     !clickSecondModal
   ) {
     closeAddWorkModal();
+    closeModalBG();
+    AllModalsStatus();
+    //   console.log("cas de figure numéro 2");
+  } else if (clickArrow) {
+    // console.log("cas de figure numéro 3");
+    closeAddWorkModal();
+    openOriginalModal();
+    AllModalsStatus();
+  } else {
+    //  console.log("cas de figure numéro 4");
+    console.log();
   }
 }
-
-const arrow = document.querySelector(".arrow-icon");
-arrow.addEventListener("click", test1);
 
 const addBtn = document.querySelector(".add-btn");
 addBtn.addEventListener("click", test2);
@@ -406,16 +411,16 @@ addBtn.addEventListener("click", test2);
 const eraseAllBtn = document.querySelector(".erase-btn");
 eraseAllBtn.addEventListener("click", test1);
 
-function previousModal() {
-  //  closeAddWorkModal();
-  openOriginalModal();
-  //  isModalClosed();
-
-  console.log("test previousModal");
-}
-
 const miniGallery = document.querySelector(".miniGallery");
 miniGallery.classList.add("galleryContent");
+console.log(asideContent);
+
+const arrow = document.querySelector(".arrow-icon");
+
+/* function previousModal() {
+
+  asideContent.classList.add("active");
+} */
 
 async function createMiniGallery(works) {
   const modalContent = document.querySelector(".modal-content");
