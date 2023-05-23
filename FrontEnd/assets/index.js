@@ -387,10 +387,10 @@ function clickAway(event) {
     closeAddWorkModal();
     openOriginalModal();
     AllModalsStatus();
-  } else {
-    console.log();
+
   }
 }
+
 
 const addBtn = document.querySelector(".add-btn");
 addBtn.addEventListener("click", test2);
