@@ -387,13 +387,11 @@ function clickAway(event) {
     closeAddWorkModal();
     openOriginalModal();
     AllModalsStatus();
-
   }
 }
 
-
-const addBtn = document.querySelector(".add-btn");
-addBtn.addEventListener("click", test2);
+/* const addBtn = document.querySelector(".add-btn");
+addBtn.addEventListener("click", test2); */
 
 const eraseAllBtn = document.querySelector(".erase-btn");
 eraseAllBtn.addEventListener("click", test1);
@@ -507,11 +505,13 @@ showLoadedImg(imageLoader, imgDisplay);
 //addPicBtn.addEventListener("click", test2);
 
 //////////////////// Fait trop tôt. À voir plus tard !
-/* const addBtn = document.querySelector(".add-btn");
+/*
+const addBtn = document.querySelector(".add-btn");
 
 addBtn.addEventListener("click", async () => {
   try {
     await addNewWork();
+    displayLocalStorage();
     console.log("Cet élément a été ajouté au portfolio avec succès");
   } catch (error) {
     console.error("Erreur lors de l'ajout de cet élément :", error);
@@ -520,11 +520,11 @@ addBtn.addEventListener("click", async () => {
 
 async function addNewWork() {
   const formData = new FormData();
-  formData.append("id", "0");
+ // formData.append("id", "0");
   formData.append("title", "string");
   formData.append("imageUrl", "string");
   formData.append("categoryId", "string");
-  formData.append("userId", "0");
+ // formData.append("userId", "0");
 
   try {
     const response = await fetch(postWorkUrl, {
@@ -549,3 +549,14 @@ async function addNewWork() {
 ////////////////////
 
 createMiniGallery();
+
+//  Pour visualiser le contenu de localStorage.
+function displayLocalStorage() {
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    const value = localStorage.getItem(key);
+    console.log(`${key}: ${value}`);
+  }
+}
+
+displayLocalStorage();
