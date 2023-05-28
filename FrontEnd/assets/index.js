@@ -232,7 +232,7 @@ function getOut() {
   }
 }
 
-function deleteToken() {
+function eraseAllContent() {
   localStorage.clear();
 }
 
@@ -390,9 +390,6 @@ function clickAway(event) {
   }
 }
 
-/* const addBtn = document.querySelector(".add-btn");
-addBtn.addEventListener("click", test2); */
-
 const eraseAllBtn = document.querySelector(".erase-btn");
 eraseAllBtn.addEventListener("click", test1);
 
@@ -478,18 +475,23 @@ async function createMiniGallery(works) {
   }
 }
 
+createMiniGallery();
+
 const imgDisplay = document.querySelector(".image-display");
 
 const showLoadedImg = (imageLoader, imageContainer) => {
   let uploadedPic;
+
   imageLoader.addEventListener("change", function () {
     const reader = new FileReader();
     const hidden1 = document.querySelector(".hidden-when-img-loaded-1");
     const hidden2 = document.querySelector(".hidden-when-img-loaded-2");
+
     reader.addEventListener("load", () => {
       uploadedPic = reader.result;
       imageContainer.style.backgroundImage = `url(${uploadedPic})`;
     });
+
     reader.readAsDataURL(imageLoader.files[0]);
     imageContainer.style.display = "block";
     hidden1.style.visibility = "hidden";
@@ -500,63 +502,74 @@ const showLoadedImg = (imageLoader, imageContainer) => {
 const imageLoader = document.querySelector("#add-pic-btn");
 showLoadedImg(imageLoader, imgDisplay);
 
-//const addPicBtn = document.querySelector(".add-pic-btn");
-//const imageLoader = document.querySelector(".add-pic-btn");
-//addPicBtn.addEventListener("click", test2);
-
-//////////////////// Fait trop tôt. À voir plus tard !
-/*
+const formModal2 = document.querySelector("#form-modal-2");
 const addBtn = document.querySelector(".add-btn");
 
-addBtn.addEventListener("click", async () => {
-  try {
-    await addNewWork();
-    displayLocalStorage();
-    console.log("Cet élément a été ajouté au portfolio avec succès");
-  } catch (error) {
-    console.error("Erreur lors de l'ajout de cet élément :", error);
-  }
-});
+addBtn.addEventListener("click", function (event) {
+  event.preventDefault();
 
-async function addNewWork() {
-  const formData = new FormData();
- // formData.append("id", "0");
-  formData.append("title", "string");
-  formData.append("imageUrl", "string");
-  formData.append("categoryId", "string");
- // formData.append("userId", "0");
+  const image = imageLoader.files[0];
+  const title = document.querySelector("#title-input").value;
+  const category = document.querySelector("#category").value;
 
-  try {
-    const response = await fetch(postWorkUrl, {
+  if (image && title && category) {
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("title", title);
+    formData.append("category", category);
+
+    fetch(postWorkUrl, {
       method: "POST",
       headers: {
-        Accept: "application/json",
         Authorization: `Bearer ${localStorage.token}`,
       },
       body: formData,
+    })
+      .then(() => {
+        gallery.innerHTML = "";
+        miniGallery.innerHTML = "";
+        return fetch(postWorkUrl);
+      })
+      .then((value) => {
+        if (value.ok) {
+          return value.json();
+        }
+      })
+      .then((works) => {
+        getPreviousWork(works, worksGenerator);
+        getPreviousWork(works, createMiniGallery);
+
+        worksGenerator(works);
+        createMiniGallery(works);
+        activFilter();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } else {
+    console.log("Veuillez remplir tous les champs du formulaire.");
+  }
+});
+
+const galleryContent = document.querySelector(".galleryContent");
+
+/* function updateGalleryAndMiniGallery() {
+  fetch(postWorkUrl)
+    .then((value) => {
+      if (value.ok) {
+        return value.json();
+      }
+    })
+    .then((works) => {
+      getPreviousWork(works, worksGenerator);
+      activFilter();
+    })
+    .then(() => {
+      closeAddWorkModal();
+      return new Promise((resolve) => setTimeout(resolve, 0));
+    })
+    .then(() => {
+      openOriginalModal();
     });
-
-    if (!response.ok) {
-      throw new Error("Erreur lors de la requête.");
-    }
-    const data = await response.json();
-    console.log(data);
-  } catch (error) {
-    console.error("Erreur :", error);
-  }
 }
-*/
-////////////////////
-
-createMiniGallery();
-
-//  Pour visualiser le contenu de localStorage.
-function displayLocalStorage() {
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    const value = localStorage.getItem(key);
-    console.log(`${key}: ${value}`);
-  }
-}
-
-displayLocalStorage();
+ */
