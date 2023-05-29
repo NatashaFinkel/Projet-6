@@ -232,10 +232,6 @@ function getOut() {
   }
 }
 
-function eraseAllContent() {
-  localStorage.clear();
-}
-
 ////  Modales.
 
 const asideContent = document.querySelector(".aside-content");
@@ -343,28 +339,45 @@ function closeAddWorkModal() {
   addWorkModal.classList.remove("active");
 }
 
-window.addEventListener("click", clickAway);
+const eraseAllBtn = document.querySelector(".erase-btn");
+eraseAllBtn.addEventListener("click", test2);
+
+// function eraseAllWorks() {
+//   const allMiniFigures = document.querySelectorAll(".miniFigure");
+//   allMiniFigures.forEach((miniFigure) => {
+//     eraseWork(miniFigure.dataset.id);
+//   });
+
+const eraseWork = (workId) => {
+  fetch(postWorkUrl + "/" + workId, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${localStorage.token}`,
+      "Content-Type": "application/json;charset=utf-8",
+    },
+  });
+};
 
 //  Cette fonction ferme les
 //   modales dès que l'utilisateur
 //  clique ailleurs que sur elles et sur
 //  les boutons qui les ouvrent.
 function clickAway(event) {
-  //  Renvoie true si on clique sur le btn qui ouvre la 1ère modale.
+   //  Renvoie true si on clique sur le btn qui ouvre la 1ère modale.
   const openModalBtn = modifGalleryBtn.contains(event.target);
 
-  //  Renvoie true si on clique sur le btn qui ouvre la 2e modale.
+   //  Renvoie true si on clique sur le btn qui ouvre la 2e modale.
   const openSecModalBtn = openSecModal.contains(event.target);
 
   const modal = document.querySelector(".modal");
 
-  //  Renvoie true si on clique sur la 1ère  modale.
+    //  Renvoie true si on clique sur la 1ère modale.
   const clickFirstModal = modal.contains(event.target);
 
-  //  Renvoie true si on clique sur la 2e  modale.
+    //  Renvoie true si on clique sur la 2e modale.
   const clickSecondModal = addWorkModal.contains(event.target);
 
-  //  Renvoie true si on clique sur la flèche-retour.
+    //  Renvoie true si on clique sur la flèche-retour.
   const clickArrow = arrow.contains(event.target);
 
   if (
@@ -390,8 +403,19 @@ function clickAway(event) {
   }
 }
 
-const eraseAllBtn = document.querySelector(".erase-btn");
-eraseAllBtn.addEventListener("click", test1);
+window.addEventListener("click", clickAway);
+
+function eraseAllWorks() {
+  const allMiniFigures = document.querySelectorAll(".miniFigure");
+  allMiniFigures.forEach((miniFigure) => {
+    eraseWork(miniFigure.dataset.id);
+  });
+
+  const allBigFigures = document.querySelectorAll(".bigFigure");
+  allBigFigures.forEach((bigFigure) => {
+    eraseWork(bigFigure.dataset.id);
+  });
+}
 
 const miniGallery = document.querySelector(".miniGallery");
 miniGallery.classList.add("galleryContent");
@@ -413,7 +437,7 @@ async function createMiniGallery(works) {
     //   souris sur chacune des miniFigures
     //  et mise en place de l'addEventListener de l'icône "poubelle".
     miniFigure.addEventListener("mouseover", displayIcon);
-    miniFigure.addEventListener("mouseover", currentImg);
+    //  miniFigure.addEventListener("mouseover", currentImg);
     miniFigure.addEventListener("mouseout", hideIcon);
 
     //  icône "flèche multidirectionnelle".
@@ -432,17 +456,6 @@ async function createMiniGallery(works) {
     //  icône "poubelle".
     const trashIcon = document.createElement("figcaption");
     trashIcon.innerHTML = `<i class="fa-solid fa-trash-can trash-can"></i>`;
-
-    function currentImg(event) {
-      const overedImg = miniFigure.contains(event.target);
-      const trashCan = miniFigure.querySelector(".trash-can");
-
-      if (overedImg) {
-        trashCan.addEventListener("click", test3);
-      } else {
-        console.log(overedImg);
-      }
-    }
 
     const miniImage = document.createElement("img");
     miniImage.classList.add("miniImg");
@@ -572,4 +585,4 @@ const galleryContent = document.querySelector(".galleryContent");
       openOriginalModal();
     });
 }
- */
+*/
