@@ -4,6 +4,10 @@
 const apiUrl = "http://localhost:5678/api/";
 const postWorkUrl = apiUrl + "works";
 
+const token = localStorage.getItem("token");
+console.log(token);
+
+//const token = localStorage.token;
 const portfolio = document.querySelector("#portfolio");
 const gallery = document.querySelector(".gallery");
 const logInAndOut = document.querySelector(".logInAndOut");
@@ -363,21 +367,21 @@ const eraseWork = (workId) => {
 //  clique ailleurs que sur elles et sur
 //  les boutons qui les ouvrent.
 function clickAway(event) {
-   //  Renvoie true si on clique sur le btn qui ouvre la 1ère modale.
+  //  Renvoie true si on clique sur le btn qui ouvre la 1ère modale.
   const openModalBtn = modifGalleryBtn.contains(event.target);
 
-   //  Renvoie true si on clique sur le btn qui ouvre la 2e modale.
+  //  Renvoie true si on clique sur le btn qui ouvre la 2e modale.
   const openSecModalBtn = openSecModal.contains(event.target);
 
   const modal = document.querySelector(".modal");
 
-    //  Renvoie true si on clique sur la 1ère modale.
+  //  Renvoie true si on clique sur la 1ère modale.
   const clickFirstModal = modal.contains(event.target);
 
-    //  Renvoie true si on clique sur la 2e modale.
+  //  Renvoie true si on clique sur la 2e modale.
   const clickSecondModal = addWorkModal.contains(event.target);
 
-    //  Renvoie true si on clique sur la flèche-retour.
+  //  Renvoie true si on clique sur la flèche-retour.
   const clickArrow = arrow.contains(event.target);
 
   if (
@@ -522,8 +526,11 @@ addBtn.addEventListener("click", function (event) {
   event.preventDefault();
 
   const image = imageLoader.files[0];
-  const title = document.querySelector("#title-input").value;
+  const title = document.querySelector("#title").value;
   const category = document.querySelector("#category").value;
+  console.log(image);
+  console.log(title);
+  console.log(category);
 
   if (image && title && category) {
     const formData = new FormData();
@@ -531,10 +538,29 @@ addBtn.addEventListener("click", function (event) {
     formData.append("title", title);
     formData.append("category", category);
 
-    fetch(postWorkUrl, {
+    /*    formData.setAttribute("image", image);
+    formData.setAttribute("title", title);
+    formData.setAttribute("category", category); */
+
+    console.log(formData);
+
+    /*     fetch(postWorkUrl, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.token}`,
+      },
+      body: formData,
+    }) */
+
+    //   console.log(token);
+    //   console.log(formData);
+
+    fetch(postWorkUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+        accept: "application/json",
       },
       body: formData,
     })
