@@ -384,6 +384,9 @@ function clickAway(event) {
   //  Renvoie true si on clique sur la flèche-retour.
   const clickArrow = arrow.contains(event.target);
 
+  //  Renvoie true si on clique sur le btn sumit de la 2e modale.
+  const clickAddBtn = addBtn.contains(event.target);
+
   if (
     !openModalBtn &&
     originalModal.classList.contains("active") &&
@@ -404,6 +407,9 @@ function clickAway(event) {
     closeAddWorkModal();
     openOriginalModal();
     AllModalsStatus();
+  } else if (clickAddBtn) {
+    submitSecondModalForm();
+    // console.log("OUiiii");
   }
 }
 
@@ -522,15 +528,18 @@ showLoadedImg(imageLoader, imgDisplay);
 const formModal2 = document.querySelector("#form-modal-2");
 const addBtn = document.querySelector(".add-btn");
 
-addBtn.addEventListener("click", function (event) {
+formModal2.addEventListener("submit", submitSecondModalForm);
+
+// original :
+/* addBtn.addEventListener("click", function (event) {
   event.preventDefault();
 
   const image = imageLoader.files[0];
   const title = document.querySelector("#title").value;
   const category = document.querySelector("#category").value;
-  console.log(image);
-  console.log(title);
-  console.log(category);
+  //  console.log(image);
+  // console.log(title);
+  // console.log(category);
 
   if (image && title && category) {
     const formData = new FormData();
@@ -538,22 +547,8 @@ addBtn.addEventListener("click", function (event) {
     formData.append("title", title);
     formData.append("category", category);
 
-    /*    formData.setAttribute("image", image);
-    formData.setAttribute("title", title);
-    formData.setAttribute("category", category); */
-
     console.log(formData);
-
-    /*     fetch(postWorkUrl, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.token}`,
-      },
-      body: formData,
-    }) */
-
     //   console.log(token);
-    //   console.log(formData);
 
     fetch(postWorkUrl, {
       method: "POST",
@@ -589,6 +584,104 @@ addBtn.addEventListener("click", function (event) {
     console.log("Veuillez remplir tous les champs du formulaire.");
   }
 });
+ */
+
+async function submitSecondModalForm() {
+  // e.preventDefault();
+  const formData = new FormData(formModal2);
+  const image = imageLoader.files[0];
+  const title = document.querySelector("#title").value;
+  const category = document.querySelector("#category").value;
+
+  // displayFormData(formData);
+
+  if (image && title && category) {
+    try {
+      const response = await fetch(postWorkUrl, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+          accept: "application/json",
+        },
+        body: formData,
+      });
+      console.log(response);
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log("Erreur : " + error);
+    }
+  } else {
+    console.log("Il manque au moins un  élément dans le formData");
+  }
+}
+
+// console.log("NNN", { image, title, category });
+
+/*  if (image && title && category) {
+  formData.append("image", image);
+  formData.append("title", title);
+  formData.append("category", category); */
+
+// if (image && title && category) {
+//  const formData = new FormData();
+
+/*     formData.append("image", image);
+    formData.append("title", title);
+    formData.append("category", category);
+ */
+//   console.log(formData);
+//   console.log(token);
+
+/*   fetch(postWorkUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+        accept: "application/json",
+      },
+      body: formData,
+    }) */
+
+/*       .then(() => {
+        gallery.innerHTML = "";
+        miniGallery.innerHTML = "";
+        return fetch(postWorkUrl);
+      }) */
+
+/*       .then((value) => {
+        if (value.ok) {
+          return value.json();
+        }
+      }) */
+
+/*       .then((works) => {
+        getPreviousWork(works, worksGenerator);
+        getPreviousWork(works, createMiniGallery);
+
+        worksGenerator(works);
+        createMiniGallery(works);
+        activFilter();
+      }) */
+/*       .catch((error) => {
+        console.log(error);
+      }); */
+/*   } else {
+    console.log("Veuillez remplir tous les champs du formulaire.");
+  } */
+//  });
+
+function displayFormData(formData) {
+  if (formData.size === 0) {
+    console.log("Le formData est vide.");
+  } else {
+    formData.forEach((value, key) => {
+      console.log(`Clé : ${key}, Valeur : ${value}`);
+    });
+  }
+}
 
 const galleryContent = document.querySelector(".galleryContent");
 
