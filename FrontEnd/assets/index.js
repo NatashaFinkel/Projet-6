@@ -4,10 +4,10 @@
 const apiUrl = "http://localhost:5678/api/";
 const postWorkUrl = apiUrl + "works";
 
+
 const token = localStorage.getItem("token");
 console.log(token);
 
-//const token = localStorage.token;
 const portfolio = document.querySelector("#portfolio");
 const gallery = document.querySelector(".gallery");
 const logInAndOut = document.querySelector(".logInAndOut");
@@ -408,11 +408,11 @@ function clickAway(event) {
     openOriginalModal();
     AllModalsStatus();
   } else if (clickAddBtn) {
-    submitSecondModalForm();
+    // submitSecondModalForm(event);
     // console.log("OUiiii");
+    test1();
   }
 }
-
 window.addEventListener("click", clickAway);
 
 function eraseAllWorks() {
@@ -500,7 +500,7 @@ async function createMiniGallery(works) {
 
 createMiniGallery();
 
-const imgDisplay = document.querySelector(".image-display");
+//const imgDisplay = document.querySelector(".image-display");
 
 const showLoadedImg = (imageLoader, imageContainer) => {
   let uploadedPic;
@@ -523,12 +523,44 @@ const showLoadedImg = (imageLoader, imageContainer) => {
 };
 
 const imageLoader = document.querySelector("#add-pic-btn");
-showLoadedImg(imageLoader, imgDisplay);
+//showLoadedImg(imageLoader, imgDisplay);
 
 const formModal2 = document.querySelector("#form-modal-2");
 const addBtn = document.querySelector(".add-btn");
 
-formModal2.addEventListener("submit", submitSecondModalForm);
+//formModal2.addEventListener("submit", submitSecondModalForm);
+
+formModal2.onclick = async () => {
+  const formData = new FormData(formModal2);
+  if (!(await postNewWork(formData))) {
+    //  console.log()
+    test1;
+    return;
+  }
+  test2();
+};
+
+async function postNewWork(formData) {
+  try {
+    const response = await fetch(`${postWorkUrl}`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+    console.log(response);
+
+    if (!response.ok) {
+      throw new Error(`Erreur HTTP: ${response.status}`);
+    }
+    console.log(`Le projet a été ajouté à la base de donnée avec succès`);
+    return true;
+  } catch (error) {
+    console.error(`Impossible d'ajouter le projet: ${error}`);
+  }
+}
 
 // original :
 /* addBtn.addEventListener("click", function (event) {
@@ -586,14 +618,15 @@ formModal2.addEventListener("submit", submitSecondModalForm);
 });
  */
 
-async function submitSecondModalForm() {
-  // e.preventDefault();
+// ESSAI 2
+/* async function submitSecondModalForm(event) {
+  event.preventDefault();
   const formData = new FormData(formModal2);
   const image = imageLoader.files[0];
   const title = document.querySelector("#title").value;
   const category = document.querySelector("#category").value;
 
-  // displayFormData(formData);
+  displayFormData(formData);
 
   if (image && title && category) {
     try {
@@ -617,25 +650,61 @@ async function submitSecondModalForm() {
     console.log("Il manque au moins un  élément dans le formData");
   }
 }
+ */
+// ESSAI 3
+// async function submitSecondModalForm(event) {
+//   event.preventDefault();
+//   const formModal2 = document.getElementById("formModal2");
+//console.log(formModal2);
+//   const imageLoader = document.getElementById("imageLoader");
+//console.log(imageLoader);
+//   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1MTg3NDkzOSwiZXhwIjoxNjUxOTYxMzM5fQ.JGN1p8YIfR-M-5eQ-Ypy6Ima5cKA4VbfL2xMr2MgHm4";
+//   const postWorkUrl = "http://localhost:5678/api/works";
+
+//   const formData = new FormData(formModal2);
+//   formData.append("image", imageLoader.files[0]);
+//   formData.append("title", document.querySelector("#title").value);
+//   formData.append("category", document.querySelector("#category").value);
+
+//   if (imageLoader.files[0] && formData.get("title") && formData.get("category")) {
+//     try {
+//       const response = await fetch(postWorkUrl, {
+//         method: "POST",
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//         body: formData,
+//       });
+
+//       const data = await response.json();
+//       console.log(data);
+//     } catch (error) {
+//       console.log("Erreur : " + error);
+//     }
+//   } else {
+//     console.log("Il manque au moins un élément dans le formData");
+//   }
+// }
 
 // console.log("NNN", { image, title, category });
 
-/*  if (image && title && category) {
+// ESSAIS EN VRAC 
+/*
+  if (image && title && category) {
   formData.append("image", image);
   formData.append("title", title);
-  formData.append("category", category); */
+  formData.append("category", category); 
 
-// if (image && title && category) {
-//  const formData = new FormData();
+ if (image && title && category) {
+ const formData = new FormData();
 
-/*     formData.append("image", image);
+     formData.append("image", image);
     formData.append("title", title);
     formData.append("category", category);
- */
-//   console.log(formData);
-//   console.log(token);
 
-/*   fetch(postWorkUrl, {
+   console.log(formData);  console.log(token);
+
+   fetch(postWorkUrl, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -643,35 +712,36 @@ async function submitSecondModalForm() {
         accept: "application/json",
       },
       body: formData,
-    }) */
+    }) 
 
-/*       .then(() => {
-        gallery.innerHTML = "";
-        miniGallery.innerHTML = "";
+       .then(() => {
+        // gallery.innerHTML = "";
+        // miniGallery.innerHTML = "";
         return fetch(postWorkUrl);
-      }) */
+      }) 
 
-/*       .then((value) => {
+      .then((value) => {
         if (value.ok) {
           return value.json();
         }
-      }) */
+      }) 
 
-/*       .then((works) => {
+      .then((works) => {
         getPreviousWork(works, worksGenerator);
         getPreviousWork(works, createMiniGallery);
 
         worksGenerator(works);
         createMiniGallery(works);
         activFilter();
-      }) */
-/*       .catch((error) => {
+      }) 
+       .catch((error) => {
         console.log(error);
-      }); */
-/*   } else {
+      }); 
+   } else {
     console.log("Veuillez remplir tous les champs du formulaire.");
-  } */
-//  });
+  } 
+  })
+ */
 
 function displayFormData(formData) {
   if (formData.size === 0) {
@@ -684,24 +754,3 @@ function displayFormData(formData) {
 }
 
 const galleryContent = document.querySelector(".galleryContent");
-
-/* function updateGalleryAndMiniGallery() {
-  fetch(postWorkUrl)
-    .then((value) => {
-      if (value.ok) {
-        return value.json();
-      }
-    })
-    .then((works) => {
-      getPreviousWork(works, worksGenerator);
-      activFilter();
-    })
-    .then(() => {
-      closeAddWorkModal();
-      return new Promise((resolve) => setTimeout(resolve, 0));
-    })
-    .then(() => {
-      openOriginalModal();
-    });
-}
-*/
