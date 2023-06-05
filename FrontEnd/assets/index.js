@@ -4,7 +4,6 @@
 const apiUrl = "http://localhost:5678/api/";
 const postWorkUrl = apiUrl + "works";
 
-
 const token = localStorage.getItem("token");
 console.log(token);
 
@@ -184,6 +183,7 @@ const createModifBtn = (id) => {
 };
 
 if (localStorage.token) {
+  console.log("Vous êtes sur l'interface Administrateur. Bienvenue !");
   logInAndOut.innerHTML = "logout";
   createAdminBanner();
   body.insertBefore(adminBanner, header);
@@ -204,7 +204,6 @@ if (localStorage.token) {
   createModifBtn("modifGalleryBtn");
 
   galleryBtn.append(modifButton);
-  console.log("Vous êtes sur l'interface 'administrateur'. Bienvenue !");
 } else {
   console.log("Vous êtes sur l'interface 'client'. Bienvenue !");
 }
@@ -234,6 +233,10 @@ function getOut() {
   if (logBtn.textContent === "login") {
     logBtn.setAttribute("href", "./login.html");
   }
+}
+
+function deleteToken() {
+  localStorage.removeItem("token");
 }
 
 ////  Modales.
@@ -408,9 +411,8 @@ function clickAway(event) {
     openOriginalModal();
     AllModalsStatus();
   } else if (clickAddBtn) {
-    // submitSecondModalForm(event);
-    // console.log("OUiiii");
-    test1();
+    const formData = new FormData(formModal2);
+    postNewWork(formData);
   }
 }
 window.addEventListener("click", clickAway);
@@ -500,7 +502,7 @@ async function createMiniGallery(works) {
 
 createMiniGallery();
 
-//const imgDisplay = document.querySelector(".image-display");
+const imgDisplay = document.querySelector(".image-display");
 
 const showLoadedImg = (imageLoader, imageContainer) => {
   let uploadedPic;
@@ -523,48 +525,44 @@ const showLoadedImg = (imageLoader, imageContainer) => {
 };
 
 const imageLoader = document.querySelector("#add-pic-btn");
-//showLoadedImg(imageLoader, imgDisplay);
+showLoadedImg(imageLoader, imgDisplay);
 
 const formModal2 = document.querySelector("#form-modal-2");
 const addBtn = document.querySelector(".add-btn");
 
-//formModal2.addEventListener("submit", submitSecondModalForm);
 
-formModal2.onclick = async () => {
-  const formData = new FormData(formModal2);
-  if (!(await postNewWork(formData))) {
-    //  console.log()
-    test1;
-    return;
-  }
-  test2();
-};
+//////////// ça marche comme ça, mais peut-être pas avec
+//////// async / await. À revoir si j'ai le temps ! 
 
-async function postNewWork(formData) {
-  try {
-    const response = await fetch(`${postWorkUrl}`, {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
+//// et   event.preventDefault();
+function postNewWork(formData) {
+  return fetch(`${postWorkUrl}`, {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  })
+    .then((response) => {
+      console.log(formData);
+      console.log(response);
+
+      if (!response.ok) {
+        throw new Error(`Erreur HTTP: ${response.status}`);
+      }
+
+      console.log(`Le projet a été ajouté à la base de donnée avec succès`);
+      return true;
+    })
+    .catch((error) => {
+      console.error(`Impossible d'ajouter le projet: ${error}`);
     });
-    console.log(response);
-
-    if (!response.ok) {
-      throw new Error(`Erreur HTTP: ${response.status}`);
-    }
-    console.log(`Le projet a été ajouté à la base de donnée avec succès`);
-    return true;
-  } catch (error) {
-    console.error(`Impossible d'ajouter le projet: ${error}`);
-  }
 }
 
 // original :
 /* addBtn.addEventListener("click", function (event) {
-  event.preventDefault();
+
 
   const image = imageLoader.files[0];
   const title = document.querySelector("#title").value;
@@ -688,7 +686,7 @@ async function postNewWork(formData) {
 
 // console.log("NNN", { image, title, category });
 
-// ESSAIS EN VRAC 
+// ESSAIS EN VRAC
 /*
   if (image && title && category) {
   formData.append("image", image);

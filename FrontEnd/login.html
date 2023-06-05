@@ -44,11 +44,17 @@
         <section id="login" class="login-page">
             <h2>Log In</h2>
 
-            <form class="loginForm">
-                <label for="email">E-mail</label>
-                <input type="email" name="email" id="email" required>
-                <label for="password">Mot de passe</label>
-                <input type="password" id="password" name="password" required>
+            <form class="login-form" autocomplete="on">
+                <div class="email-location">
+                    <label for="email">E-mail</label>
+                    <input type="email" name="email" id="email" required autocomplete="on">
+                </div>
+
+                <div class="password-location">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
                 <input type="submit" value="Se connecter">
             </form>
 
