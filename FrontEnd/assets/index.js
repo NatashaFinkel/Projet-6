@@ -17,6 +17,8 @@ let adminBanner;
 let modifButton;
 const galleryBtn = document.querySelector(".gallery-btn");
 
+const addBtn = document.querySelector(".add-btn");
+
 async function getCategories() {
   try {
     const response = await fetch(apiUrl + "categories");
@@ -165,7 +167,7 @@ async function activFilter() {
   });
 }
 
-addToDOM();
+//addToDOM();
 
 const createAdminBanner = () => {
   adminBanner = document.createElement("div");
@@ -369,7 +371,7 @@ const eraseWork = (workId) => {
 //   modales dès que l'utilisateur
 //  clique ailleurs que sur elles et sur
 //  les boutons qui les ouvrent.
-function clickAway(event) {
+async function clickAway(event) {
   //  Renvoie true si on clique sur le btn qui ouvre la 1ère modale.
   const openModalBtn = modifGalleryBtn.contains(event.target);
 
@@ -411,11 +413,45 @@ function clickAway(event) {
     openOriginalModal();
     AllModalsStatus();
   } else if (clickAddBtn) {
-    const formData = new FormData(formModal2);
-    postNewWork(formData);
+    try {
+      const formData = new FormData(formModal2);
+      const newContent = await postNewWork(formData);
+
+      gallery.innerHTML = "";
+      miniGallery.innerHTML = "";
+
+      const works = await getPreviousWork();
+      let fragment = document.createDocumentFragment();
+
+      fragment.appendChild(await worksGenerator(works));
+
+      //  ça, ça marche, mais il manque la génération du travail
+      //   pour la miniGallerie !
+      portfolio.appendChild(fragment);
+
+    } catch (error) {
+      console.error(`Erreur lors de l'affichage des données: ${error}`);
+    }
   }
 }
 window.addEventListener("click", clickAway);
+
+async function clickAddBtn() {
+  try {
+    const formData = new FormData(formModal2);
+    await postNewWork(formData); // Envoyer le formulaire sans attendre la réponse
+
+    // Afficher les données du formulaire en temps réel dans .gallery
+    const response = await fetch(postWorkUrl);
+    if (!response.ok) {
+      throw new Error(`Erreur HTTP: ${response.status}`);
+    }
+    const data = await response.json();
+    //   gallery.textContent = JSON.stringify(data);
+  } catch (error) {
+    console.error(`Erreur lors de l'affichage des données: ${error}`);
+  }
+}
 
 function eraseAllWorks() {
   const allMiniFigures = document.querySelectorAll(".miniFigure");
@@ -528,36 +564,32 @@ const imageLoader = document.querySelector("#add-pic-btn");
 showLoadedImg(imageLoader, imgDisplay);
 
 const formModal2 = document.querySelector("#form-modal-2");
-const addBtn = document.querySelector(".add-btn");
-
 
 //////////// ça marche comme ça, mais peut-être pas avec
-//////// async / await. À revoir si j'ai le temps ! 
+//////// async / await. À revoir si j'ai le temps !
 
 //// et   event.preventDefault();
-function postNewWork(formData) {
-  return fetch(`${postWorkUrl}`, {
-    method: "POST",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: formData,
-  })
-    .then((response) => {
-      console.log(formData);
-      console.log(response);
-
-      if (!response.ok) {
-        throw new Error(`Erreur HTTP: ${response.status}`);
-      }
-
-      console.log(`Le projet a été ajouté à la base de donnée avec succès`);
-      return true;
-    })
-    .catch((error) => {
-      console.error(`Impossible d'ajouter le projet: ${error}`);
+async function postNewWork(formData) {
+  try {
+    const response = await fetch(`${postWorkUrl}`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
     });
+    displayFormData(formData);
+
+    if (!response.ok) {
+      throw new Error(`Erreur HTTP: ${response.status}`);
+    }
+
+    console.log(`Le projet a été ajouté à la base de donnée avec succès`);
+    return true;
+  } catch (error) {
+    console.error(`Impossible d'ajouter le projet: ${error}`);
+  }
 }
 
 // original :
@@ -580,15 +612,7 @@ function postNewWork(formData) {
     console.log(formData);
     //   console.log(token);
 
-    fetch(postWorkUrl, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-        accept: "application/json",
-      },
-      body: formData,
-    })
+
       .then(() => {
         gallery.innerHTML = "";
         miniGallery.innerHTML = "";
@@ -702,42 +726,7 @@ function postNewWork(formData) {
 
    console.log(formData);  console.log(token);
 
-   fetch(postWorkUrl, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-        accept: "application/json",
-      },
-      body: formData,
-    }) 
-
-       .then(() => {
-        // gallery.innerHTML = "";
-        // miniGallery.innerHTML = "";
-        return fetch(postWorkUrl);
-      }) 
-
-      .then((value) => {
-        if (value.ok) {
-          return value.json();
-        }
-      }) 
-
-      .then((works) => {
-        getPreviousWork(works, worksGenerator);
-        getPreviousWork(works, createMiniGallery);
-
-        worksGenerator(works);
-        createMiniGallery(works);
-        activFilter();
-      }) 
-       .catch((error) => {
-        console.log(error);
-      }); 
-   } else {
-    console.log("Veuillez remplir tous les champs du formulaire.");
-  } 
+  
   })
  */
 
@@ -752,3 +741,4 @@ function displayFormData(formData) {
 }
 
 const galleryContent = document.querySelector(".galleryContent");
+addToDOM();
