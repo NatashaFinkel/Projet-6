@@ -167,8 +167,6 @@ async function activFilter() {
   });
 }
 
-//addToDOM();
-
 const createAdminBanner = () => {
   adminBanner = document.createElement("div");
   adminBanner.classList.add("admin-banner");
@@ -204,7 +202,6 @@ if (localStorage.token) {
 
   //  Pour créer le bouton qui modifie le contenu de la galerie.
   createModifBtn("modifGalleryBtn");
-
   galleryBtn.append(modifButton);
 } else {
   console.log("Vous êtes sur l'interface 'client'. Bienvenue !");
@@ -349,7 +346,7 @@ function closeAddWorkModal() {
 }
 
 const eraseAllBtn = document.querySelector(".erase-btn");
-eraseAllBtn.addEventListener("click", test2);
+//eraseAllBtn.addEventListener("click", test2);
 
 // function eraseAllWorks() {
 //   const allMiniFigures = document.querySelectorAll(".miniFigure");
@@ -392,6 +389,9 @@ async function clickAway(event) {
   //  Renvoie true si on clique sur le btn sumit de la 2e modale.
   const clickAddBtn = addBtn.contains(event.target);
 
+  //  Renvoie true si on clique sur le btn qui supprime tous les travaux.
+  const clickEraseAllBtn = eraseAllBtn.contains(event.target);
+
   if (
     !openModalBtn &&
     originalModal.classList.contains("active") &&
@@ -420,36 +420,27 @@ async function clickAway(event) {
       gallery.innerHTML = "";
       miniGallery.innerHTML = "";
 
-      const works = await getPreviousWork();
-      let fragment = document.createDocumentFragment();
-
-      fragment.appendChild(await worksGenerator(works));
-
-      //  ça, ça marche, mais il manque la génération du travail
-      //   pour la miniGallerie !
-      portfolio.appendChild(fragment);
-
+      addToDOM();
+      createMiniGallery();
     } catch (error) {
       console.error(`Erreur lors de l'affichage des données: ${error}`);
+    }
+  } else if (clickEraseAllBtn) {
+    try {
+      console.log("Ok : effacé !");
+    } catch (error) {
+      console.error(`Erreur lors de l'effacement des données: ${error}`);
     }
   }
 }
 window.addEventListener("click", clickAway);
 
-async function clickAddBtn() {
-  try {
-    const formData = new FormData(formModal2);
-    await postNewWork(formData); // Envoyer le formulaire sans attendre la réponse
-
-    // Afficher les données du formulaire en temps réel dans .gallery
-    const response = await fetch(postWorkUrl);
-    if (!response.ok) {
-      throw new Error(`Erreur HTTP: ${response.status}`);
-    }
-    const data = await response.json();
-    //   gallery.textContent = JSON.stringify(data);
-  } catch (error) {
-    console.error(`Erreur lors de l'affichage des données: ${error}`);
+function appendToNode(parentNode, childNode) {
+  if (childNode instanceof Node && childNode !== null) {
+    parentNode.appendChild(childNode);
+    console.log("C'est un node !");
+  } else {
+    console.error("L'objet childNode n'est pas du type Node ou est nul.");
   }
 }
 
@@ -565,10 +556,7 @@ showLoadedImg(imageLoader, imgDisplay);
 
 const formModal2 = document.querySelector("#form-modal-2");
 
-//////////// ça marche comme ça, mais peut-être pas avec
-//////// async / await. À revoir si j'ai le temps !
-
-//// et   event.preventDefault();
+/////// ? ajouter  event.preventDefault();
 async function postNewWork(formData) {
   try {
     const response = await fetch(`${postWorkUrl}`, {
@@ -579,7 +567,6 @@ async function postNewWork(formData) {
       },
       body: formData,
     });
-    displayFormData(formData);
 
     if (!response.ok) {
       throw new Error(`Erreur HTTP: ${response.status}`);
@@ -592,13 +579,7 @@ async function postNewWork(formData) {
   }
 }
 
-// original :
-/* addBtn.addEventListener("click", function (event) {
-
-
-  const image = imageLoader.files[0];
-  const title = document.querySelector("#title").value;
-  const category = document.querySelector("#category").value;
+/* 
   //  console.log(image);
   // console.log(title);
   // console.log(category);
@@ -608,36 +589,6 @@ async function postNewWork(formData) {
     formData.append("image", image);
     formData.append("title", title);
     formData.append("category", category);
-
-    console.log(formData);
-    //   console.log(token);
-
-
-      .then(() => {
-        gallery.innerHTML = "";
-        miniGallery.innerHTML = "";
-        return fetch(postWorkUrl);
-      })
-      .then((value) => {
-        if (value.ok) {
-          return value.json();
-        }
-      })
-      .then((works) => {
-        getPreviousWork(works, worksGenerator);
-        getPreviousWork(works, createMiniGallery);
-
-        worksGenerator(works);
-        createMiniGallery(works);
-        activFilter();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  } else {
-    console.log("Veuillez remplir tous les champs du formulaire.");
-  }
-});
  */
 
 // ESSAI 2
@@ -648,69 +599,17 @@ async function postNewWork(formData) {
   const title = document.querySelector("#title").value;
   const category = document.querySelector("#category").value;
 
-  displayFormData(formData);
 
   if (image && title && category) {
-    try {
-      const response = await fetch(postWorkUrl, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-          accept: "application/json",
-        },
-        body: formData,
-      });
-      console.log(response);
-
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.log("Erreur : " + error);
-    }
-  } else {
     console.log("Il manque au moins un  élément dans le formData");
   }
 }
  */
 // ESSAI 3
-// async function submitSecondModalForm(event) {
+
 //   event.preventDefault();
-//   const formModal2 = document.getElementById("formModal2");
-//console.log(formModal2);
-//   const imageLoader = document.getElementById("imageLoader");
-//console.log(imageLoader);
-//   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1MTg3NDkzOSwiZXhwIjoxNjUxOTYxMzM5fQ.JGN1p8YIfR-M-5eQ-Ypy6Ima5cKA4VbfL2xMr2MgHm4";
-//   const postWorkUrl = "http://localhost:5678/api/works";
-
-//   const formData = new FormData(formModal2);
-//   formData.append("image", imageLoader.files[0]);
-//   formData.append("title", document.querySelector("#title").value);
-//   formData.append("category", document.querySelector("#category").value);
-
 //   if (imageLoader.files[0] && formData.get("title") && formData.get("category")) {
-//     try {
-//       const response = await fetch(postWorkUrl, {
-//         method: "POST",
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//         body: formData,
-//       });
 
-//       const data = await response.json();
-//       console.log(data);
-//     } catch (error) {
-//       console.log("Erreur : " + error);
-//     }
-//   } else {
-//     console.log("Il manque au moins un élément dans le formData");
-//   }
-// }
-
-// console.log("NNN", { image, title, category });
-
-// ESSAIS EN VRAC
 /*
   if (image && title && category) {
   formData.append("image", image);
@@ -723,22 +622,10 @@ async function postNewWork(formData) {
      formData.append("image", image);
     formData.append("title", title);
     formData.append("category", category);
-
+    
    console.log(formData);  console.log(token);
-
-  
   })
  */
-
-function displayFormData(formData) {
-  if (formData.size === 0) {
-    console.log("Le formData est vide.");
-  } else {
-    formData.forEach((value, key) => {
-      console.log(`Clé : ${key}, Valeur : ${value}`);
-    });
-  }
-}
 
 const galleryContent = document.querySelector(".galleryContent");
 addToDOM();
