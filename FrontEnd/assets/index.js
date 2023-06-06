@@ -19,6 +19,8 @@ const galleryBtn = document.querySelector(".gallery-btn");
 
 const addBtn = document.querySelector(".add-btn");
 
+const imgBox = document.querySelector(".image-box");
+
 async function getCategories() {
   try {
     const response = await fetch(apiUrl + "categories");
@@ -346,7 +348,6 @@ function closeAddWorkModal() {
 }
 
 const eraseAllBtn = document.querySelector(".erase-btn");
-//eraseAllBtn.addEventListener("click", test2);
 
 // function eraseAllWorks() {
 //   const allMiniFigures = document.querySelectorAll(".miniFigure");
@@ -392,6 +393,8 @@ async function clickAway(event) {
   //  Renvoie true si on clique sur le btn qui supprime tous les travaux.
   const clickEraseAllBtn = eraseAllBtn.contains(event.target);
 
+  let imageContainer = document.querySelector(".image-display");
+
   if (
     !openModalBtn &&
     originalModal.classList.contains("active") &&
@@ -420,8 +423,19 @@ async function clickAway(event) {
       gallery.innerHTML = "";
       miniGallery.innerHTML = "";
 
-      addToDOM();
+      const works = await getPreviousWork();
+      let fragment = document.createDocumentFragment();
+      fragment.appendChild(await worksGenerator(works));
+      portfolio.appendChild(fragment);
+
       createMiniGallery();
+
+      formModal2.reset();
+      imageContainer.style.backgroundImage = "";
+      imgBox.classList.remove("hidden");
+
+      /////  c'est ça, dans cette fonction, mais à modifier :
+      //////   imageContainer.style.display = "initial";
     } catch (error) {
       console.error(`Erreur lors de l'affichage des données: ${error}`);
     }
@@ -433,16 +447,8 @@ async function clickAway(event) {
     }
   }
 }
-window.addEventListener("click", clickAway);
 
-function appendToNode(parentNode, childNode) {
-  if (childNode instanceof Node && childNode !== null) {
-    parentNode.appendChild(childNode);
-    console.log("C'est un node !");
-  } else {
-    console.error("L'objet childNode n'est pas du type Node ou est nul.");
-  }
-}
+window.addEventListener("click", clickAway);
 
 function eraseAllWorks() {
   const allMiniFigures = document.querySelectorAll(".miniFigure");
@@ -536,18 +542,15 @@ const showLoadedImg = (imageLoader, imageContainer) => {
 
   imageLoader.addEventListener("change", function () {
     const reader = new FileReader();
-    const hidden1 = document.querySelector(".hidden-when-img-loaded-1");
-    const hidden2 = document.querySelector(".hidden-when-img-loaded-2");
 
     reader.addEventListener("load", () => {
       uploadedPic = reader.result;
       imageContainer.style.backgroundImage = `url(${uploadedPic})`;
+      imageContainer.style.display = "flex";
+      imgBox.classList.add("hidden");
     });
 
     reader.readAsDataURL(imageLoader.files[0]);
-    imageContainer.style.display = "block";
-    hidden1.style.visibility = "hidden";
-    hidden2.style.visibility = "hidden";
   });
 };
 
@@ -580,6 +583,8 @@ async function postNewWork(formData) {
 }
 
 /* 
+
+
   //  console.log(image);
   // console.log(title);
   // console.log(category);

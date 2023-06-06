@@ -327,10 +327,11 @@ footer,
 }
 
 .login-page,
-.login-page form, .login-form div {
+.login-page form,
+.login-form div {
 	display: flex;
 	flex-direction: column;
-/* 	margin-bottom: 350px;
+	/* 	margin-bottom: 350px;
 	padding-top: 50px;
 	width: 50%; */
 	padding-top: 15px;
@@ -465,8 +466,6 @@ footer,
 	display: flex;
 }
 
-
-
 .top-modal {
 	display: flex;
 	justify-content: flex-end;
@@ -531,6 +530,15 @@ footer,
 
 .image-box p {
 	position: relative;
+	display: flex;
+}
+
+.hidden {
+	visibility: hidden;
+}
+
+.display-none {
+	display: none;
 }
 
 .modal-form {
