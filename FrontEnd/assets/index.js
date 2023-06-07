@@ -433,9 +433,8 @@ async function clickAway(event) {
       formModal2.reset();
       imageContainer.style.backgroundImage = "";
       imgBox.classList.remove("hidden");
+      imageContainer.style.display = "none";
 
-      /////  c'est ça, dans cette fonction, mais à modifier :
-      //////   imageContainer.style.display = "initial";
     } catch (error) {
       console.error(`Erreur lors de l'affichage des données: ${error}`);
     }
