@@ -21,6 +21,19 @@ const addBtn = document.querySelector(".add-btn");
 
 const imgBox = document.querySelector(".image-box");
 
+let errorText;
+let errorIsHere;
+
+/* const errorContainerForMissingImg = document.querySelector(
+  ".error-container-for-missing-img"
+);
+const errorContainerForMissingTitle = document.querySelector(
+  ".error-container-for-missing-title"
+);
+const errorContainerForMissingCategory = document.querySelector(
+  ".error-container-for-missing-category"
+); */
+
 async function getCategories() {
   try {
     const response = await fetch(apiUrl + "categories");
@@ -419,7 +432,19 @@ async function clickAway(event) {
     try {
       const formData = new FormData(formModal2);
       const newContent = await postNewWork(formData);
+      const img = formData.get("image");
+      const title = formData.get("title");
+      const category = formData.get("category");
 
+      if (img.name === "") {
+        errorInAddWorks("image");
+      } else if (!title) {
+        errorInAddWorks("title");
+      } else if (!category) {
+        errorInAddWorks("category");
+      }
+
+      //   const newContent = await postNewWork(formData);
       gallery.innerHTML = "";
       miniGallery.innerHTML = "";
 
@@ -434,7 +459,6 @@ async function clickAway(event) {
       imageContainer.style.backgroundImage = "";
       imgBox.classList.remove("hidden");
       imageContainer.style.display = "none";
-
     } catch (error) {
       console.error(`Erreur lors de l'affichage des données: ${error}`);
     }
@@ -558,8 +582,9 @@ showLoadedImg(imageLoader, imgDisplay);
 
 const formModal2 = document.querySelector("#form-modal-2");
 
-/////// ? ajouter  event.preventDefault();
-async function postNewWork(formData) {
+// Essai 1 postNewWork()
+/* async function postNewWork(formData) {
+
   try {
     const response = await fetch(`${postWorkUrl}`, {
       method: "POST",
@@ -578,12 +603,148 @@ async function postNewWork(formData) {
     return true;
   } catch (error) {
     console.error(`Impossible d'ajouter le projet: ${error}`);
+
+  }
+} */
+
+async function postNewWork(formData) {
+  let errorLocation;
+  let errorContainer = document.querySelector(".error-container");
+  if (errorContainer) {
+    errorContainer.remove();
+  }
+
+  try {
+    const response = await fetch(`${postWorkUrl}`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      formModal2.reset();
+    } else {
+      closeAddWorkModal();
+      openOriginalModal();
+      console.log(`Le projet a été ajouté à la base de données avec succès`);
+      return true;
+    }
+  } catch (error) {
+    console.error(`Impossible d'ajouter le projet: ${error}`);
   }
 }
 
+function createErrorMessage(error) {
+  // let title;
+  let errorIsHere;
+  let errorText;
+
+  /*   const errorContainerForModal = document.getElementsByClassName(
+    "error-container-for-modal"
+  ); */
+
+  const errorDiv = document.createElement("div");
+  errorDiv.classList.add("error-container");
+  errorDiv.classList.add("error-message");
+
+  errorText = document.createTextNode(errorText);
+
+  errorDiv.appendChild(errorText);
+
+  errorIsHere.appendChild(errorDiv);
+}
+
+// Essai 1 errorInAddWorks()
+/* function errorInAddWorks(type) {
+  let errorLocation;
+  let errorText;
+
+  switch (type) {
+    case "image":
+      console.log("la requête POST a échoué : il manque l'image !");
+      errorLocation = document.querySelector(".error-container-for-missing-img");
+      errorText = "Merci de choisir une image.";
+            break;
+    case "title":
+      errorLocation = document.querySelector(".error-container-for-missing-title");
+      errorText =
+        "Merci de choisir un titre.";
+      break;
+
+          case "category":
+      errorLocation = document.querySelector(".error-container-for-missing-category");
+      errorText =
+        "Merci de choisir une catégorie.";
+      break;
+  }
+
+  const errorMessage = document.querySelector(".error-message");
+
+  if (errorMessage) {
+    errorLocation.remove();
+  }
+
+  let errorMessageContainer = document.createElement("div");
+  errorMessageContainer.setAttribute("class", "error-container");
+
+  let message = document.createElement("p");
+  message.setAttribute("class", "error-message");
+  message.textContent = errorText;
+
+  errorMessageContainer.append(message);
+
+  errorLocation.appendChild(errorMessageContainer);
+}
+ */
+
+// Essai 2 errorInAddWorks()
+
+function errorInAddWorks(type) {
+  //  let errorLocation;
+  let errorText;
+
+  let errorLocation = document.querySelector(
+    ".error-container-for-missing-title"
+  );
+
+  switch (type) {
+    case "image":
+      console.log("la requête POST a échoué !");
+      /*  errorLocation = document.querySelector(
+        ".error-container-for-missing-img"
+      ); */
+      errorText = "Merci de choisir une image.";
+      break;
+    case "title":
+      /*  errorLocation = document.querySelector(
+        ".error-container-for-missing-title"
+      ); */
+      errorText = "Merci de choisir un titre.";
+      break;
+    case "category":
+      /*   errorLocation = document.querySelector(
+        ".error-container-for-missing-category"
+      ); */
+      errorText = "Merci de choisir une catégorie.";
+      break;
+  }
+
+  let errorMessageContainer = document.createElement("div");
+  errorMessageContainer.setAttribute("class", "error-container");
+
+  let message = document.createElement("p");
+  message.setAttribute("class", "error-message");
+  message.textContent = errorText;
+
+  errorMessageContainer.append(message);
+
+  errorLocation.appendChild(errorMessageContainer);
+}
+
 /* 
-
-
   //  console.log(image);
   // console.log(title);
   // console.log(category);

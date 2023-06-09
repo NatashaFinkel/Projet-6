@@ -434,12 +434,13 @@ footer,
 
 
 #add-work-modal {
-	width: 320px;
-	height: 650px;
+	/* 	width: 320px;
+	height: 650px; */
 	flex-direction: column;
 	background-color: white;
-	padding: 20px 50px 0px 50px;
+	padding: 45px 50px 10px;
 	display: none;
+	width: 250px;
 }
 
 
@@ -451,8 +452,8 @@ footer,
 }
 
 #original-modal>div {
-	width: 40%;
-	padding: 30px;
+	width: 320px;
+	padding: 25px 60px 0px;
 	background-color: #fff;
 	border-radius: 10px;
 }
@@ -574,7 +575,7 @@ footer,
 	border: none;
 	padding: 10px 0px;
 	font-size: 14px;
-	width: 80%;
+/* 	width: 80%; */
 	margin: 50px 30px 0px 30px;
 }
 
@@ -610,17 +611,20 @@ footer,
 
 .btn-div-modal-1,
 .btn-div-modal-2 {
-	display: flex;
+	/* display: flex;
 	flex-direction: column;
 	width: 60%;
 	border-top: 1px solid #B3B3B3;
 	margin-top: 45px;
 	align-self: center;
+	justify-self: center; */
+	text-align: center;
 	justify-self: center;
-}
+margin-top: 40px;
+	border-top: 1px solid #B3B3B3;
+	display: flex;
+	flex-direction: column;
 
-.btn-div-modal-2 {
-	margin-left: 20%;
 }
 
 .modal-content .erase-btn {
@@ -678,9 +682,10 @@ footer,
 }
 
 .error-container {
-	border: solid 1px red;
+	border: solid 2px red;
 	display: flex;
 	padding: 15px;
+	margin: 10px;
 }
 
 .error-message {
