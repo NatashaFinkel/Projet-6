@@ -15,14 +15,16 @@ const header = document.querySelector("header");
 const figure = document.querySelector("figure");
 let adminBanner;
 let modifButton;
+
 const galleryBtn = document.querySelector(".gallery-btn");
-
+const filterZone = document.querySelector("#filter-zone");
 const addBtn = document.querySelector(".add-btn");
-
 const imgBox = document.querySelector(".image-box");
 
 let errorText;
 let errorIsHere;
+
+addToDOM();
 
 async function getCategories() {
   try {
@@ -55,11 +57,6 @@ async function createFilterBtns(works) {
   for (let element of works) {
     categories.add(element.category.name);
   }
-
-  //  Pour créer la zone avec les filtres,
-  //  ajouter la classe et la placer.
-  const filterZone = document.createElement("div");
-  filterZone.classList.add("filter-zone");
 
   let fragment = document.createDocumentFragment();
   fragment.appendChild(filterZone);
@@ -107,7 +104,7 @@ async function addToDOM() {
   const portfolio = document.getElementById("portfolio");
   const works = await getPreviousWork();
 
-  let fragment = document.createDocumentFragment();
+   let fragment = document.createDocumentFragment();
   fragment.appendChild(await createFilterBtns(works));
   fragment.appendChild(await worksGenerator(works));
 
@@ -187,11 +184,14 @@ const createModifBtn = (id) => {
   modifButton.innerHTML = `<i class="fa-regular fa-pen-to-square pen-icon"></i><p>modifier</p>`;
 };
 
+
 if (localStorage.token) {
   console.log("Vous êtes sur l'interface Administrateur. Bienvenue !");
   logInAndOut.innerHTML = "logout";
   createAdminBanner();
   body.insertBefore(adminBanner, header);
+
+ filterZone.style.display = "none";
 
   //  Pour créer le bouton qui modifie la photo de Sophie Bluel.
   createModifBtn("modifIntroPictureBtn");
@@ -209,7 +209,7 @@ if (localStorage.token) {
   createModifBtn("modifGalleryBtn");
   galleryBtn.append(modifButton);
 } else {
-  console.log("Vous êtes sur l'interface 'client'. Bienvenue !");
+  console.log("Vous êtes sur l'interface 'Client'. Bienvenue !");
 }
 
 function test1() {
@@ -601,21 +601,6 @@ async function postNewWork(formData) {
   }
 }
 
-function createErrorMessage(error) {
-  let errorIsHere;
-  let errorText;
-
-  const errorDiv = document.createElement("div");
-  errorDiv.classList.add("error-container");
-  errorDiv.classList.add("error-message");
-
-  errorText = document.createTextNode(errorText);
-
-  errorDiv.appendChild(errorText);
-
-  errorIsHere.appendChild(errorDiv);
-}
-
 function errorInAddWorks(type) {
   let errorText;
 
@@ -648,4 +633,3 @@ function errorInAddWorks(type) {
 }
 
 const galleryContent = document.querySelector(".galleryContent");
-addToDOM();

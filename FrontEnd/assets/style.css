@@ -357,8 +357,9 @@ footer,
 .filter-zone {
 	display: flex;
 	justify-content: center;
-	margin: 50px 0px;
+	margin: 0px;
 	gap: 10px;
+	margin-bottom: 40px;
 }
 
 .filter-button {

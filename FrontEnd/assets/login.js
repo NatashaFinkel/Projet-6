@@ -13,6 +13,13 @@ async function submitForm(event) {
   const formDataContentAsAnObject = Object.fromEntries(loginFormData.entries());
   const formDataAsJSON = JSON.stringify(formDataContentAsAnObject);
 
+/*   const errorMessage = document.querySelector(".error-message");
+
+  if (errorMessage) {
+    errorLocation.remove();
+  }
+ */
+
   try {
     const response = await fetch(`${logInUrl}`, {
       method: "POST",
@@ -50,36 +57,6 @@ async function submitForm(event) {
   }
 }
 
-//   let displayErrorMessage = document.querySelector(".errorMessage");
-
-//   if (displayErrorMessage) {
-//      form.removeChild(displayErrorMessage);
-/*      let errorHere = document.querySelector(".errorContainer");
-        if (errorHere) {
-          loginForm.removeChild(errorHere);
-        }
- */
-//  Pour créer le conteneur du message d'erreur.
-/*     const errorMessageContainer = document.createElement("div");
-        errorMessageContainer.classList.add("errorContainer");
-        let errorText = document.createTextNode(
-          "Erreur dans l’identifiant ou le mot de passe."
-        );
- */
-/*         errorMessageContainer.appendChild(errorText);
-        const connectUserInput = loginForm.querySelector('input[type="submit"]');
- */
-//  Pour insérer la div (avec le message d'erreur) juste avant
-//  le bouton de connection du formulaire.
-/*         loginForm.insertBefore(errorMessageContainer, connectUserInput);
-      } else {
-        return response.json();
-      }
-    })
- */
-//    .then((data) => {
-//  Il faut stocker le token pour pouvoir réaliser les envois
-//  et les suppressions des travaux.
 
 //  On utilise localStorage pour que
 //  les données soient conservées à la fermeture
@@ -89,9 +66,7 @@ async function submitForm(event) {
       localStorage.setItem("token", data.token); */
 
 /* 
-    .catch((error) => {
-      console.error(`ERREUR : ${error}`);
-    }); 
+
 }); */
 
 function errorInLogIn(type) {
@@ -109,7 +84,7 @@ function errorInLogIn(type) {
     case "password":
       errorLocation = document.querySelector(".password-location");
       errorText =
-        "Erreur dans la saisie : merci d'entrer votre mot de passe une nouvelle fois. ";
+        "Erreur dans la saisie. Merci d'entrer votre mot de passe une nouvelle fois. ";
 
       break;
   }
@@ -118,8 +93,8 @@ function errorInLogIn(type) {
 
   if (errorMessage) {
     errorLocation.remove();
-  }
-
+  } 
+ 
   let errorMessageContainer = document.createElement("div");
   errorMessageContainer.setAttribute("class", "error-container");
 
@@ -130,8 +105,4 @@ function errorInLogIn(type) {
   errorMessageContainer.append(message);
 
   errorLocation.appendChild(errorMessageContainer);
-}
-
-function isFormData(obj) {
-  return obj instanceof FormData;
 }
