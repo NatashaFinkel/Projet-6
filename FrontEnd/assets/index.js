@@ -24,16 +24,6 @@ const imgBox = document.querySelector(".image-box");
 let errorText;
 let errorIsHere;
 
-/* const errorContainerForMissingImg = document.querySelector(
-  ".error-container-for-missing-img"
-);
-const errorContainerForMissingTitle = document.querySelector(
-  ".error-container-for-missing-title"
-);
-const errorContainerForMissingCategory = document.querySelector(
-  ".error-container-for-missing-category"
-); */
-
 async function getCategories() {
   try {
     const response = await fetch(apiUrl + "categories");
@@ -444,7 +434,6 @@ async function clickAway(event) {
         errorInAddWorks("category");
       }
 
-      //   const newContent = await postNewWork(formData);
       gallery.innerHTML = "";
       miniGallery.innerHTML = "";
 
@@ -582,31 +571,6 @@ showLoadedImg(imageLoader, imgDisplay);
 
 const formModal2 = document.querySelector("#form-modal-2");
 
-// Essai 1 postNewWork()
-/* async function postNewWork(formData) {
-
-  try {
-    const response = await fetch(`${postWorkUrl}`, {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    });
-
-    if (!response.ok) {
-      throw new Error(`Erreur HTTP: ${response.status}`);
-    }
-
-    console.log(`Le projet a été ajouté à la base de donnée avec succès`);
-    return true;
-  } catch (error) {
-    console.error(`Impossible d'ajouter le projet: ${error}`);
-
-  }
-} */
-
 async function postNewWork(formData) {
   let errorLocation;
   let errorContainer = document.querySelector(".error-container");
@@ -638,13 +602,8 @@ async function postNewWork(formData) {
 }
 
 function createErrorMessage(error) {
-  // let title;
   let errorIsHere;
   let errorText;
-
-  /*   const errorContainerForModal = document.getElementsByClassName(
-    "error-container-for-modal"
-  ); */
 
   const errorDiv = document.createElement("div");
   errorDiv.classList.add("error-container");
@@ -657,53 +616,7 @@ function createErrorMessage(error) {
   errorIsHere.appendChild(errorDiv);
 }
 
-// Essai 1 errorInAddWorks()
-/* function errorInAddWorks(type) {
-  let errorLocation;
-  let errorText;
-
-  switch (type) {
-    case "image":
-      console.log("la requête POST a échoué : il manque l'image !");
-      errorLocation = document.querySelector(".error-container-for-missing-img");
-      errorText = "Merci de choisir une image.";
-            break;
-    case "title":
-      errorLocation = document.querySelector(".error-container-for-missing-title");
-      errorText =
-        "Merci de choisir un titre.";
-      break;
-
-          case "category":
-      errorLocation = document.querySelector(".error-container-for-missing-category");
-      errorText =
-        "Merci de choisir une catégorie.";
-      break;
-  }
-
-  const errorMessage = document.querySelector(".error-message");
-
-  if (errorMessage) {
-    errorLocation.remove();
-  }
-
-  let errorMessageContainer = document.createElement("div");
-  errorMessageContainer.setAttribute("class", "error-container");
-
-  let message = document.createElement("p");
-  message.setAttribute("class", "error-message");
-  message.textContent = errorText;
-
-  errorMessageContainer.append(message);
-
-  errorLocation.appendChild(errorMessageContainer);
-}
- */
-
-// Essai 2 errorInAddWorks()
-
 function errorInAddWorks(type) {
-  //  let errorLocation;
   let errorText;
 
   let errorLocation = document.querySelector(
@@ -712,22 +625,12 @@ function errorInAddWorks(type) {
 
   switch (type) {
     case "image":
-      console.log("la requête POST a échoué !");
-      /*  errorLocation = document.querySelector(
-        ".error-container-for-missing-img"
-      ); */
       errorText = "Merci de choisir une image.";
       break;
     case "title":
-      /*  errorLocation = document.querySelector(
-        ".error-container-for-missing-title"
-      ); */
       errorText = "Merci de choisir un titre.";
       break;
     case "category":
-      /*   errorLocation = document.querySelector(
-        ".error-container-for-missing-category"
-      ); */
       errorText = "Merci de choisir une catégorie.";
       break;
   }
@@ -743,54 +646,6 @@ function errorInAddWorks(type) {
 
   errorLocation.appendChild(errorMessageContainer);
 }
-
-/* 
-  //  console.log(image);
-  // console.log(title);
-  // console.log(category);
-
-  if (image && title && category) {
-    const formData = new FormData();
-    formData.append("image", image);
-    formData.append("title", title);
-    formData.append("category", category);
- */
-
-// ESSAI 2
-/* async function submitSecondModalForm(event) {
-  event.preventDefault();
-  const formData = new FormData(formModal2);
-  const image = imageLoader.files[0];
-  const title = document.querySelector("#title").value;
-  const category = document.querySelector("#category").value;
-
-
-  if (image && title && category) {
-    console.log("Il manque au moins un  élément dans le formData");
-  }
-}
- */
-// ESSAI 3
-
-//   event.preventDefault();
-//   if (imageLoader.files[0] && formData.get("title") && formData.get("category")) {
-
-/*
-  if (image && title && category) {
-  formData.append("image", image);
-  formData.append("title", title);
-  formData.append("category", category); 
-
- if (image && title && category) {
- const formData = new FormData();
-
-     formData.append("image", image);
-    formData.append("title", title);
-    formData.append("category", category);
-    
-   console.log(formData);  console.log(token);
-  })
- */
 
 const galleryContent = document.querySelector(".galleryContent");
 addToDOM();
