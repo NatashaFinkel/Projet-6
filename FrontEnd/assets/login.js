@@ -13,13 +13,6 @@ async function submitForm(event) {
   const formDataContentAsAnObject = Object.fromEntries(loginFormData.entries());
   const formDataAsJSON = JSON.stringify(formDataContentAsAnObject);
 
-/*   const errorMessage = document.querySelector(".error-message");
-
-  if (errorMessage) {
-    errorLocation.remove();
-  }
- */
-
   try {
     const response = await fetch(`${logInUrl}`, {
       method: "POST",
@@ -57,25 +50,12 @@ async function submitForm(event) {
   }
 }
 
-
-//  On utilise localStorage pour que
-//  les données soient conservées à la fermeture
-//  de la page web (contrairement à sessionStorage qui les efface).
-
-/*     localStorage.setItem("id", data.userId);
-      localStorage.setItem("token", data.token); */
-
-/* 
-
-}); */
-
 function errorInLogIn(type) {
   let errorLocation;
   let errorText;
 
   switch (type) {
     case "email":
-      console.log("Erreur dans l'email !");
       errorLocation = document.querySelector(".email-location");
       errorText =
         "Cette adresse e-mail n'a pas été reconnue. Merci de saisir votre identifiant une nouvelle fois.";

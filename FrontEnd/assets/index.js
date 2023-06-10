@@ -121,52 +121,51 @@ async function activFilter() {
   firstFilterBtn.classList.add("selected-filter");
   firstFilterBtn.setAttribute("id", "filter");
 
-  //  J'ai choisi de mettre l'addEventListener sur filterZone pour ne pas
-  //  appeller la méthode plusieurs fois (à chaque filtre).
-  filterZone.addEventListener("click", function (selectedItem) {
-    //  Quand on clique sur l'un des filtres, la class
-    //  selected-filter se place sur celui-ci, et se
-    //  déplace quand on clique sur l'un des autres filtres.
-    filterZone
-      .querySelector(".selected-filter")
-      .classList.remove("selected-filter");
+  console.log(filterButton);
+  for (const button of filterButton) {
+    button.addEventListener("click", function (selectedItem) {
+      filterZone
+        .querySelector(".selected-filter")
+        .classList.remove("selected-filter");
 
-    filterZone.querySelector("#filter").classList.remove("filter");
+      let filterId = document.getElementById("filter");
+      filterId.removeAttribute("id");
 
-    selectedItem.target.classList.add("selected-filter");
+      selectedItem.target.classList.add("selected-filter");
 
-    selectedItem.target.setAttribute("id", "filter");
+      selectedItem.target.setAttribute("id", "filter");
 
-    // categorie renvoie le nom de la catégorie du filtre sur lequel on clique.
-    let category = selectedItem.target.getAttribute("data-category");
+      // categorie renvoie le nom de la catégorie du filtre sur lequel on clique.
+      let category = selectedItem.target.getAttribute("data-category");
 
-    //  Pour chaque figure de chacun des éléments avec la classe bigFigure.
-    for (let figure of bigFigure) {
-      //  filter renvoie le nom de catégorie de chacune des figures.
-      let filter = figure.getAttribute("data-category");
+      //  Pour chaque figure de chacun des éléments avec la classe bigFigure.
+      for (let figure of bigFigure) {
+        //  filter renvoie le nom de catégorie de chacune des figures.
+        let filter = figure.getAttribute("data-category");
 
-      //  switch est utile quand on veut exécuter une action
-      //  qui peut être différente selon certaines conditions.
-      //  ici : on vérifie si la valeur est "vraie".
-      switch (true) {
-        case category == "Tous":
-          gallery.style.display = "grid";
-          figure.style.display = "block";
-          break;
+        //  switch est utile quand on veut exécuter une action
+        //  qui peut être différente selon certaines conditions.
+        //  ici : on execute ceci si la valeur est "vraie".
+        switch (true) {
+          case category == "Tous":
+            gallery.style.display = "grid";
+            figure.style.display = "block";
+            break;
 
-        //  Si le nom de catégorie du filtre est le même que
-        //  celui de la figure.
-        case category == filter:
-          gallery.style.display = "grid";
-          figure.style.display = "block";
-          break;
+          //  Si le nom de catégorie du filtre est le même que
+          //  celui de la figure.
+          case category == filter:
+            gallery.style.display = "grid";
+            figure.style.display = "block";
+            break;
 
-        default:
-          figure.style.display = "none";
-          gallery.style.display = "grid";
+          default:
+            figure.style.display = "none";
+            gallery.style.display = "grid";
+        }
       }
-    }
-  });
+    });
+  }
 }
 
 const createAdminBanner = () => {
