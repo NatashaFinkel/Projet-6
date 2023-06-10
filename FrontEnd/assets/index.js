@@ -383,7 +383,7 @@ function eraseAllWorks() {
         })
         .catch((error) => {
           console.error(
-            `Erreur lors de la suppression dans la mini galerie : ${error}`
+            `Erreur lors de la suppression dans la mini-galerie : ${error}`
           );
         });
     });
