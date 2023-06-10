@@ -104,7 +104,7 @@ async function addToDOM() {
   const portfolio = document.getElementById("portfolio");
   const works = await getPreviousWork();
 
-   let fragment = document.createDocumentFragment();
+  let fragment = document.createDocumentFragment();
   fragment.appendChild(await createFilterBtns(works));
   fragment.appendChild(await worksGenerator(works));
 
@@ -184,14 +184,13 @@ const createModifBtn = (id) => {
   modifButton.innerHTML = `<i class="fa-regular fa-pen-to-square pen-icon"></i><p>modifier</p>`;
 };
 
-
 if (localStorage.token) {
   console.log("Vous êtes sur l'interface Administrateur. Bienvenue !");
   logInAndOut.innerHTML = "logout";
   createAdminBanner();
   body.insertBefore(adminBanner, header);
 
- filterZone.style.display = "none";
+  filterZone.style.display = "none";
 
   //  Pour créer le bouton qui modifie la photo de Sophie Bluel.
   createModifBtn("modifIntroPictureBtn");
@@ -352,20 +351,24 @@ function closeAddWorkModal() {
 
 const eraseAllBtn = document.querySelector(".erase-btn");
 
-// function eraseAllWorks() {
-//   const allMiniFigures = document.querySelectorAll(".miniFigure");
-//   allMiniFigures.forEach((miniFigure) => {
-//     eraseWork(miniFigure.dataset.id);
-//   });
+const eraseWork = async (workId) => {
+  const works = await getPreviousWork();
+  try {
+    const response = await fetch(postWorkUrl + "/" + workId, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+        "Content-Type": "application/json;charset=utf-8",
+      },
+    });
 
-const eraseWork = (workId) => {
-  fetch(postWorkUrl + "/" + workId, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${localStorage.token}`,
-      "Content-Type": "application/json;charset=utf-8",
-    },
-  });
+    if (!response.ok) {
+      throw new Error(`Erreur HTTP: ${response.status}`);
+    }
+    console.log(`L'élément avec l'id ${workId}  a été supprimé avec succès !`);
+  } catch (error) {
+    console.error(`Impossible de supprimer l'élément avec l'id ${workId}`);
+  }
 };
 
 //  Cette fonction ferme les
@@ -395,6 +398,51 @@ async function clickAway(event) {
 
   //  Renvoie true si on clique sur le btn qui supprime tous les travaux.
   const clickEraseAllBtn = eraseAllBtn.contains(event.target);
+
+  const allTrashIcons = document.querySelectorAll(".trash-can");
+
+  function selectThisTrash() {
+    allTrashIcons.forEach((trashIcon) => {
+      trashIcon.addEventListener("click", function () {
+        selectedTrashIcon = trashIcon;
+      });
+
+      trashIcon.addEventListener("click", test2);
+      trashIcon.addEventListener("click", removeFigure);
+
+      function removeFigure() {
+        let element = trashIcon.closest(".miniFigure");
+        const dataId = element.dataset.id;
+
+        let allBigElements = gallery.querySelectorAll(".bigFigure");
+
+        for (let oneBigElement of allBigElements) {
+          const oneBigElementId = oneBigElement.dataset.id;
+
+          if (oneBigElementId === dataId) {
+            try {
+              eraseWork(dataId).then(() => {
+                eraseWork(oneBigElementId)
+                  .then(() => {
+                    element.remove();
+                    oneBigElement.remove();
+                  })
+                  .catch((error) => {
+                    console.error(
+                      `Impossible de supprimer le travail avec l'ID ${oneBigElementId}: ${error}`
+                    );
+                  });
+              });
+            } catch (error) {
+              console.error(`Erreur lors de la suppression : ${error}`);
+            }
+          }
+        }
+      }
+    });
+  }
+
+  selectThisTrash();
 
   let imageContainer = document.querySelector(".image-display");
 
@@ -453,7 +501,7 @@ async function clickAway(event) {
     }
   } else if (clickEraseAllBtn) {
     try {
-      console.log("Ok : effacé !");
+      console.log("Ok : tout est effacé !");
     } catch (error) {
       console.error(`Erreur lors de l'effacement des données: ${error}`);
     }
@@ -480,14 +528,14 @@ miniGallery.classList.add("galleryContent");
 const arrow = document.querySelector(".arrow-icon");
 
 async function createMiniGallery(works) {
-  const modalContent = document.querySelector(".modal-content");
+
   //  Pour pouvoir utiliser les travaux précédents téléchargés.
-  //console.log(modalContent);
   works = await getPreviousWork();
 
   for (let i = 0; i < works.length; i++) {
     const miniFigure = document.createElement("figure");
     miniFigure.classList.add("miniFigure");
+    miniFigure.setAttribute("data-id", works[i].id);
 
     //  Pour faire apparaître et disparaître l'icône
     //  "flèche multidirectionnelle" au passage de la
@@ -524,15 +572,6 @@ async function createMiniGallery(works) {
 
     const iconDiv = document.createElement("div");
     iconDiv.classList.add("iconDiv");
-
-    // function removeFigure() {
-    //   let element = trashIcon.closest(".miniFigure");
-    //   let elementB = works[i];
-    //   // let elementB = works[i];
-    //   console.log(element);
-    //   console.log(elementB);
-    //   //    element.parentNode.removeChild(element);
-    // }
 
     iconDiv.append(directionArrow);
     iconDiv.append(trashIcon);
