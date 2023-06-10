@@ -364,11 +364,47 @@ const eraseWork = async (workId) => {
     if (!response.ok) {
       throw new Error(`Erreur HTTP: ${response.status}`);
     }
-    console.log(`L'élément avec l'id ${workId}  a été supprimé avec succès !`);
+    console.log("L'élément a été supprimé avec succès !");
   } catch (error) {
-    console.error(`Impossible de supprimer l'élément avec l'id ${workId}`);
+    console.error("Impossible de supprimer l'élément");
   }
 };
+
+function eraseAllWorks() {
+  const allMiniFigures = document.querySelectorAll(".miniFigure");
+  const allBigFigures = document.querySelectorAll(".bigFigure");
+
+  try {
+    allMiniFigures.forEach((miniFigure) => {
+      const dataId = miniFigure.dataset.id;
+      eraseWork(dataId)
+        .then(() => {
+          miniFigure.remove();
+        })
+        .catch((error) => {
+          console.error(
+            `Erreur lors de la suppression dans la mini galerie : ${error}`
+          );
+        });
+    });
+
+    allBigFigures.forEach((bigFigure) => {
+      const dataId = bigFigure.dataset.id;
+      eraseWork(dataId)
+        .then(() => {
+          bigFigure.remove();
+        })
+
+        .catch((error) => {
+          console.error(
+            `Erreur lors de la suppression dans la grande galerie : ${error}`
+          );
+        });
+    });
+  } catch (error) {
+    console.error(`Impossible de supprimer la totalité des travaux : ${error}`);
+  }
+}
 
 //  Cette fonction ferme les
 //   modales dès que l'utilisateur
@@ -500,7 +536,7 @@ async function clickAway(event) {
     }
   } else if (clickEraseAllBtn) {
     try {
-      console.log("Ok : tout est effacé !");
+      eraseAllWorks();
     } catch (error) {
       console.error(`Erreur lors de l'effacement des données: ${error}`);
     }
@@ -508,18 +544,6 @@ async function clickAway(event) {
 }
 
 window.addEventListener("click", clickAway);
-
-function eraseAllWorks() {
-  const allMiniFigures = document.querySelectorAll(".miniFigure");
-  allMiniFigures.forEach((miniFigure) => {
-    eraseWork(miniFigure.dataset.id);
-  });
-
-  const allBigFigures = document.querySelectorAll(".bigFigure");
-  allBigFigures.forEach((bigFigure) => {
-    eraseWork(bigFigure.dataset.id);
-  });
-}
 
 const miniGallery = document.querySelector(".miniGallery");
 miniGallery.classList.add("galleryContent");
