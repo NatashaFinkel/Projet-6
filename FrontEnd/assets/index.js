@@ -352,7 +352,6 @@ function closeAddWorkModal() {
 const eraseAllBtn = document.querySelector(".erase-btn");
 
 const eraseWork = async (workId) => {
-  const works = await getPreviousWork();
   try {
     const response = await fetch(postWorkUrl + "/" + workId, {
       method: "DELETE",
@@ -407,7 +406,6 @@ async function clickAway(event) {
         selectedTrashIcon = trashIcon;
       });
 
-      trashIcon.addEventListener("click", test2);
       trashIcon.addEventListener("click", removeFigure);
 
       function removeFigure() {
@@ -470,6 +468,7 @@ async function clickAway(event) {
     try {
       const formData = new FormData(formModal2);
       const newContent = await postNewWork(formData);
+
       const img = formData.get("image");
       const title = formData.get("title");
       const category = formData.get("category");
@@ -528,7 +527,6 @@ miniGallery.classList.add("galleryContent");
 const arrow = document.querySelector(".arrow-icon");
 
 async function createMiniGallery(works) {
-
   //  Pour pouvoir utiliser les travaux précédents téléchargés.
   works = await getPreviousWork();
 
