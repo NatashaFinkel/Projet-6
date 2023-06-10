@@ -55,7 +55,7 @@
 
 			<div class="filter-zone" id="filter-zone"></div>
 
-			<div class="gallery galleryContent"></div>
+			<div class="gallery"></div>
 
 		</section>
 
@@ -101,7 +101,7 @@
 					<div class="miniGallery"></div>
 
 					<div class="btn-div-modal-1">
-						<input type="submit" class="submitBtn" id="open-sec-mod" value="Ajouter une photo">
+						<input type="submit" class="submit-btn" id="open-sec-mod" value="Ajouter une photo">
 
 						<input type="button" class="erase-btn" value="Supprimer la galerie">
 					</div>
@@ -137,24 +137,22 @@
 				<div class="modal-form">
 
 					<form id="form-modal-2">
-						<div class="div1">
+						<div class="img-displayer">
 							<div class="image-display"></div>
 
-							<div class="image-box hidden-when-img-loaded">
+							<div class="image-box">
 								<i class="fa-regular fa-image landscape-image"></i>
-								<label for="add-pic-btn" class="hidden-when-img-loaded-2">+ Ajouter photo</label>
+								<label for="add-pic-btn">+ Ajouter photo</label>
 								<input type="file" id="add-pic-btn" name="image" accept="image/png, image/jpeg">
 								<p>jpg, png : 4mo max</p>
 							</div>
 
 						</div>
 
-						<div class="error-container-for-missing-img"></div>
-
 						<label for="title">Titre</label><br>
 						<input type="text" id="title" name="title"><br>
 
-						<div class="error-container-for-missing-title"></div>
+						<div class="error-container-for-missing-data-form"></div>
 
 						<label for="category">Catégorie</label><br>
 
@@ -165,7 +163,6 @@
 							<option value="3">Hôtels & restaurants</option>
 						</select>
 
-						<div class="error-container-for-missing-category"></div>
 					</form>
 
 				</div>

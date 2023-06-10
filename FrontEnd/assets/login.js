@@ -64,7 +64,7 @@ function errorInLogIn(type) {
     case "password":
       errorLocation = document.querySelector(".password-location");
       errorText =
-        "Erreur dans la saisie. Merci d'entrer votre mot de passe une nouvelle fois. ";
+        "Erreur dans la saisie. Merci d'entrer votre mot de passe une nouvelle fois.";
 
       break;
   }
@@ -73,8 +73,8 @@ function errorInLogIn(type) {
 
   if (errorMessage) {
     errorLocation.remove();
-  } 
- 
+  }
+
   let errorMessageContainer = document.createElement("div");
   errorMessageContainer.setAttribute("class", "error-container");
 

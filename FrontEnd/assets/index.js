@@ -15,7 +15,6 @@ const header = document.querySelector("header");
 const figure = document.querySelector("figure");
 let adminBanner;
 let modifButton;
-//let modifGalleryBtn;
 
 const galleryBtn = document.querySelector(".gallery-btn");
 const filterZone = document.querySelector("#filter-zone");
@@ -122,7 +121,6 @@ async function activFilter() {
   firstFilterBtn.classList.add("selected-filter");
   firstFilterBtn.setAttribute("id", "filter");
 
-  console.log(filterButton);
   for (const button of filterButton) {
     button.addEventListener("click", function (selectedItem) {
       filterZone
@@ -146,7 +144,7 @@ async function activFilter() {
 
         //  switch est utile quand on veut exécuter une action
         //  qui peut être différente selon certaines conditions.
-        //  ici : on execute ceci si la valeur est "vraie".
+        //  ici : on execute le code si la valeur est "vraie".
         switch (true) {
           case category == "Tous":
             gallery.style.display = "grid";
@@ -206,27 +204,12 @@ if (localStorage.token) {
 
   //  Pour créer le bouton qui modifie le contenu de la galerie.
   createModifBtn("openModalBtn");
-
-//  modifGalleryBtn = document.querySelector("#modifGalleryBtn");
-
   galleryBtn.addEventListener("click", createModalBG);
   galleryBtn.addEventListener("click", openOriginalModal);
 
   galleryBtn.append(modifButton);
 } else {
   console.log("Vous êtes sur l'interface 'Client'. Bienvenue !");
-}
-
-function test1() {
-  console.log("Test 1 réussi !");
-}
-
-function test2() {
-  console.log("Test 2 réussi !");
-}
-
-function test3() {
-  console.log("Test 3 réussi !");
 }
 
 //  Pour faire le logout.
@@ -259,10 +242,6 @@ const secondModal = document.querySelector("#second-modal");
 
 const closeFirstModal = document.querySelector(".close-original-modal");
 const closeSecondModal = document.querySelector(".close-add-work-modal");
-
-/* modifGalleryBtn = document.querySelector("#modifGalleryBtn");
-modifGalleryBtn.addEventListener("click", createModalBG);
-modifGalleryBtn.addEventListener("click", openOriginalModal); */
 
 const modalBG = document.querySelector(".modal-bg");
 
@@ -418,9 +397,7 @@ function eraseAllWorks() {
 //  les boutons qui les ouvrent.
 async function clickAway(event) {
   //  Renvoie true si on clique sur le btn qui ouvre la 1ère modale.
-//  const openModalBtn = modifGalleryBtn.contains(event.target);
   const openModalBtn = galleryBtn.contains(event.target);
-  // galleryBtn
 
   //  Renvoie true si on clique sur le btn qui ouvre la 2e modale.
   const openSecModalBtn = openSecModal.contains(event.target);
@@ -436,7 +413,7 @@ async function clickAway(event) {
   //  Renvoie true si on clique sur la flèche-retour.
   const clickArrow = arrow.contains(event.target);
 
-  //  Renvoie true si on clique sur le btn sumit de la 2e modale.
+  //  Renvoie true si on clique sur le btn submit de la 2e modale.
   const clickAddBtn = addBtn.contains(event.target);
 
   //  Renvoie true si on clique sur le btn qui supprime tous les travaux.
@@ -554,7 +531,6 @@ async function clickAway(event) {
 window.addEventListener("click", clickAway);
 
 const miniGallery = document.querySelector(".miniGallery");
-miniGallery.classList.add("galleryContent");
 
 const arrow = document.querySelector(".arrow-icon");
 
@@ -569,10 +545,8 @@ async function createMiniGallery(works) {
 
     //  Pour faire apparaître et disparaître l'icône
     //  "flèche multidirectionnelle" au passage de la
-    //   souris sur chacune des miniFigures
-    //  et mise en place de l'addEventListener de l'icône "poubelle".
+    //   souris sur chacune des miniFigures.
     miniFigure.addEventListener("mouseover", displayIcon);
-    //  miniFigure.addEventListener("mouseover", currentImg);
     miniFigure.addEventListener("mouseout", hideIcon);
 
     //  icône "flèche multidirectionnelle".
@@ -598,7 +572,6 @@ async function createMiniGallery(works) {
 
     const miniFigcaption = document.createElement("figcaption");
     miniFigcaption.innerHTML = `<p>éditer</p>`;
-    miniFigcaption.addEventListener("click", test3);
 
     const iconDiv = document.createElement("div");
     iconDiv.classList.add("iconDiv");
@@ -641,8 +614,8 @@ showLoadedImg(imageLoader, imgDisplay);
 const formModal2 = document.querySelector("#form-modal-2");
 
 async function postNewWork(formData) {
-  let errorLocation;
   let errorContainer = document.querySelector(".error-container");
+
   if (errorContainer) {
     errorContainer.remove();
   }
@@ -674,7 +647,7 @@ function errorInAddWorks(type) {
   let errorText;
 
   let errorLocation = document.querySelector(
-    ".error-container-for-missing-title"
+    ".error-container-for-missing-data-form"
   );
 
   switch (type) {
@@ -700,5 +673,3 @@ function errorInAddWorks(type) {
 
   errorLocation.appendChild(errorMessageContainer);
 }
-
-const galleryContent = document.querySelector(".galleryContent");
