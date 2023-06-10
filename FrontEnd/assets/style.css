@@ -239,7 +239,7 @@ a:hover,
 	margin-bottom: 1em;
 }
 
-.gallery-btn {
+.gallery-div {
 	display: flex;
 	justify-content: center;
 	align-items: baseline;

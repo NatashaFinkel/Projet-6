@@ -15,6 +15,7 @@ const header = document.querySelector("header");
 const figure = document.querySelector("figure");
 let adminBanner;
 let modifButton;
+//let modifGalleryBtn;
 
 const galleryBtn = document.querySelector(".gallery-btn");
 const filterZone = document.querySelector("#filter-zone");
@@ -204,7 +205,13 @@ if (localStorage.token) {
   introArticle.insertBefore(modifButton, introArticleTitle);
 
   //  Pour créer le bouton qui modifie le contenu de la galerie.
-  createModifBtn("modifGalleryBtn");
+  createModifBtn("openModalBtn");
+
+//  modifGalleryBtn = document.querySelector("#modifGalleryBtn");
+
+  galleryBtn.addEventListener("click", createModalBG);
+  galleryBtn.addEventListener("click", openOriginalModal);
+
   galleryBtn.append(modifButton);
 } else {
   console.log("Vous êtes sur l'interface 'Client'. Bienvenue !");
@@ -253,9 +260,9 @@ const secondModal = document.querySelector("#second-modal");
 const closeFirstModal = document.querySelector(".close-original-modal");
 const closeSecondModal = document.querySelector(".close-add-work-modal");
 
-const modifGalleryBtn = document.querySelector("#modifGalleryBtn");
+/* modifGalleryBtn = document.querySelector("#modifGalleryBtn");
 modifGalleryBtn.addEventListener("click", createModalBG);
-modifGalleryBtn.addEventListener("click", openOriginalModal);
+modifGalleryBtn.addEventListener("click", openOriginalModal); */
 
 const modalBG = document.querySelector(".modal-bg");
 
@@ -411,7 +418,9 @@ function eraseAllWorks() {
 //  les boutons qui les ouvrent.
 async function clickAway(event) {
   //  Renvoie true si on clique sur le btn qui ouvre la 1ère modale.
-  const openModalBtn = modifGalleryBtn.contains(event.target);
+//  const openModalBtn = modifGalleryBtn.contains(event.target);
+  const openModalBtn = galleryBtn.contains(event.target);
+  // galleryBtn
 
   //  Renvoie true si on clique sur le btn qui ouvre la 2e modale.
   const openSecModalBtn = openSecModal.contains(event.target);
