@@ -501,7 +501,7 @@ async function clickAway(event) {
       } else if (!category) {
         errorInAddWorks("category");
       }
-
+      
       gallery.innerHTML = "";
       miniGallery.innerHTML = "";
 
@@ -635,7 +635,6 @@ async function postNewWork(formData) {
     } else {
       closeAddWorkModal();
       openOriginalModal();
-      console.log(`Le projet a été ajouté à la base de données avec succès`);
       return true;
     }
   } catch (error) {
