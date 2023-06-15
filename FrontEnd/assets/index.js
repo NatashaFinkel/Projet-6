@@ -52,22 +52,37 @@ async function getPreviousWork() {
 
 async function createFilterBtns(works) {
   const categories = new Set();
+
   categories.add("Tous");
 
   for (let element of works) {
     categories.add(element.category.name);
   }
 
+  const categoriesData = await getCategories();
+
   let fragment = document.createDocumentFragment();
   fragment.appendChild(filterZone);
   portfolio.insertBefore(filterZone, gallery);
 
-  for (let element of categories) {
+  //  Juste pour le bouton "Tous".
+  let allButton = document.createElement("button");
+  allButton.setAttribute("type", "button");
+  allButton.setAttribute("class", "filter-button");
+  allButton.setAttribute("data-category", "Tous");
+  allButton.setAttribute("data-id", "0");
+  allButton.textContent = "Tous";
+  filterZone.appendChild(allButton);
+
+  for (let category of categoriesData) {
     let button = document.createElement("button");
     button.setAttribute("type", "button");
     button.setAttribute("class", "filter-button");
-    button.setAttribute("data-category", element);
-    button.textContent = element;
+    button.setAttribute("data-category", category.name);
+    button.setAttribute("data-id", category.id);
+
+    button.textContent = category.name;
+
     filterZone.appendChild(button);
   }
   return fragment;
@@ -84,6 +99,7 @@ async function worksGenerator(works) {
     figure.setAttribute("class", "bigFigure");
     figure.setAttribute("data-category", element.category.name);
     figure.setAttribute("data-id", element.id);
+    figure.setAttribute("category-id", element.categoryId);
 
     let img = document.createElement("img");
     img.setAttribute("crossorigin", "anonymous");
@@ -134,33 +150,20 @@ async function activFilter() {
 
       selectedItem.target.setAttribute("id", "filter");
 
-      // categorie renvoie le nom de la catégorie du filtre sur lequel on clique.
-      let category = selectedItem.target.getAttribute("data-category");
+      let category = selectedItem.target.getAttribute("data-id");
 
-      //  Pour chaque figure de chacun des éléments avec la classe bigFigure.
       for (let figure of bigFigure) {
-        //  filter renvoie le nom de catégorie de chacune des figures.
-        let filter = figure.getAttribute("data-category");
+        let filter = figure.getAttribute("category-id");
 
-        //  switch est utile quand on veut exécuter une action
-        //  qui peut être différente selon certaines conditions.
-        //  ici : on execute le code si la valeur est "vraie".
-        switch (true) {
-          case category == "Tous":
-            gallery.style.display = "grid";
-            figure.style.display = "block";
-            break;
-
-          //  Si le nom de catégorie du filtre est le même que
-          //  celui de la figure.
-          case category == filter:
-            gallery.style.display = "grid";
-            figure.style.display = "block";
-            break;
-
-          default:
-            figure.style.display = "none";
-            gallery.style.display = "grid";
+        if (category == "0") {
+          gallery.style.display = "grid";
+          figure.style.display = "block";
+        } else if (category == filter) {
+          gallery.style.display = "grid";
+          figure.style.display = "block";
+        } else {
+          figure.style.display = "none";
+          gallery.style.display = "grid";
         }
       }
     });
@@ -501,7 +504,7 @@ async function clickAway(event) {
       } else if (!category) {
         errorInAddWorks("category");
       }
-      
+
       gallery.innerHTML = "";
       miniGallery.innerHTML = "";
 
