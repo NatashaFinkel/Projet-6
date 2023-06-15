@@ -616,6 +616,35 @@ showLoadedImg(imageLoader, imgDisplay);
 
 const formModal2 = document.querySelector("#form-modal-2");
 
+async function addSelectForm() {
+  const labelElement = document.querySelector('label[for="category"]');
+  const selectElement = await createSelectForm();
+  labelElement.insertAdjacentElement("afterend", selectElement);
+}
+
+addSelectForm();
+
+async function createSelectForm() {
+  const selectElement = document.getElementById("category");
+
+  const emptyOption = document.createElement("option");
+  emptyOption.setAttribute("value", "");
+  emptyOption.setAttribute("label", " ");
+  selectElement.appendChild(emptyOption);
+
+  const categoriesData = await getCategories();
+
+  for (let category of categoriesData) {
+    const option = document.createElement("option");
+    option.setAttribute("value", category.id);
+    option.setAttribute("id", category.id);
+    option.textContent = category.name;
+    selectElement.appendChild(option);
+  }
+
+  return selectElement;
+}
+
 async function postNewWork(formData) {
   let errorContainer = document.querySelector(".error-container");
 
